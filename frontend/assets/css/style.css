@@ -81,115 +81,139 @@ p {
     line-height: 1.6;
 }
 
-/********************************* 
-*********FLASHCARD SELECT*********
-**********************************/
-
-body {
-  background: #ffffff;
-  color: #eee;
-  font-family: Arial, sans-serif;
-  display: flex;
-  justify-content: center;
-  padding: 40px;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-.container {
-  border: 2px solid #000000;
-  padding: 30px;
-  border-radius: 12px;
-  width: 600px;
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #324cbe 0%, #3320ae 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+            padding: 20px;
+    }
+
+.login-container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    padding: 40px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.logo-section {
+     text-align: center;
+    margin-bottom: 30px;
+}
+
+.logo-image {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 h1 {
-  text-align: center;
-  margin-bottom: 30px;
-  font-size: 2rem;
-  color: #000000;
+    color: #333;
+    font-size: 28px;
+    margin-bottom: 10px;
 }
 
-.row {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 30px;
+.subtitle {
+    color: #666;
+    font-size: 14px;
+}
+
+.input-group {
+    margin-bottom: 20px;
 }
 
 label {
-  display: block;
-  margin-bottom: 6px;
-  color: #000000;
+    display: block;
+    color: #333;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 8px;
 }
 
-select {
-  width: 220px;
-  padding: 8px;
-  border-radius: 6px;
-  border: 1px solid #000000;
-  background: #ffffff;
-  color: #000000;
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: border-color 0.3s;
 }
 
-.menu-button {
-  width: 100%;
-  padding: 15px;
-  background: #ffffff;
-  border: 2px solid #000000;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  color: #000000;
-  font-size: 1.1rem;
-  cursor: pointer;
+input[type="text"]:focus,
+input[type="password"]:focus {
+    outline: none;
+    border-color: #667eea;
 }
 
-
-
-/********************************* 
-************FLASHCARDS************
-**********************************/
-
-/* Flashcard Screen */
-.flashcard-box {
-  border:2px solid #000000;
-  border-radius:12px;
-  padding:25px;
-  margin-bottom:25px;
-  background:#ffffff;
-  font-size:1.5rem;
-  color:#000000;
+.forgot-password {
+    text-align: right;
+    margin-top: 8px;
 }
 
-.show-btn {
-  width:100%;
-  padding:14px;
-  border:2px solid #000000;
-  background:#ffffff;
-  color:#000000;
-  font-size:1.1rem;
-  border-radius:10px;
-  cursor:pointer;
-  margin-bottom:20px;
+.forgot-password a {
+    color: #667eea;
+    text-decoration: none;
+    font-size: 13px;
+    transition: color 0.3s;
 }
 
-/* Answer box */
-.answer-box {   
-  display:none;
-  border:2px solid #000000;
-  border-radius:12px;
-  padding:20px;
-  background:#222;
-  font-size:1.3rem;
-  color:#eee;
+.forgot-password a:hover {
+    color: #764ba2;
+    text-decoration: underline;
 }
 
-/* Switch order button */
-.switch-btn {
-  position:absolute;
-  right:20px;
-  top:20px;
-  padding:10px 16px;
-  border:2px solid #000000;
-  background:#ffffff;
-  border-radius:8px;
-  color:#000000;
-  cursor:pointer;
+.login-button {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin-top: 25px;
+}
+
+.login-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+}
+
+.login-button:active {
+    transform: translateY(0);
+}
+
+.signup-link {
+    text-align: center;
+    margin-top: 20px;
+    color: #666;
+    font-size: 14px;
+}
+
+.signup-link a {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+.signup-link a:hover {
+    color: #764ba2;
+    text-decoration: underline;
 }
