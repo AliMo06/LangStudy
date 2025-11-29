@@ -80,3 +80,116 @@ p {
     font-size: 16px;
     line-height: 1.6;
 }
+
+/********************************* 
+*********FLASHCARD SELECT*********
+**********************************/
+
+body {
+  background: #ffffff;
+  color: #eee;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+}
+
+.container {
+  border: 2px solid #000000;
+  padding: 30px;
+  border-radius: 12px;
+  width: 600px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2rem;
+  color: #000000;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  color: #000000;
+}
+
+select {
+  width: 220px;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #000000;
+  background: #ffffff;
+  color: #000000;
+}
+
+.menu-button {
+  width: 100%;
+  padding: 15px;
+  background: #ffffff;
+  border: 2px solid #000000;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  color: #000000;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+
+
+/********************************* 
+************FLASHCARDS************
+**********************************/
+
+/* Flashcard Screen */
+.flashcard-box {
+  border:2px solid #000000;
+  border-radius:12px;
+  padding:25px;
+  margin-bottom:25px;
+  background:#ffffff;
+  font-size:1.5rem;
+  color:#000000;
+}
+
+.show-btn {
+  width:100%;
+  padding:14px;
+  border:2px solid #000000;
+  background:#ffffff;
+  color:#000000;
+  font-size:1.1rem;
+  border-radius:10px;
+  cursor:pointer;
+  margin-bottom:20px;
+}
+
+/* Answer box */
+.answer-box {   
+  display:none;
+  border:2px solid #000000;
+  border-radius:12px;
+  padding:20px;
+  background:#222;
+  font-size:1.3rem;
+  color:#eee;
+}
+
+/* Switch order button */
+.switch-btn {
+  position:absolute;
+  right:20px;
+  top:20px;
+  padding:10px 16px;
+  border:2px solid #000000;
+  background:#ffffff;
+  border-radius:8px;
+  color:#000000;
+  cursor:pointer;
+}
