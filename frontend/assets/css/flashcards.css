@@ -1,12 +1,3 @@
- body {
-        font-family: Arial, sans-serif;
-        background: #f0f3fa;
-        margin: 0;
-        padding: 20px;
-        display: flex;
-        justify-content: center;
-    }
-
     .card-container {
         width: 420px;
         background: white;
