@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Flashcards</title>
+<link rel="stylesheet" href="assets/css/flashcards.css" />
+<body>
+
+<div class="card-container">
+    <h2>Flashcards</h2>
+
+    <div id="question" class="question-box"></div>
+    <div id="answer" class="answer-box"></div>
+
+    <div>
+        <button class="nav-btn" id="prevBtn">◀ Prev</button>
+        <button class="show-btn" id="showBtn">Show Answer</button>
+        <button class="nav-btn" id="nextBtn">Next ▶</button>
+    </div>
+
+    <button class="swap-btn" id="swapBtn">Swap Q/A</button>
+
+    <p style="margin-top:12px; color:#666;">
+        Card <span id="index">1</span> / <span id="total">1</span>
+    </p>
+</div>
+
+<script src="assets/js/flashcards.js"></script>
+
+</body>
+</html>

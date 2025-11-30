@@ -462,3 +462,30 @@ input::placeholder {
     padding: 10px 20px;
     border: 2px solid rgba(0, 0 ,200, 0.75);
 }
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.menu-button {
+  width: 100%;
+  padding: 15px;
+  background: #ffffff;
+  border: 2px solid #000000;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  color: #000000;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+select {
+  width: 160px;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #000000;
+  background: #ffffff;
+  color: #000000;
+}
