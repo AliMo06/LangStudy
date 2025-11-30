@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversation Translation</title>
+    <link rel="stylesheet" href="assets/css/translateconv.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <button class="back-button" onclick="goBack()">
+                <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                </svg>
+                Back
+            </button>
+            <h1>Conversation Translation</h1>
+        </div>
+
+        <div class="language-selectors">
+            <div class="language-selector">
+                <label for="lang1">Language 1</label>
+                <select id="lang1">
+                    <option value="English">English</option>
+                    <option value="Spanish">Spanish</option>
+                    <option value="French">French</option>
+                    <option value="Arabic">Arabic</option>
+                </select>
+            </div>
+
+            <div class="language-selector">
+                <label for="lang2">Language 2</label>
+                <select id="lang2">
+                    <option value="English">English</option>
+                    <option value="Spanish" selected>Spanish</option>
+                    <option value="French">French</option>
+                    <option value="Arabic">Arabic</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="mic-buttons">
+            <div class="mic-button-container">
+                <button class="mic-button" id="mic1" onclick="startRecording(true)">
+                    <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="mic-button-container">
+                <button class="mic-button" id="mic2" onclick="startRecording(false)">
+                    <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="translation-grid">
+            <div class="translation-box">
+                <button class="speaker-button" onclick="speak('lang1Input')">
+                    <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/>
+                    </svg>
+                </button>
+                <div class="box-header">Input (<span id="lang1Label">English</span>)</div>
+                <textarea id="lang1Input" placeholder="Type in English..."></textarea>
+            </div>
+
+            <div class="translation-box">
+                <button class="speaker-button" onclick="speak('lang2Input')">
+                    <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/>
+                    </svg>
+                </button>
+                <div class="box-header">Input (<span id="lang2Label">Spanish</span>)</div>
+                <textarea id="lang2Input" placeholder="Type in Spanish..."></textarea>
+            </div>
+
+            <div class="translation-box output">
+                <button class="speaker-button" onclick="speak('lang2Output')">
+                    <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/>
+                    </svg>
+                </button>
+                <div class="box-header">Output (<span id="lang2OutputLabel">Spanish</span>)</div>
+                <div id="lang2Output" class="output-text empty">Translation will appear here...</div>
+            </div>
+
+            <div class="translation-box output">
+                <button class="speaker-button" onclick="speak('lang1Output')">
+                    <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/>
+                    </svg>
+                </button>
+                <div class="box-header">Output (<span id="lang1OutputLabel">English</span>)</div>
+                <div id="lang1Output" class="output-text empty">Translation will appear here...</div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Type or speak in either language for instant translation</p>
+        </div>
+    </div>
+    <script src="assets/js/conversation.js"></script>
+</body>
+</html>
