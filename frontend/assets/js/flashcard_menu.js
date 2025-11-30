@@ -11,7 +11,7 @@ function goToFlashcards(category) {
     const to = document.getElementById("toLang").value;
 
     // Pass values to next page using URL parameters
-    const url = `flashcard.html?from=${from}&to=${to}&cat=${category}`;
+    const url = `flashcards.html?from=${from}&to=${to}&cat=${category}`;
 
     window.location.href = url;
 }

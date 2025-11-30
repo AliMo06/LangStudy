@@ -1,27 +1,26 @@
 {
-  "basic_phrases": [
-    {
-      "q": "¿Cómo te llamas?",
-      "a": "What's your name?"
-    },
-    {
-      "q": "Buenos días",
-      "a": "Good morning"
-    },
-    {
-      "q": "Gracias",
-      "a": "Thank you"
-    }
-  ],
-
-  "basic_words": [
-    {
-      "q": "Casa",
-      "a": "House"
-    },
-    {
-      "q": "Perro",
-      "a": "Dog"
-    }
-  ]
+  "basic_words": {
+    "en-en": [
+      { "q": "House", "a": "House" },
+      { "q": "Dog", "a": "Dog" }
+    ],
+    "en-es": [
+      { "q": "House", "a": "Casa" },
+      { "q": "Dog", "a": "Perro" }
+    ],
+    "es-en": [
+      { "q": "Casa", "a": "House" },
+      { "q": "Perro", "a": "Dog" }
+    ]
+  },
+  "basic_phrases": {
+    "en-en": [
+      { "q": "Good morning", "a": "Good morning" },
+      { "q": "Thank you", "a": "Thank you" }
+    ],
+    "es-en": [
+      { "q": "¿Cómo te llamas?", "a": "What's your name?" },
+      { "q": "Buenos días", "a": "Good morning" }
+    ]
+  }
 }
