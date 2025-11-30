@@ -68,6 +68,10 @@
             } else {
                 alert('Text-to-speech is not supported in your browser');
             }
+            document.getElementById("logo-image").src = "assets/img/200.gif";
+            setTimeout(function() {
+            document.getElementById("logo-image").src = "assets/img/logo_cropped.png";
+            }, 5000);
         }
 
         function updateCharCount(type) {

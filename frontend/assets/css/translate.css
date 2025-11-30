@@ -199,3 +199,8 @@
                 width: 100%;
             }
         }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
