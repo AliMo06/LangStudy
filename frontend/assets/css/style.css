@@ -452,3 +452,13 @@ input::placeholder {
 .error-message.show {
     display: block;
 }
+
+.welcome-button {
+    color: rgba(0, 0, 0, 1);
+    margin-top: 20px;
+    margin-right: 67px;
+    margin-left: 67px;
+    border-radius: 6px;
+    padding: 10px 20px;
+    border: 2px solid rgba(0, 0 ,200, 0.75);
+}
