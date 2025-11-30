@@ -17,6 +17,16 @@ const category = params.get("cat");   // basic_words or basic_phrases
 const from = params.get("from");      // en, es, etc.
 const to = params.get("to");          // en, es, etc.
 
+// Map category codes to friendly names
+const categoryNames = {
+    basic_words: "Basic Words",
+    basic_phrases: "Basic Phrases"
+};
+
+// Display the category
+document.getElementById("categoryLabel").textContent = categoryNames[category] || "Flashcards";
+
+
 // Load JSON and set flashcards for chosen category
 async function loadCategory(category) {
   try {
@@ -42,19 +52,20 @@ async function loadCategory(category) {
   }
 }
 
+const cardText = document.querySelector(".question-text");
+const answerText = document.querySelector(".answer-text");
 
 function loadCard() {
   const cardData = flashcards[index];
-  card.textContent = swapped ? cardData.a : cardData.q;
+  cardText.textContent = swapped ? cardData.a : cardData.q;
   answerBox.style.display = "none";
   document.getElementById("index").textContent = index + 1;
   document.getElementById("total").textContent = flashcards.length;
 }
 
-
 function showAnswer() {
   const cardData = flashcards[index];
-  answerBox.textContent = swapped ? cardData.q : cardData.a;
+  answerText.textContent = swapped ? cardData.q : cardData.a;
   answerBox.style.display = "block";
 }
 

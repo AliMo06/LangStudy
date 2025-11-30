@@ -8,25 +8,40 @@
 <body>
 
 <div class="card-container">
+    <a class="back" href="flashcard_menu.html">← Back</a>
     <h2>Flashcards</h2>
+    <h3 id="categoryLabel" class="category-label"></h3>
 
-    <div id="question" class="question-box"></div>
-    <div id="answer" class="answer-box"></div>
+    <div id="question" class="question-box">
+    <span class="question-text"></span>
+    <button class="pronounce-btn">🔊</button>
+    </div>
+
+    <div id="answer" class="answer-box">
+    <span class="answer-text"></span>
+    <button class="pronounce-btn">🔊</button>
+    </div>
+
 
     <div>
         <button class="nav-btn" id="prevBtn">◀ Prev</button>
         <button class="show-btn" id="showBtn">Show Answer</button>
         <button class="nav-btn" id="nextBtn">Next ▶</button>
+        
     </div>
 
-    <button class="swap-btn" id="swapBtn">Swap Q/A</button>
+    <div class="swap-container">
+        <button class="swap-btn" id="swapBtn">Switch Order ⇅</button>
+    </div>
 
-    <p style="margin-top:12px; color:#666;">
+    <p class="card-counter">
         Card <span id="index">1</span> / <span id="total">1</span>
     </p>
+
 </div>
 
 <script src="assets/js/flashcards.js"></script>
+
 
 </body>
 </html>
