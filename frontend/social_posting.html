@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="page.title">LangStudy - Social Feed</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/social_posting.css">
+</head>
+<body>
+    <div class="social-container">
+        <div class="social-header">
+            <div class="header-left">
+                <h1 data-i18n="header.appName">LangStudy</h1>
+                <div class="logo-image"><img src="assets/img/logo_cropped.png" alt="Logo" class="logo-image"></div>
+            </div>
+            <div class="header-right">
+                <select id="languageSelector" class="language-selector">
+                    <option value="en">English</option>
+                    <option value="es">Español</option>
+                    <option value="fr">Français</option>
+                    <option value="ar">العربية</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="post-creator">
+            <h2 data-i18n="postCreator.heading">Share your language learning journey:</h2>
+            <div class="post-input-group">
+                <label for="postTitle" data-i18n="postCreator.titleLabel">Title</label>
+                <input type="text" id="postTitle" data-i18n-placeholder="postCreator.titlePlaceholder" placeholder="Give your post a title...">
+            </div>
+            <div class="post-input-group">
+                <label for="postContent" data-i18n="postCreator.contentLabel">What's on your mind?</label>
+                <textarea id="postContent" data-i18n-placeholder="postCreator.contentPlaceholder" placeholder="Type here..."></textarea>
+            </div>
+            <button class="post-button" id="createPostBtn" data-i18n="postCreator.shareButton">Post</button>
+        </div>
+
+        <div class="feed" id="feed">
+            <div class="post">
+                <div class="post-header">
+                    <div class="post-info">
+                        <h3>Tickle Tipson</h3>
+                    </div>
+                </div>
+                <div class="post-title">67</div>
+                <div class="post-content">
+                    Hi guys does anyone wanna be my friend 🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺
+                </div>
+                <div class="post-actions">
+                    <button class="action-button">
+                        <span>👍</span>
+                        <span data-i18n="actions.likes" data-i18n-options='{"count": 67}'>67 Likes</span>
+                    </button>
+                    <button class="action-button">
+                        <span>💬</span>
+                        <span data-i18n="actions.comments" data-i18n-options='{"count": 5}'>5 Comments</span>
+                    </button>
+                    <button class="action-button">
+                        <span>🔖</span>
+                        <span data-i18n="actions.save">Save</span>
+                    </button>
+                    <button class="action-button translate-button">
+                        <span>🌐</span>
+                        <span data-i18n="actions.translate">Translate</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="post">
+                <div class="post-header">
+                    <div class="post-info">
+                        <h3>Ali Mohamed</h3>
+                    </div>
+                </div>
+                <div class="post-title">Can this app get any worse?</div>
+                <div class="post-content">
+                    I 100% despise LangStudy, this app's developers are trash and haven't added any functionality whatsoever, I hate it but I can't even delete my account, that's how bad this app is. 
+                </div>
+                <div class="post-actions">
+                    <button class="action-button">
+                        <span>👍</span>
+                        <span data-i18n="actions.likes" data-i18n-options='{"count": 41}'>41 Likes</span>
+                    </button>
+                    <button class="action-button">
+                        <span>💬</span>
+                        <span data-i18n="actions.comments" data-i18n-options='{"count": 15}'>15 Comments</span>
+                    </button>
+                    <button class="action-button">
+                        <span>🔖</span>
+                        <span data-i18n="actions.save">Save</span>
+                    </button>
+                    <button class="action-button translate-button">
+                        <span>🌐</span>
+                        <span data-i18n="actions.translate">Translate</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="post">
+                <div class="post-header">
+                    <div class="post-info">
+                        <h3>عمار عبد المعطي</h3>
+                    </div>
+                </div>
+                <div class="post-title">هل المطورون متخلفون عقلياً؟</div>
+                <div class="post-content">
+                    لا يوجد أي شيء مترجم على الإطلاق في هذا التطبيق، ومع ذلك يسمونه "تطبيق لغات".
+                </div>
+                <div class="post-actions">
+                    <button class="action-button">
+                        <span>👍</span>
+                        <span data-i18n="actions.likes" data-i18n-options='{"count": 61}'>61 Likes</span>
+                    </button>
+                    <button class="action-button">
+                        <span>💬</span>
+                        <span data-i18n="actions.comments" data-i18n-options='{"count": 9}'>9 Comments</span>
+                    </button>
+                    <button class="action-button">
+                        <span>🔖</span>
+                        <span data-i18n="actions.save">Save</span>
+                    </button>
+                    <button class="action-button translate-button">
+                        <span>🌐</span>
+                        <span data-i18n="actions.translate">Translate</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="assets/js/social_posting.js"></script>
+</body>
+</html>
