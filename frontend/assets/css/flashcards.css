@@ -16,6 +16,15 @@
         text-align: center;
     }
 
+    .back {
+            text-decoration: none;
+            color: #333;
+            font-size: 15px;
+            margin-bottom: 10px;
+            display: block;
+            text-align: left;
+    }
+
     .question-box {
         background: #ffffff;
         border-radius: 10px;
@@ -23,17 +32,19 @@
         border: 1px solid #d0d4dd;
         font-size: 1.2rem;
         min-height: 60px;
+        position: relative;
     }
 
     .answer-box {
         margin-top: 14px;
         background: #eef1f7;
         border-radius: 10px;
-        padding: 16px;
+        padding: 18px;
         border: 1px solid #ccd1dd;
-        font-size: 1rem;
+        font-size: 1.2rem;
         min-height: 40px;
         display: none;
+        position: relative;
     }
 
     button {
@@ -46,15 +57,58 @@
     }
 
     .nav-btn {
-        background: #e2e6f0;
+        background: #000000;
+        color: white;
+        font-size: 1
     }
 
     .show-btn {
-        background: #6c5ce7;
+        background: #000000;
         color: white;
+    }
+    
+    .swap-btn {
+        background: #ffffff;
+        color: rgb(0, 0, 0);
+        border: 1px solid #000000;
     }
 
-    .swap-btn {
-        background: #09a8a3;
-        color: white;
+    .pronounce-btn {
+    position: absolute;
+    top: 8px;       /* move to top */
+    right: 8px;     /* move to right */
+    margin: 0;      /* remove global margin */
+    background: #000; 
+    color: rgb(0, 0, 0);   /* visible on light boxes */
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    transition: transform 0.1s ease;
+}
+
+.pronounce-btn:hover {
+    transform: scale(1.1);
+}
+
+
+
+    .card-counter {
+    margin-top: 12px;
+    color: #000000;
+    font-size: 15px;
     }
+
+.category-label {
+    margin-top: 6px;
+    color: #000000;
+    font-weight: bold;
+    font-size: 16px;
+    text-align: right;
+    }  
