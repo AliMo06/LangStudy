@@ -44,3 +44,9 @@ select {
   font-size: 1.1rem;
   cursor: pointer;
 }
+
+.logo {
+    display: block;
+    margin: 0 auto 20px;   /* center + spacing */
+    height: 80px;          /* adjust size as needed */
+}
