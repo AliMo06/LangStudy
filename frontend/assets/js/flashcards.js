@@ -1,8 +1,7 @@
-let flashcards = [];
-let index = 0;
+let flashcards = []; // data from flashcards.json
+let index = 0; //current flashcard
 let swapped = false;
 
-// Correct element IDs
 const card = document.getElementById("question");
 const answerBox = document.getElementById("answer");
 
@@ -11,29 +10,29 @@ const nextBtn = document.getElementById("nextBtn");
 const showBtn = document.getElementById("showBtn");
 const swapBtn = document.getElementById("swapBtn");
 
-// --- Read URL params ---
+// Read URL parameters from passed in url
 const params = new URLSearchParams(window.location.search);
-const category = params.get("cat");   // basic_words or basic_phrases
-const from = params.get("from");      // en, es, etc.
-const to = params.get("to");          // en, es, etc.
+const category = params.get("cat");   // selected category (words/phrases)
+const from = params.get("from");      // from language
+const to = params.get("to");          // to language
 
-// Map category codes to friendly names
+// Category names are mapped for display on the page
 const categoryNames = {
     basic_words: "Basic Words",
     basic_phrases: "Basic Phrases"
 };
 
-// Display the category
+// Display category
 document.getElementById("categoryLabel").textContent = categoryNames[category] || "Flashcards";
 
 
-// Load JSON and set flashcards for chosen category
+// Load json and set flashcards for chosen options
 async function loadCategory(category) {
   try {
     const res = await fetch("data/flashcards.json");
     const data = await res.json();
 
-    // Build key from selected languages
+    // Build key from chosen languages
     const langKey = `${from}-${to}`;
 
     if (!data[category][langKey]) {
@@ -52,9 +51,12 @@ async function loadCategory(category) {
   }
 }
 
+// Display the word/phrase
 const cardText = document.querySelector(".question-text");
 const answerText = document.querySelector(".answer-text");
 
+
+// Display a flashcard using information from the json
 function loadCard() {
   const cardData = flashcards[index];
   cardText.textContent = swapped ? cardData.a : cardData.q;
@@ -63,13 +65,14 @@ function loadCard() {
   document.getElementById("total").textContent = flashcards.length;
 }
 
+// Show answer button
 function showAnswer() {
   const cardData = flashcards[index];
   answerText.textContent = swapped ? cardData.q : cardData.a;
   answerBox.style.display = "block";
 }
 
-// Navigation
+// Navigating between cards
 prevBtn.onclick = () => {
   index = (index - 1 + flashcards.length) % flashcards.length;
   loadCard();

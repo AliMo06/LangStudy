@@ -1,4 +1,4 @@
- body {
+        body {
             font-family: Arial, sans-serif;
             background:  #324cbe;
             margin: 0;
@@ -46,6 +46,6 @@
 
         .logo {
         display: block;
-        margin: 0 auto 20px;   /* center + spacing */
-        height: 80px;          /* adjust size as needed */
+        margin: 0 auto 20px;
+        height: 80px;
         }   

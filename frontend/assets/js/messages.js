@@ -1,42 +1,43 @@
 const sendBtn = document.getElementById("sendBtn");
-        const input = document.getElementById("messageInput");
-        const messageArea = document.getElementById("messageArea");
+const input = document.getElementById("messageInput");
+const messageArea = document.getElementById("messageArea");
 
-        function sendMessage() {
-            const text = input.value.trim();
-            if (text === "") return; // ignore empty messages
+// Read the text inputted into the message box
+function sendMessage() {
+    const text = input.value.trim();
+    if (text === "") return; // ignore empty messages
 
-            // Create message container
-            const msg = document.createElement("div");
-            msg.className = "message";
+    // Create message container
+    const msg = document.createElement("div");
+    msg.className = "message";
 
-            // Sender label
-            const sender = document.createElement("div");
-            sender.className = "sender";
-            sender.textContent = "You";
+    // Create sender class
+    const sender = document.createElement("div");
+    sender.className = "sender";
+    sender.textContent = "You";
 
-            // Message text
-            const content = document.createElement("div");
-            content.textContent = text;
+    // Create message text
+    const content = document.createElement("div");
+    content.textContent = text;
 
-            // Append to DOM
-            msg.appendChild(sender);
-            msg.appendChild(content);
-            messageArea.appendChild(msg);
+    // Append the separate parts together
+    msg.appendChild(sender);
+    msg.appendChild(content);
+    messageArea.appendChild(msg);
 
-            // Scroll to bottom
-            messageArea.scrollTop = messageArea.scrollHeight;
+    // Auto scroll to bottom
+    messageArea.scrollTop = messageArea.scrollHeight;
 
-            // Clear input
-            input.value = "";
-        }
+    // Clear message box
+    input.value = "";
+}
 
-        // Button click
-        sendBtn.addEventListener("click", sendMessage);
+// Send message when send button clicked
+sendBtn.addEventListener("click", sendMessage);
 
-        // "Enter" key support
-        input.addEventListener("keypress", function (e) {
-            if (e.key === "Enter") {
-                sendMessage();
-            }
-        });
+// If the enter key is pressed, send message
+input.addEventListener("keypress", function (e) {
+    if (e.key === "Enter") {
+            sendMessage();
+    }
+});
