@@ -1,6 +1,8 @@
 {
-  "app-title": "لانج ستودي",
+  "app-title": "لانج ستدي",
   "language-label": "اللغة:",
-  "welcome-message": "أهلاً وسهلاً بكم إلى لانج ستودي",
-  "description": "اختر لغتك من القائمة المنسدلة أعلاه."
+  "welcome-message": "مرحباً بك في لانج ستدي",
+  "description": "تسجيل الدخول أو إنشاء حساب أدناه",
+  "signup-button": "إنشاء حساب",
+  "login-button": "تسجيل الدخول"
 }
