@@ -2,5 +2,7 @@
   "app-title": "LangStudy",
   "language-label": "Langue:",
   "welcome-message": "Bienvenue dans l'Application de LangStudy",
-  "description": "Sélectionnez votre langue dans le menu déroulant ci-dessus."
+  "description": "Se Connecter ou Créer un compte.",
+  "signup-button": "Créer un compte",
+  "login-button": "Se Connecter"
 }

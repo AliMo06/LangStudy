@@ -2,5 +2,7 @@
   "app-title": "LangStudy",
   "language-label": "Language:",
   "welcome-message": "Welcome to LangStudy",
-  "description": "Login or Sign Up Below"
+  "description": "Login or Sign Up Below",
+  "signup-button": "Sign Up",
+  "login-button": "Log In"
 }
