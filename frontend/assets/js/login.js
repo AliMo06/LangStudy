@@ -25,15 +25,3 @@
                 document.getElementById('loginBtn').click();
             }
         });
-
-        // forgot password link
-        document.getElementById('forgotLink').addEventListener('click', function(e) {
-            e.preventDefault();
-            alert('Password reset functionality will be implemented');
-        });
-
-        // sign up link
-        document.getElementById('signupLink').addEventListener('click', function(e) {
-            e.preventDefault();
-            alert('Sign up page will be implemented');
-        });
