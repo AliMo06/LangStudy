@@ -1,0 +1,139 @@
+body {
+    background: #3320ae;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding-bottom: 80px;
+}
+
+.social-container {
+    width: 100%;
+    max-width: 900px; /* optional: wider than before */
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.social-header {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.social-header h1 {
+    font-size: 24px;
+    color: #333;
+    margin: 0;
+}
+
+.logo-image {
+    width: 30px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.language-selector {
+    padding: 8px 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    background: white;
+    color: #333;
+    transition: border-color 0.3s;
+}
+
+.language-selector:focus,
+.language-selector:hover {
+    border-color: #667eea;
+}
+
+.exchange-container {
+    max-width: 900px;
+    width: 100%;
+    margin: 0 auto 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-sizing: border-box;
+}
+
+.user-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    border: 1px solid #e0e0e0;
+    width: 100%;
+}
+
+.user-card .name {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.tag {
+    background: #f5f5f5;
+    color: #333;
+    padding: 5px 12px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+}
+
+.section-label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #555;
+    margin-right: 8px;
+}
+
+.accept-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    align-self: center; 
+}
+
+.accept-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(102, 126, 234, 0.4);
+}
