@@ -25,7 +25,7 @@
         });
 
         // Form submission
-        form.addEventListener('submit', function(e) {
+        form.addEventListener('submit', async function(e) {
             e.preventDefault();
             
             // Check if passwords match
@@ -40,10 +40,40 @@
                 return;
             }
 
-            // If all validations pass
-            alert('Account created successfully! Redirecting to login...');
-            form.reset();
+            //grabs values from form fields and puts them in an object
+    const formData = {
+        fullname: document.getElementById('fullname').value,
+        email: emailInput.value,
+        username: document.getElementById('username').value,
+        password: password.value
+    };
+
+
+    //sends data to python backend
+    try {
+        const response = await fetch('http://localhost:5000/signup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
         });
+
+
+        //handles the response
+        const data = await response.json();
+
+        if (data.success) {
+            alert('Account created successfully! Redirecting to login...');
+            window.location.href = 'login.html';
+        } else {
+            alert('Error: ' + data.message);
+        }
+    } catch (error) {
+        alert('Error connecting to server. Make sure the backend is running!');
+        console.error('Error:', error);
+    }
+});
 
         function handleSocialSignup(provider) {
             alert(`Signing up with ${provider}...`);

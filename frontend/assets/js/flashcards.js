@@ -20,12 +20,36 @@ const to = params.get("to");          // en, es, etc.
 // Map category codes to friendly names
 const categoryNames = {
     basic_words: "Basic Words",
-    basic_phrases: "Basic Phrases"
+    basic_phrases: "Basic Phrases",
+    basic_sentences: "Basic Sentences"
 };
 
 // Display the category
 document.getElementById("categoryLabel").textContent = categoryNames[category] || "Flashcards";
 
+// text to speech function
+function speak(text, lang) {
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        
+        const utterance = new SpeechSynthesisUtterance(text);
+        
+        // map language codes to speech synthesis language codes
+        const langMap = {
+            'en': 'en-US',
+            'es': 'es-ES',
+            'fr': 'fr-FR',
+            'ar': 'ar-SA'
+        };
+        
+        utterance.lang = langMap[lang] || 'en-US';
+        utterance.rate = 0.9;
+        
+        window.speechSynthesis.speak(utterance);
+    } else {
+        alert('Text-to-speech not supported in this browser');
+    }
+}
 
 // Load JSON and set flashcards for chosen category
 async function loadCategory(category) {
@@ -86,6 +110,26 @@ swapBtn.onclick = () => {
   swapped = !swapped;
   loadCard();
 };
+
+
+// add click handlers for the speaker buttons
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('pronounce-btn')) {
+        const parentBox = e.target.closest('.question-box, .answer-box');
+        
+        if (parentBox.id === 'question') {
+            // speaking the question
+            const text = cardText.textContent;
+            const lang = swapped ? to : from;
+            speak(text, lang);
+        } else if (parentBox.id === 'answer') {
+            // speaking the answer
+            const text = answerText.textContent;
+            const lang = swapped ? from : to;
+            speak(text, lang);
+        }
+    }
+});
 
 // Load selected category
 loadCategory(category);
