@@ -74,7 +74,3 @@
         console.error('Error:', error);
     }
 });
-
-        function handleSocialSignup(provider) {
-            alert(`Signing up with ${provider}...`);
-        }
