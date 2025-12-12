@@ -1,16 +1,17 @@
 import sqlite3
-import hashlib  #encryp passwords
+import hashlib
 from datetime import datetime
 
 def get_db_connection():  
-    conn = sqlite3.connect('users.db') #opens a database
-    conn.row_factory = sqlite3.Row  #lets us access data
+    conn = sqlite3.connect('users.db')
+    conn.row_factory = sqlite3.Row
     return conn
 
 def init_db():
-    conn = get_db_connection()  #get a database connection
-    cursor = conn.cursor()  #creates a cursor in the database
+    conn = get_db_connection()
+    cursor = conn.cursor()
     
+    # Users table
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -22,12 +23,40 @@ def init_db():
         )
     ''')
     
-    conn.commit()  #saves changes
-    conn.close()  #closes the database connection
-    print("Database initialized!")
+    # Friendships table (stores friend connections)
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS friendships (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            friend_id INTEGER NOT NULL,
+            status TEXT DEFAULT 'pending',
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users (id),
+            FOREIGN KEY (friend_id) REFERENCES users (id),
+            UNIQUE(user_id, friend_id)
+        )
+    ''')
+    
+    # Messages table
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS messages (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            sender_id INTEGER NOT NULL,
+            receiver_id INTEGER NOT NULL,
+            message_text TEXT NOT NULL,
+            timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            read_status INTEGER DEFAULT 0,
+            FOREIGN KEY (sender_id) REFERENCES users (id),
+            FOREIGN KEY (receiver_id) REFERENCES users (id)
+        )
+    ''')
+    
+    conn.commit()
+    conn.close()
+    print("Database initialized with messaging tables!")
 
 def hash_password(password):
-    return hashlib.sha256(password.encode()).hexdigest()  #encrypts passwords
+    return hashlib.sha256(password.encode()).hexdigest()
 
 if __name__ == "__main__":
     init_db()
