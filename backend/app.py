@@ -1,23 +1,52 @@
-from flask import Flask, request, jsonify, session
+from flask import Flask, request, jsonify, session, send_from_directory
 from flask_cors import CORS
 from database import get_db_connection, hash_password, init_db
 import sqlite3
+import os
 
-app = Flask(__name__)
+# Setup paths for frontend directory
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+FRONTEND_DIR = os.path.join(BASE_DIR, '..', 'frontend')
+
+app = Flask(__name__, static_folder=FRONTEND_DIR)
 app.secret_key = 'your-secret-key-change-this-later'
 
-# More specific CORS configuration to handle sessions properly
+# Configure session settings
+app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
+app.config['SESSION_COOKIE_SECURE'] = False
+app.config['SESSION_COOKIE_HTTPONLY'] = True
+app.config['SESSION_COOKIE_DOMAIN'] = None
+
+# CORS configuration
 CORS(app, 
      supports_credentials=True,
-     origins=["http://localhost:*", "http://127.0.0.1:*", "null"],
+     origins=["http://localhost:5000", "http://127.0.0.1:5000"],
      allow_headers=["Content-Type"],
      expose_headers=["Content-Type"])
 
 init_db()
 
+# Serve HTML files
+@app.route('/')
+def index():
+    return send_from_directory(FRONTEND_DIR, 'login.html')
+
+@app.route('/<path:filename>')
+def serve_frontend(filename):
+    # Debug: print what we're looking for
+    full_path = os.path.join(FRONTEND_DIR, filename)
+    print(f"Looking for file: {filename}")
+    print(f"Full path: {full_path}")
+    print(f"File exists: {os.path.exists(full_path)}")
+    
+    # Serve all files from frontend directory
+    try:
+        return send_from_directory(FRONTEND_DIR, filename)
+    except Exception as e:
+        print(f"Error serving {filename}: {e}")
+        return "File not found", 404
+
 # ========== USER AUTHENTICATION ==========
-session_id = ""
-session_username = ""
 
 @app.route('/signup', methods=['POST'])
 def signup():
@@ -67,8 +96,6 @@ def login():
     if user:
         session['user_id'] = user['id']
         session['username'] = user['username']
-        session_id = session['user_id']
-        session_username = session['username']
         return jsonify({'success': True, 'message': 'Login successful', 'username': user['username']})
     else:
         return jsonify({'success': False, 'message': 'Invalid username or password'}), 401
@@ -77,6 +104,18 @@ def login():
 def logout():
     session.clear()
     return jsonify({'success': True, 'message': 'Logged out successfully'})
+
+# Debug endpoint to check session
+@app.route('/check-session', methods=['GET'])
+def check_session():
+    if 'user_id' in session:
+        return jsonify({
+            'logged_in': True, 
+            'user_id': session['user_id'],
+            'username': session.get('username')
+        })
+    else:
+        return jsonify({'logged_in': False})
 
 @app.route('/forgot-password', methods=['POST'])
 def forgot_password():
@@ -114,23 +153,108 @@ def forgot_password():
 
 # ========== MESSAGING ENDPOINTS ==========
 
-@app.route('/friends', methods=['GET'])
-def get_friends():
-    """Get list of all friends for the logged-in user"""
+@app.route('/search-users', methods=['GET'])
+def search_users():
+    """Search for users by username"""
+    if 'user_id' not in session:
+        return jsonify({'success': False, 'message': 'Not logged in'}), 401
     
-    user_id = session_id
+    query = request.args.get('query', '').strip().lower()
+    
+    user_id = session['user_id']
     conn = get_db_connection()
     cursor = conn.cursor()
     
-    # Get accepted friendships
+    # Debug: Print all users
+    all_users = cursor.execute('SELECT id, username FROM users WHERE id != ?', (user_id,)).fetchall()
+    print(f"All users in database (excluding self): {[dict(u) for u in all_users]}")
+    print(f"Searching for: '{query}', Current user_id: {user_id}")
+    
+    # If query is empty or too short, show all users (excluding self)
+    if len(query) == 0:
+        users = cursor.execute('''
+            SELECT id, username, fullname 
+            FROM users 
+            WHERE id != ?
+            ORDER BY username
+            LIMIT 20
+        ''', (user_id,)).fetchall()
+    else:
+        # Search for users whose username contains the query (case-insensitive)
+        users = cursor.execute('''
+            SELECT id, username, fullname 
+            FROM users 
+            WHERE LOWER(username) LIKE ? AND id != ?
+            ORDER BY username
+            LIMIT 20
+        ''', (f'%{query}%', user_id)).fetchall()
+    
+    print(f"Found {len(users)} users matching '{query}'")
+    
+    # For each user, check friendship status
+    results = []
+    for user in users:
+        # Check if already friends or request pending
+        friendship_out = cursor.execute(
+            'SELECT status FROM friendships WHERE user_id = ? AND friend_id = ?',
+            (user_id, user['id'])
+        ).fetchone()
+        
+        friendship_in = cursor.execute(
+            'SELECT status FROM friendships WHERE user_id = ? AND friend_id = ?',
+            (user['id'], user_id)
+        ).fetchone()
+        
+        status = 'none'
+        if friendship_out and friendship_out['status'] == 'accepted':
+            status = 'friends'
+        elif friendship_in and friendship_in['status'] == 'accepted':
+            status = 'friends'
+        elif friendship_out and friendship_out['status'] == 'pending':
+            if friendship_in and friendship_in['status'] == 'pending':
+                status = 'friends'  # Both sent requests
+            else:
+                status = 'request_sent'
+        elif friendship_in and friendship_in['status'] == 'pending':
+            status = 'request_received'
+        
+        results.append({
+            'id': user['id'],
+            'username': user['username'],
+            'fullname': user['fullname'],
+            'friendship_status': status
+        })
+    
+    conn.close()
+    print(f"Returning {len(results)} results")
+    return jsonify({'success': True, 'users': results})
+
+@app.route('/friends', methods=['GET'])
+def get_friends():
+    """Get list of all friends for the logged-in user"""
+    if 'user_id' not in session:
+        return jsonify({'success': False, 'message': 'Not logged in'}), 401
+    
+    user_id = session['user_id']
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    # Get accepted friendships - need to check both directions but avoid duplicates
     friends = cursor.execute('''
-        SELECT u.id, u.username, u.fullname 
+        SELECT DISTINCT u.id, u.username, u.fullname 
         FROM users u
-        INNER JOIN friendships f ON (f.friend_id = u.id OR f.user_id = u.id)
-        WHERE (f.user_id = ? OR f.friend_id = ?) 
-        AND f.status = 'accepted'
+        WHERE u.id IN (
+            SELECT CASE 
+                WHEN f.user_id = ? THEN f.friend_id
+                WHEN f.friend_id = ? THEN f.user_id
+            END as friend_user_id
+            FROM friendships f
+            WHERE (f.user_id = ? OR f.friend_id = ?)
+            AND f.status = 'accepted'
+        )
         AND u.id != ?
-    ''', (user_id, user_id, user_id)).fetchall()
+        ORDER BY u.username
+    ''', (user_id, user_id, user_id, user_id, user_id)).fetchall()
     
     conn.close()
     
@@ -139,7 +263,9 @@ def get_friends():
 
 @app.route('/add-friend', methods=['POST'])
 def add_friend():
-    """Send a friend request"""
+    """Send a friend request (mutual requests required to become friends)"""
+    if 'user_id' not in session:
+        return jsonify({'success': False, 'message': 'Not logged in'}), 401
     
     data = request.get_json()
     friend_username = data.get('friend_username')
@@ -147,7 +273,7 @@ def add_friend():
     if not friend_username:
         return jsonify({'success': False, 'message': 'Friend username required'}), 400
     
-    user_id = session_id
+    user_id = session['user_id']
     conn = get_db_connection()
     cursor = conn.cursor()
     
@@ -164,21 +290,58 @@ def add_friend():
         conn.close()
         return jsonify({'success': False, 'message': 'Cannot add yourself as friend'}), 400
     
-    try:
-        cursor.execute(
-            'INSERT INTO friendships (user_id, friend_id, status) VALUES (?, ?, ?)',
-            (user_id, friend_id, 'accepted')  # Auto-accept for simplicity
-        )
-        conn.commit()
+    # Check if there's already a pending request from this user
+    existing_request = cursor.execute(
+        'SELECT * FROM friendships WHERE user_id = ? AND friend_id = ?',
+        (user_id, friend_id)
+    ).fetchone()
+    
+    if existing_request:
         conn.close()
-        return jsonify({'success': True, 'message': 'Friend added successfully'})
+        if existing_request['status'] == 'accepted':
+            return jsonify({'success': False, 'message': 'Already friends'}), 400
+        else:
+            return jsonify({'success': False, 'message': 'Friend request already sent'}), 400
+    
+    # Check if the other user has sent a request to us
+    reverse_request = cursor.execute(
+        'SELECT * FROM friendships WHERE user_id = ? AND friend_id = ?',
+        (friend_id, user_id)
+    ).fetchone()
+    
+    try:
+        if reverse_request and reverse_request['status'] == 'pending':
+            # Both users have now sent requests - accept ONLY the reverse request, don't create new one
+            cursor.execute(
+                'UPDATE friendships SET status = ? WHERE user_id = ? AND friend_id = ?',
+                ('accepted', friend_id, user_id)
+            )
+            # Also create the mirror friendship so queries work both ways
+            cursor.execute(
+                'INSERT INTO friendships (user_id, friend_id, status) VALUES (?, ?, ?)',
+                (user_id, friend_id, 'accepted')
+            )
+            conn.commit()
+            conn.close()
+            return jsonify({'success': True, 'message': 'Friend request accepted! You are now friends.'})
+        else:
+            # Create a pending request
+            cursor.execute(
+                'INSERT INTO friendships (user_id, friend_id, status) VALUES (?, ?, ?)',
+                (user_id, friend_id, 'pending')
+            )
+            conn.commit()
+            conn.close()
+            return jsonify({'success': True, 'message': 'Friend request sent'})
     except sqlite3.IntegrityError:
         conn.close()
-        return jsonify({'success': False, 'message': 'Friendship already exists'}), 400
+        return jsonify({'success': False, 'message': 'Database error occurred'}), 400
 
 @app.route('/send-message', methods=['POST'])
 def send_message():
     """Send a message to a friend"""
+    if 'user_id' not in session:
+        return jsonify({'success': False, 'message': 'Not logged in'}), 401
     
     data = request.get_json()
     receiver_id = data.get('receiver_id')
@@ -187,7 +350,7 @@ def send_message():
     if not receiver_id or not message_text:
         return jsonify({'success': False, 'message': 'Receiver ID and message text required'}), 400
     
-    sender_id = session_id
+    sender_id = session['user_id']
     
     conn = get_db_connection()
     cursor = conn.cursor()
@@ -224,8 +387,10 @@ def send_message():
 @app.route('/get-messages/<int:friend_id>', methods=['GET'])
 def get_messages(friend_id):
     """Get all messages between logged-in user and a specific friend"""
-
-    user_id = session_id
+    if 'user_id' not in session:
+        return jsonify({'success': False, 'message': 'Not logged in'}), 401
+    
+    user_id = session['user_id']
     conn = get_db_connection()
     cursor = conn.cursor()
     
@@ -265,8 +430,10 @@ def get_messages(friend_id):
 @app.route('/unread-count', methods=['GET'])
 def unread_count():
     """Get count of unread messages for logged-in user"""
+    if 'user_id' not in session:
+        return jsonify({'success': False, 'message': 'Not logged in'}), 401
     
-    user_id = session_id
+    user_id = session['user_id']
     conn = get_db_connection()
     cursor = conn.cursor()
     

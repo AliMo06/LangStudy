@@ -6,23 +6,119 @@
     <title>Messages</title>
     <link rel="stylesheet" href="assets/css/taskbar.css" />
     <link rel="stylesheet" href="assets/css/message_select.css" />
-    
+    <style>
+        .search-container {
+            margin: 20px 0;
+            padding: 0 20px;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+        
+        .search-results {
+            margin: 10px 0;
+            padding: 0 20px;
+        }
+        
+        .search-result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background: #f5f5f5;
+            margin-bottom: 8px;
+            border-radius: 8px;
+        }
+        
+        .user-info {
+            flex: 1;
+        }
+        
+        .user-info .username {
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .user-info .fullname {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .add-friend-btn {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .add-friend-btn:hover {
+            background-color: #45a049;
+        }
+        
+        .add-friend-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .status-friends {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        .status-pending {
+            background-color: #fff3e0;
+            color: #f57c00;
+        }
+    </style>
 </head>
 
 <body>
     <div class="container">
         <img src="assets/img/logo_cropped.png" alt="Logo" class="logo">
         <h1>Messages</h1>
+        
+        <!-- Search Bar -->
+        <div class="search-container">
+            <input 
+                type="text" 
+                id="searchInput" 
+                class="search-input" 
+                placeholder="Search users by username (or leave blank to see all)..."
+            />
+        </div>
+        
+        <!-- Search Results -->
+        <div class="search-results" id="searchResults"></div>
+        
         <h2>Friends</h2>
-<!-- List of friends, each friend is linked to their own HTML conversation page-->
-        <ul>
-            <li><a href="messages.html">Friend 1</a></li>
-            <li><a href="messages.html">Friend 2</a></li>
-            <li><a href="messages.html">Friend 3</a></li>
-            <li><a href="messages.html">Friend 4</a></li>
+        <!-- List of friends -->
+        <ul id="friendsList">
+            <li style="list-style: none; padding: 10px;">Loading friends...</li>
         </ul>
         
     </div>
+    
     <nav class="bottom-nav">
         <a href="message_select.html" class="nav-item">
             <div class="nav-icon"><img src="assets/img/messages_icon.png" alt="Logo" class="logo-image"></div>
@@ -49,6 +145,7 @@
             <div class="nav-label">Live Translation</div>
         </a>
     </nav>
-    <script src="assets/js/messages_select.js"></script>
+    
+    <script src="assets/js/message_select.js"></script>
 </body>
 </html>

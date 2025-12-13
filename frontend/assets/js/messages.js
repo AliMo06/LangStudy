@@ -19,7 +19,7 @@ async function loadMessages() {
     }
     
     try {
-        const response = await fetch(`http://localhost:5000/get-messages/${friendId}`, {
+        const response = await fetch(`/get-messages/${friendId}`, {
             method: 'GET',
             credentials: 'include'
         });
@@ -71,7 +71,7 @@ async function sendMessage() {
     }
     
     try {
-        const response = await fetch('http://localhost:5000/send-message', {
+        const response = await fetch('/send-message', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

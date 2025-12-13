@@ -1,9 +1,14 @@
 import sqlite3
 import hashlib
 from datetime import datetime
+import os
+
+# Get the directory where this script is located
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_PATH = os.path.join(BASE_DIR, 'users.db')
 
 def get_db_connection():  
-    conn = sqlite3.connect('users.db')
+    conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     return conn
 
