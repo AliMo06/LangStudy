@@ -435,5 +435,180 @@ def unread_count():
     
     return jsonify({'success': True, 'unread_count': count})
 
+# ========== SOCIAL POSTS ==========
+
+@app.route("/posts", methods=["GET"])
+def get_posts():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT 
+            p.id,
+            p.author,
+            p.title,
+            p.content,
+            p.created_at,
+            p.reposted_from,
+            p.reposted_by,
+            orig.title AS original_title,
+            orig.content AS original_content,
+            orig.author AS original_author
+        FROM posts p
+        LEFT JOIN posts orig ON p.reposted_from = orig.id
+        ORDER BY p.created_at DESC
+    """)
+
+    posts = [dict(row) for row in cursor.fetchall()]
+    conn.close()
+    return jsonify(posts)
+
+
+@app.route("/posts", methods=["POST"])
+def create_post():
+    if 'username' not in session:
+        return jsonify({'success': False, 'message': 'Not logged in'}), 401
+
+    data = request.get_json()
+    title = data.get("title")
+    content = data.get("content")
+
+    if not title or not content:
+        return jsonify({'success': False, 'message': 'Missing fields'}), 400
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        INSERT INTO posts (author, title, content)
+        VALUES (?, ?, ?)
+    """, (session['username'], title, content))
+
+    conn.commit()
+    conn.close()
+
+    return jsonify({'success': True})
+
+
+@app.route("/repost", methods=["POST"])
+def repost():
+    if 'username' not in session:
+        return jsonify({'success': False, 'message': 'Not logged in'}), 401
+
+    data = request.get_json()
+    post_id = data.get("post_id")
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    original = cursor.execute(
+        "SELECT * FROM posts WHERE id = ?",
+        (post_id,)
+    ).fetchone()
+
+    if not original:
+        conn.close()
+        return jsonify({'success': False, 'message': 'Post not found'}), 404
+
+    cursor.execute("""
+        INSERT INTO posts (
+            author, title, content,
+            reposted_from, reposted_by
+        )
+        VALUES (?, ?, ?, ?, ?)
+    """, (
+        original['author'],
+        original['title'],
+        original['content'],
+        original['id'],
+        session['username']
+    ))
+
+    conn.commit()
+    conn.close()
+
+    return jsonify({'success': True})
+
+
+# ========== LIKES ==========
+
+@app.route('/like', methods=['POST'])
+def like_post():
+    if 'user_id' not in session:
+        return jsonify({'success': False, 'message': 'Not logged in'}), 401
+
+    data = request.get_json()
+    post_id = data.get('post_id')
+    user_id = session['user_id']
+
+    if not post_id:
+        return jsonify({'success': False, 'message': 'Post ID required'}), 400
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    # Get original post ID (follow repost chain)
+    post = cursor.execute('SELECT reposted_from FROM posts WHERE id = ?', (post_id,)).fetchone()
+    if not post:
+        conn.close()
+        return jsonify({'success': False, 'message': 'Post not found'}), 404
+
+    original_post_id = post['reposted_from'] or post_id
+
+    # Check if user already liked
+    existing = cursor.execute(
+        'SELECT * FROM post_likes WHERE user_id = ? AND post_id = ?',
+        (user_id, original_post_id)
+    ).fetchone()
+
+    if existing:
+        # Unlike
+        cursor.execute('DELETE FROM post_likes WHERE id = ?', (existing['id'],))
+        conn.commit()
+        conn.close()
+        return jsonify({'success': True, 'action': 'unliked'})
+    else:
+        # Like
+        cursor.execute('INSERT INTO post_likes (user_id, post_id) VALUES (?, ?)',
+                       (user_id, original_post_id))
+        conn.commit()
+        conn.close()
+        return jsonify({'success': True, 'action': 'liked'})
+
+
+@app.route('/post-likes/<int:post_id>', methods=['GET'])
+def get_post_likes(post_id):
+    """Get like count and whether current user liked it"""
+    if 'user_id' not in session:
+        user_id = None
+    else:
+        user_id = session['user_id']
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    post = cursor.execute('SELECT reposted_from FROM posts WHERE id = ?', (post_id,)).fetchone()
+    if not post:
+        conn.close()
+        return jsonify({'success': False, 'message': 'Post not found'}), 404
+
+    original_post_id = post['reposted_from'] or post_id
+
+    count = cursor.execute(
+        'SELECT COUNT(*) as cnt FROM post_likes WHERE post_id = ?',
+        (original_post_id,)
+    ).fetchone()['cnt']
+
+    liked = False
+    if user_id:
+        liked = cursor.execute(
+            'SELECT 1 FROM post_likes WHERE post_id = ? AND user_id = ?',
+            (original_post_id, user_id)
+        ).fetchone() is not None
+
+    conn.close()
+    return jsonify({'success': True, 'count': count, 'liked': liked})
+
+
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

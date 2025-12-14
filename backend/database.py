@@ -55,10 +55,40 @@ def init_db():
             FOREIGN KEY (receiver_id) REFERENCES users (id)
         )
     ''')
+
+    # Posts table
+    cursor.execute("""
+            CREATE TABLE IF NOT EXISTS posts (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            author TEXT NOT NULL,
+            title TEXT NOT NULL,
+            content TEXT NOT NULL,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+
+            -- repost support
+            reposted_from INTEGER,
+            reposted_by TEXT,
+
+            FOREIGN KEY (reposted_from) REFERENCES posts(id)
+        )
+    """)
+
+
+    # Likes Table
+    cursor.execute("""
+            CREATE TABLE IF NOT EXISTS post_likes (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            post_id INTEGER NOT NULL,
+            UNIQUE(user_id, post_id), -- prevents double-likes
+            FOREIGN KEY(user_id) REFERENCES users(id),
+            FOREIGN KEY(post_id) REFERENCES posts(id)
+        )
+    """)
+
     
     conn.commit()
     conn.close()
-    print("Database initialized with messaging tables!")
 
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
