@@ -132,3 +132,86 @@
             background-color: #fff3e0;
             color: #f57c00;
         }
+        .search-container {
+            margin: 20px 0;
+            padding: 0 20px;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+        
+        .search-results {
+            margin: 10px 0;
+            padding: 0 20px;
+        }
+        
+        .search-result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background: #f5f5f5;
+            margin-bottom: 8px;
+            border-radius: 8px;
+        }
+        
+        .user-info {
+            flex: 1;
+        }
+        
+        .user-info .username {
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .user-info .fullname {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .add-friend-btn {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .add-friend-btn:hover {
+            background-color: #45a049;
+        }
+        
+        .add-friend-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .status-friends {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        .status-pending {
+            background-color: #fff3e0;
+            color: #f57c00;
+        }

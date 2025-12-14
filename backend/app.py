@@ -610,5 +610,166 @@ def get_post_likes(post_id):
     return jsonify({'success': True, 'count': count, 'liked': liked})
 
 
+# ========== LANGUAGE EXCHANGE ENDPOINTS ==========
+
+@app.route('/publish-exchange-request', methods=['POST'])
+def publish_exchange_request():
+    """Publish a language exchange request"""
+    if 'user_id' not in session:
+        return jsonify({'success': False, 'message': 'Not logged in'}), 401
+    
+    data = request.get_json()
+    speaks = data.get('speaks', [])
+    learning = data.get('learning', [])
+    
+    if not speaks or not learning:
+        return jsonify({'success': False, 'message': 'Must specify languages'}), 400
+    
+    user_id = session['user_id']
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    # Delete any existing request from this user
+    cursor.execute('DELETE FROM exchange_requests WHERE user_id = ?', (user_id,))
+    
+    # Create new request
+    cursor.execute('''
+        INSERT INTO exchange_requests (user_id, speaks_languages, learning_languages)
+        VALUES (?, ?, ?)
+    ''', (user_id, ','.join(speaks), ','.join(learning)))
+    
+    conn.commit()
+    conn.close()
+    
+    return jsonify({'success': True, 'message': 'Request published'})
+
+@app.route('/get-exchange-requests', methods=['GET'])
+def get_exchange_requests():
+    """Get all exchange requests except from current user"""
+    if 'user_id' not in session:
+        return jsonify({'success': False, 'message': 'Not logged in'}), 401
+    
+    user_id = session['user_id']
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    requests = cursor.execute('''
+        SELECT e.user_id, e.speaks_languages, e.learning_languages, 
+               u.username, u.fullname
+        FROM exchange_requests e
+        JOIN users u ON e.user_id = u.id
+        WHERE e.user_id != ?
+        ORDER BY e.created_at DESC
+    ''', (user_id,)).fetchall()
+    
+    conn.close()
+    
+    requests_list = [{
+        'user_id': r['user_id'],
+        'username': r['username'],
+        'fullname': r['fullname'],
+        'speaks': r['speaks_languages'].split(','),
+        'learning': r['learning_languages'].split(',')
+    } for r in requests]
+    
+    return jsonify({'success': True, 'requests': requests_list})
+
+@app.route('/connect-exchange', methods=['POST'])
+def connect_exchange():
+    """Connect with a user for language exchange"""
+    if 'user_id' not in session:
+        return jsonify({'success': False, 'message': 'Not logged in'}), 401
+    
+    data = request.get_json()
+    partner_id = data.get('partner_id')
+    
+    if not partner_id:
+        return jsonify({'success': False, 'message': 'Partner ID required'}), 400
+    
+    user_id = session['user_id']
+    
+    # Check if connection already exists
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    existing = cursor.execute('''
+        SELECT * FROM exchange_connections 
+        WHERE (user1_id = ? AND user2_id = ?) OR (user1_id = ? AND user2_id = ?)
+    ''', (user_id, partner_id, partner_id, user_id)).fetchone()
+    
+    if not existing:
+        # Create new connection
+        cursor.execute('''
+            INSERT INTO exchange_connections (user1_id, user2_id)
+            VALUES (?, ?)
+        ''', (user_id, partner_id))
+        conn.commit()
+    
+    conn.close()
+    
+    return jsonify({'success': True, 'message': 'Connected successfully'})
+
+@app.route('/get-exchange-messages/<int:partner_id>', methods=['GET'])
+def get_exchange_messages(partner_id):
+    """Get exchange messages with a partner"""
+    if 'user_id' not in session:
+        return jsonify({'success': False, 'message': 'Not logged in'}), 401
+    
+    user_id = session['user_id']
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    messages = cursor.execute('''
+        SELECT m.id, m.sender_id, m.receiver_id, m.message_text, m.timestamp,
+               u.username as sender_username
+        FROM messages m
+        JOIN users u ON m.sender_id = u.id
+        WHERE (m.sender_id = ? AND m.receiver_id = ?) 
+           OR (m.sender_id = ? AND m.receiver_id = ?)
+        ORDER BY m.timestamp ASC
+    ''', (user_id, partner_id, partner_id, user_id)).fetchall()
+    
+    conn.close()
+    
+    messages_list = [{
+        'id': m['id'],
+        'sender_id': m['sender_id'],
+        'message_text': m['message_text'],
+        'timestamp': m['timestamp'],
+        'sender_username': m['sender_username'],
+        'is_mine': m['sender_id'] == user_id
+    } for m in messages]
+    
+    return jsonify({'success': True, 'messages': messages_list})
+
+@app.route('/send-exchange-message', methods=['POST'])
+def send_exchange_message():
+    """Send a message in exchange chat"""
+    if 'user_id' not in session:
+        return jsonify({'success': False, 'message': 'Not logged in'}), 401
+    
+    data = request.get_json()
+    partner_id = data.get('partner_id')
+    message_text = data.get('message_text')
+    
+    if not partner_id or not message_text:
+        return jsonify({'success': False, 'message': 'Missing required fields'}), 400
+    
+    sender_id = session['user_id']
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    cursor.execute('''
+        INSERT INTO messages (sender_id, receiver_id, message_text)
+        VALUES (?, ?, ?)
+    ''', (sender_id, partner_id, message_text))
+    
+    conn.commit()
+    message_id = cursor.lastrowid
+    timestamp = cursor.execute('SELECT timestamp FROM messages WHERE id = ?', (message_id,)).fetchone()['timestamp']
+    conn.close()
+    
+    return jsonify({'success': True, 'message_id': message_id, 'timestamp': timestamp})
+
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

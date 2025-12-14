@@ -77,3 +77,46 @@
         .send-btn:hover {
             background: #3a6ce0;
         }
+
+        .translate-btn {
+            background: #2196F3;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+        
+        .translate-btn:hover {
+            background: #1976D2;
+        }
+        
+        .translation {
+            background: #E3F2FD;
+            padding: 8px;
+            margin-top: 5px;
+            border-radius: 4px;
+            font-style: italic;
+            color: #1565C0;
+            font-size: 14px;
+        }
+        
+        .message-wrapper {
+            margin-bottom: 15px;
+        }
+        
+        .exchange-header {
+            background: #9c27b0;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .exchange-header h2 {
+            margin: 0;
+            color: white;
+        }

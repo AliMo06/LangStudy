@@ -86,9 +86,34 @@ def init_db():
         )
     """)
 
+    # Exchange requests table
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS exchange_requests (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            speaks_languages TEXT NOT NULL,
+            learning_languages TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users (id),
+            UNIQUE(user_id)
+        )
+    ''')
+    
+    # Exchange connections table
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS exchange_connections (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user1_id INTEGER NOT NULL,
+            user2_id INTEGER NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user1_id) REFERENCES users (id),
+            FOREIGN KEY (user2_id) REFERENCES users (id)
+        )
+    ''')
     
     conn.commit()
     conn.close()
+    print("Database initialized with messaging tables!")
 
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
