@@ -45,8 +45,8 @@
 
         .logo {
         display: block;
-        margin: 0 auto 20px;   /* center + spacing */
-        height: 80px;          /* adjust size as needed */
+        margin: 0 auto 20px;
+        height: 80px;
         }   
         
         .search-container {

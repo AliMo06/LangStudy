@@ -66,11 +66,11 @@
 
     .pronounce-btn {
     position: absolute;
-    top: 8px;       /* move to top */
-    right: 8px;     /* move to right */
-    margin: 0;      /* remove global margin */
+    top: 8px;
+    right: 8px;
+    margin: 0;
     background: #000; 
-    color: rgb(0, 0, 0);   /* visible on light boxes */
+    color: rgb(0, 0, 0);
     border: none;
     border-radius: 50%;
     width: 32px;
