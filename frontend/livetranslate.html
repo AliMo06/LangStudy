@@ -141,16 +141,66 @@
       .picture{height:180px}
       .title{font-size:36px}
     }
+
+    .container {
+      position: relative; /* allows absolute positioning */
+    }
+
+    /* Language selector top-right */
+    .language-selector {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Compact dropdown (width fix) */
+    .language-selector select {
+      width: auto;          /* critical */
+      min-width: 90px;
+      padding: 4px 6px;
+      font-size: 12px;
+      border-radius: 6px;
+      border: 1px solid var(--accent);
+      background: #fff;
+      color: #000;
+      cursor: pointer;
+    }
+
+    .language-selector label {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+
   </style>
 </head>
 <body>
   <div class="container">
-    <header>
-      <div class="title">Live Translator</div>
+
+    <!-- Language Selector (top-right) -->
+      <div class="language-selector">
+        <label for="language-dropdown">Language:</label>
+        <select id="language-dropdown">
+          <option value="en">English</option>
+          <option value="es">Español</option>
+          <option value="fr">Français</option>
+          <option value="ar">العربية</option>
+        </select>
+      </div>
+
+      <header>
+    <div class="title">Live Translator</div>
+
+    <a href="index.html" class="logo-link">
       <div class="logo">
         <img src="./assets/img/logo.png" alt="Pablu mascot">
       </div>
+    </a>
     </header>
+
 
     <main class="menu">
       <!-- Presentation Mode Card -->

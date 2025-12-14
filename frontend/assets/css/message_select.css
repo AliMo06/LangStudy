@@ -215,3 +215,37 @@
             background-color: #fff3e0;
             color: #f57c00;
         }
+
+
+        .container {
+            position: relative;
+            border: 2px solid #000;
+            padding: 30px;
+            border-radius: 12px;
+            width: 600px;
+        }
+
+        .language-selector {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .language-selector select {
+            width: auto;
+            min-width: 80px;
+            padding: 6px 10px;
+            font-size: 14px;
+            border-radius: 6px;
+            border: 1px solid #000;
+            background: #fff;
+            cursor: pointer;
+        }
+
+        .language-selector label {
+            font-size: 14px;
+            margin-right: 4px;
+        }
