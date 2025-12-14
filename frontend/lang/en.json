@@ -1,8 +1,39 @@
 {
   "app-title": "LangStudy",
-  "language-label": "Language:",
-  "welcome-message": "Welcome to LangStudy",
-  "description": "Login or Sign Up Below",
-  "signup-button": "Sign Up",
-  "login-button": "Log In"
+  "language-label": "Langue:",
+  "welcome-message": "Bienvenue dans l'Application de LangStudy",
+  "description": "Se Connecter ou Créer un compte.",
+  "signup-button": "Créer un compte",
+  "login-button": "Se Connecter",
+
+  "page": {
+    "title": "LangStudy - Social Feed"
+  },
+  "header": {
+    "appName": "LangStudy"
+  },
+  "postCreator": {
+    "heading": "Share your language learning journey:",
+    "titleLabel": "Title",
+    "titlePlaceholder": "Give your post a title...",
+    "contentLabel": "What's on your mind?",
+    "contentPlaceholder": "Type here...",
+    "shareButton": "Post"
+  },
+  "nav": {
+    "messages": "Messages",
+    "flashcards": "Flashcards",
+    "social": "Social Posting",
+    "exchange": "Exchange",
+    "translation": "Live Translation"
+  },
+
+ "post": {
+    "likes": "Likes",
+    "repost": "Repost",
+    "translate": "Translate",
+    "repostedBy": "Reposted by"
 }
+
+}
+

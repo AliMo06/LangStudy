@@ -2,7 +2,40 @@
   "app-title": "LangStudy",
   "language-label": "Idioma:",
   "welcome-message": "Bienvenido a LangStudy",
-  "description": "Iniciar tu sesión o Registrar su cuenta.",
-  "signup-button": "Registrar su cuenta",
-  "login-button": "Iniciar sesión"
+  "description": "Inicia sesión o registra tu cuenta.",
+  "signup-button": "Registrarse",
+  "login-button": "Iniciar sesión",
+
+  "page": {
+    "title": "LangStudy - Muro Social"
+  },
+
+  "header": {
+    "appName": "LangStudy"
+  },
+
+  "postCreator": {
+    "heading": "Comparte tu experiencia de aprendizaje de idiomas:",
+    "titleLabel": "Título",
+    "titlePlaceholder": "Dale un título a tu publicación...",
+    "contentLabel": "¿Qué estás pensando?",
+    "contentPlaceholder": "Escribe aquí...",
+    "shareButton": "Publicar"
+  },
+
+  "nav": {
+    "messages": "Mensajes",
+    "flashcards": "Tarjetas",
+    "social": "Publicaciones",
+    "exchange": "Intercambio",
+    "translation": "Traducción en Vivo"
+  },
+
+  "post": {
+    "likes": "Me gusta",
+    "repost": "Repostear",
+    "translate": "Traducir",
+    "repostedBy": "Reposteado por"
+}
+
 }

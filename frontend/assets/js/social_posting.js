@@ -63,7 +63,7 @@ async function renderPost(post) {
             <div class="post-info">
                 <h3>
                     ${escapeHtml(post.author)} 
-                    ${post.reposted_by ? `<span>🔁 Reposted by ${escapeHtml(post.reposted_by)}</span>` : ''}
+                    ${post.reposted_by ? `<span>🔁 ${i18n.t('post.repostedBy')} ${escapeHtml(post.reposted_by)}</span>` : ''}
                 </h3>
             </div>
         </div>
@@ -72,15 +72,15 @@ async function renderPost(post) {
         <div class="post-actions">
             <button class="action-button like-button" data-post-id="${post.id}">
                 <span>👍</span>
-                <span class="like-count">0 Likes</span>
+                <span class="like-count">0  ${i18n.t('post.likes')}</span>
             </button>
             <button class="action-button repost-button" data-post-id="${post.id}">
                 <span>🔁</span>
-                <span>Repost</span>
+                <span>${i18n.t('post.repost')}</span>
             </button>
             <button class="action-button translate-button">
                 <span>🌐</span>
-                <span>Translate</span>
+                <span>${i18n.t('post.translate')}</span>
             </button>
         </div>
     `;
@@ -96,10 +96,10 @@ async function renderPost(post) {
         const res = await fetch(`/post-likes/${post.id}`, { credentials: 'include' });
         const data = await res.json();
         if (data.success) {
-            likeCountSpan.textContent = `${data.count} Likes`;
+            likeCountSpan.textContent = `${data.count} ${i18n.t('post.likes')}`;
             if (data.liked) likeBtn.classList.add('active');
         }
-    } catch (err) {
+    } catch (err) { 
         console.error('Failed to load likes', err);
     }
 

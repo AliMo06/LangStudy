@@ -1,8 +1,32 @@
 {
   "app-title": "LangStudy",
-  "language-label": "Langue:",
-  "welcome-message": "Bienvenue dans l'Application de LangStudy",
-  "description": "Se Connecter ou Créer un compte.",
-  "signup-button": "Créer un compte",
-  "login-button": "Se Connecter"
+  "language-label": "Language:",
+  "welcome-message": "Welcome to LangStudy",
+  "description": "Login or Sign Up Below",
+  "signup-button": "Sign Up",
+  "login-button": "Log In",
+
+  "page": {
+    "title": "LangStudy - Flux Social"
+  },
+  "header": {
+    "appName": "LangStudy"
+  },
+  "postCreator": {
+    "heading": "Partagez votre parcours d'apprentissage des langues:",
+    "titleLabel": "Titre",
+    "titlePlaceholder": "Donnez un titre à votre publication...",
+    "contentLabel": "Qu'est-ce qui préoccupe votre esprit?",
+    "contentPlaceholder": "Tapez ici...",
+    "shareButton": "Poste"
+  },
+  "nav": {
+    "messages": "Messages",
+    "flashcards": "Cartes mémoire",
+    "social": "Publication sociale",
+    "exchange": "Échange",
+    "translation": "Traduction"
+  }
+
 }
+
