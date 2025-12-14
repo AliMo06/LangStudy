@@ -1,14 +1,14 @@
 .social-container {
-    max-width: 700px;
+    max-width: 750px;
     margin: 0 auto;
 }
 
 .social-header {
     background: white;
-    border-radius: 12px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 14px;
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.12);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -17,20 +17,20 @@
 .header-left {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 18px;
 }
 
 .header-right {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 18px;
 }
 
 .language-selector {
-    padding: 8px 12px;
+    padding: 10px 14px;
     border: 2px solid #e0e0e0;
-    border-radius: 8px;
-    font-size: 14px;
+    border-radius: 10px;
+    font-size: 15px;
     cursor: pointer;
     background: white;
     color: #333;
@@ -47,13 +47,13 @@
 }
 
 .social-header h1 {
-    font-size: 24px;
+    font-size: 26px;
     color: #333;
 }
 
 .profile-icon {
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     border-radius: 50%;
     display: flex;
@@ -66,36 +66,36 @@
 
 .post-creator {
     background: white;
-    border-radius: 12px;
-    padding: 25px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 14px;
+    padding: 30px;
+    margin-bottom: 25px;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.12);
 }
 
 .post-creator h2 {
-    font-size: 18px;
+    font-size: 20px;
     color: #333;
-    margin-bottom: 15px;
+    margin-bottom: 18px;
 }
 
 .post-input-group {
-    margin-bottom: 15px;
+    margin-bottom: 18px;
 }
 
 .post-input-group label {
     display: block;
-    font-size: 14px;
+    font-size: 15px;
     color: #555;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     font-weight: 500;
 }
 
 .post-input-group input, .post-input-group textarea {
     width: 100%;
-    padding: 12px 15px;
+    padding: 14px 16px;
     border: 2px solid #e0e0e0;
-    border-radius: 8px;
-    font-size: 14px;
+    border-radius: 10px;
+    font-size: 15px;
     transition: border-color 0.3s;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
@@ -107,24 +107,24 @@
 
 .post-input-group textarea {
     resize: vertical;
-    min-height: 100px;
+    min-height: 120px;
 }
 
 .post-button {
     width: 100%;
-    padding: 14px;
+    padding: 18px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     border: none;
-    border-radius: 8px;
-    font-size: 16px;
+    border-radius: 10px;
+    font-size: 17px;
     font-weight: 600;
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .post-button:hover {
-    box-shadow: 0 6px 12px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 8px 14px rgba(102, 126, 234, 0.4);
 }
 
 .post-button:active {
@@ -134,68 +134,69 @@
 .feed {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 25px;
 }
 
 .post {
     background: white;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 14px;
+    padding: 40px;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.12);
 }
 
 .post-header {
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin-bottom: 15px;
+    gap: 16px;
+    margin-bottom: 20px;
 }
 
 .post-info h3 {
-    font-size: 16px;
+    font-size: 18px;
     color: #333;
-    margin-bottom: 2px;
+    margin-bottom: 4px;
 }
 
 .post-title {
-    font-size: 18px;
-    color: #333;
+    font-size: 20px;
+    color: #222;
     font-weight: 600;
-    margin-bottom: 10px;
+    margin-bottom: 14px;
 }
 
 .post-content {
-    font-size: 14px;
+    font-size: 16px;
     color: #555;
-    line-height: 1.6;
-    margin-bottom: 15px;
+    line-height: 1.8;
+    margin-bottom: 20px;
 }
 
 .post-actions {
     display: flex;
-    justify-content: center;
-    gap: 20px;
-    padding-top: 15px;
-    border-top: 1px solid #f0f0f0;
+    justify-content: space-around;
+    gap: 40px;
+    padding-top: 25px;
+    border-top: 1px solid #e0e0e0;
 }
 
 .action-button {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 8px 12px;
+    gap: 14px;
+    padding: 12px 18px;
     background: transparent;
     border: none;
-    border-radius: 6px;
-    color: #666;
-    font-size: 14px;
+    border-radius: 10px;
+    color: #555;
+    font-size: 16px;
     cursor: pointer;
-    transition: background 0.2s, color 0.2s;
+    transition: background 0.2s, color 0.2s, transform 0.2s;
 }
 
 .action-button:hover {
-    background: #f5f5f5;
+    background: #f0f0f0;
     color: #667eea;
+    transform: translateY(-2px);
 }
 
 .action-button.active {
@@ -203,11 +204,13 @@
     font-weight: 600;
 }
 
+.like-count {
+    font-size: 15px;
+}
+
 .logo-image {
-    width: 30px;
-    height: 45px;
-    margin-left: 15px;
-    margin: 0;
+    width: 35px;
+    height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
