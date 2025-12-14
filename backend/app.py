@@ -29,16 +29,10 @@ init_db()
 # Serve HTML files
 @app.route('/')
 def index():
-    return send_from_directory(FRONTEND_DIR, 'login.html')
+    return send_from_directory(FRONTEND_DIR, 'index.html')
 
 @app.route('/<path:filename>')
 def serve_frontend(filename):
-    # Debug: print what we're looking for
-    full_path = os.path.join(FRONTEND_DIR, filename)
-    print(f"Looking for file: {filename}")
-    print(f"Full path: {full_path}")
-    print(f"File exists: {os.path.exists(full_path)}")
-    
     # Serve all files from frontend directory
     try:
         return send_from_directory(FRONTEND_DIR, filename)
@@ -164,11 +158,6 @@ def search_users():
     user_id = session['user_id']
     conn = get_db_connection()
     cursor = conn.cursor()
-    
-    # Debug: Print all users
-    all_users = cursor.execute('SELECT id, username FROM users WHERE id != ?', (user_id,)).fetchall()
-    print(f"All users in database (excluding self): {[dict(u) for u in all_users]}")
-    print(f"Searching for: '{query}', Current user_id: {user_id}")
     
     # If query is empty or too short, show all users (excluding self)
     if len(query) == 0:
