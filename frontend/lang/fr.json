@@ -36,7 +36,12 @@
     "likes": "Mentions J’aime",
     "repost": "Reposter",
     "translate": "Traduire",
-    "repostedBy": "Reposté par"
+    "repostedBy": "Reposté par",
+    "translated": "Traduit",
+    "translating": "Traduction...",
+    "translationLabel": "Traduction :",
+    "translationFailed": "La traduction a échoué. Veuillez réessayer.",
+    "translationUnavailable": "Le service de traduction est indisponible. Réessayez plus tard."
   },
 
   "flashcardsMenu": {

@@ -36,7 +36,12 @@
     "likes": "Likes",
     "repost": "Repost",
     "translate": "Translate",
-    "repostedBy": "Reposted by"
+    "repostedBy": "Reposted by",
+    "translated": "Translated",
+    "translating": "Translating...",
+    "translationLabel": "Translation:",
+    "translationFailed": "Translation failed. Please try again.",
+    "translationUnavailable": "Translation service unavailable. Please try again later."
   },
   
   "flashcardsMenu": {

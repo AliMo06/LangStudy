@@ -36,7 +36,12 @@
     "likes": "الإعجابات",
     "repost": "إعادة النشر",
     "translate": "ترجمة",
-    "repostedBy": "أُعيد نشره بواسطة"
+    "repostedBy": "أُعيد نشره بواسطة",
+    "translated": "تمت الترجمة",
+    "translating": "جاري الترجمة...",
+    "translationLabel": "الترجمة:",
+    "translationFailed": "فشلت الترجمة. حاول مرة أخرى.",
+    "translationUnavailable": "خدمة الترجمة غير متوفرة حاليًا. حاول لاحقًا."
   },
 
   "flashcardsMenu": {
