@@ -82,14 +82,23 @@ function displayMessage(msg) {
 }
 
 async function translateMessage(messageId, text, wrapper) {
+    const targetLang = document.getElementById('language-dropdown').value;
     // Check if already translated
     if (translations[messageId]) {
         return;
     }
     
     try {
-        // Simple translation using a free API (you can replace with better service)
-        const response = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=auto|en`);
+        const response = await fetch(`${API_URL}/translate`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                text: text,
+                target_language: targetLang
+            })
+        });
         const data = await response.json();
         
         if (data.responseData && data.responseData.translatedText) {

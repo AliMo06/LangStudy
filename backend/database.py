@@ -113,7 +113,7 @@ def init_db():
     
     conn.commit()
     conn.close()
-    print("Database initialized with messaging tables!")
+    print("Database initialized!")
 
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
