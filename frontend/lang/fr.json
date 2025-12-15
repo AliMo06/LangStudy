@@ -39,6 +39,31 @@
     "repostedBy": "Reposté par"
   },
 
+  "flashcardsMenu": {
+    "title": "Menu des cartes mémoire",
+    "language": "Langue:",
+    "from": "De:",
+    "to": "À:",
+    "basicWords": "Commencer : Mots de base",
+    "basicPhrases": "Commencer : Phrases de base",
+    "basicSentences": "Commencer : Phrases complètes"
+  },
+  "flashcards": {
+    "title": "Cartes mémoire",
+    "back": "← Retour",
+    "prev": "◀ Précédent",
+    "next": "Suivant ▶",
+    "show": "Répondre",
+    "swap": "Inverser l'ordre ⇅",
+    "card": "Carte",
+    "ttsNotSupported": "La synthèse vocale n'est pas prise en charge par ce navigateur",
+    "categories": {
+      "words": "Mots de base",
+      "phrases": "Phrases de base",
+      "sentences": "Phrases complètes"
+    }
+  },
+
   "messages": {
     "pageTitle": "Messages",
     "title": "Messages",

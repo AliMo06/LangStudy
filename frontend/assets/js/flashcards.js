@@ -1,8 +1,9 @@
-let flashcards = []; // data from flashcards.json
-let index = 0; //current flashcard
+let flashcards = [];
+let index = 0;
 let swapped = false;
 
-// Correct element IDs
+const cardText = document.querySelector(".question-text");
+const answerText = document.querySelector(".answer-text");
 const card = document.getElementById("question");
 const answerBox = document.getElementById("answer");
 
@@ -11,127 +12,98 @@ const nextBtn = document.getElementById("nextBtn");
 const showBtn = document.getElementById("showBtn");
 const swapBtn = document.getElementById("swapBtn");
 
-// Read URL parameters from passed in url
+// URL params
 const params = new URLSearchParams(window.location.search);
-const category = params.get("cat");   // selected category (words/phrases)
-const from = params.get("from");      // from language
-const to = params.get("to");          // to language
+const category = params.get("cat");
+const from = params.get("from");
+const to = params.get("to");
 
-// Category names are mapped for display on the page
-const categoryNames = {
-    basic_words: "Basic Words",
-    basic_phrases: "Basic Phrases",
-    basic_sentences: "Basic Sentences"
-};
+// Update category label using i18n
+function updateCategoryLabel() {
+    let key;
+    switch (category) {
+        case "basic_words": key = "flashcards.categories.words"; break;
+        case "basic_phrases": key = "flashcards.categories.phrases"; break;
+        case "basic_sentences": key = "flashcards.categories.sentences"; break;
+        default: key = "flashcards.title";
+    }
+    document.getElementById("categoryLabel").textContent = i18n.t(key);
+}
 
-// Display the category
-document.getElementById("categoryLabel").textContent = categoryNames[category] || "Flashcards";
+// Load flashcards JSON
+async function loadCategory(category) {
+    try {
+        const res = await fetch("data/flashcards.json");
+        const data = await res.json();
+        const langKey = `${from}-${to}`;
 
-// text to speech function
+        if (!data[category] || !data[category][langKey]) {
+            console.error(`No flashcards found for ${langKey}`);
+            flashcards = [];
+            return;
+        }
+
+        flashcards = data[category][langKey];
+        index = 0;
+        swapped = false;
+        loadCard();
+        updateCategoryLabel();
+
+    } catch (err) {
+        console.error("Error loading flashcards:", err);
+    }
+}
+
+// Load one flashcard
+function loadCard() {
+    if (!flashcards.length) return;
+    const cardData = flashcards[index];
+    cardText.textContent = swapped ? cardData.a : cardData.q;
+    answerBox.style.display = "none";
+    document.getElementById("index").textContent = index + 1;
+    document.getElementById("total").textContent = flashcards.length;
+}
+
+// Show answer
+function showAnswer() {
+    const cardData = flashcards[index];
+    answerText.textContent = swapped ? cardData.q : cardData.a;
+    answerBox.style.display = "block";
+}
+
+// Navigation buttons
+prevBtn.onclick = () => { index = (index - 1 + flashcards.length) % flashcards.length; loadCard(); };
+nextBtn.onclick = () => { index = (index + 1) % flashcards.length; loadCard(); };
+showBtn.onclick = showAnswer;
+swapBtn.onclick = () => { swapped = !swapped; loadCard(); };
+
+// TTS
 function speak(text, lang) {
     if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
-        
         const utterance = new SpeechSynthesisUtterance(text);
-        
-        // map language codes to speech synthesis language codes
-        const langMap = {
-            'en': 'en-US',
-            'es': 'es-ES',
-            'fr': 'fr-FR',
-            'ar': 'ar-SA'
-        };
-        
+        const langMap = { en: 'en-US', es: 'es-ES', fr: 'fr-FR', ar: 'ar-SA' };
         utterance.lang = langMap[lang] || 'en-US';
         utterance.rate = 0.9;
-        
         window.speechSynthesis.speak(utterance);
     } else {
-        alert('Text-to-speech not supported in this browser');
+        alert(i18n.t('flashcards.ttsNotSupported'));
     }
 }
 
-// Load JSON and set flashcards for chosen category
-async function loadCategory(category) {
-  try {
-    const res = await fetch("data/flashcards.json");
-    const data = await res.json();
-
-    // Build key from selected languages
-    const langKey = `${from}-${to}`;
-
-    if (!data[category][langKey]) {
-      console.error(`No flashcards found for ${langKey}`);
-      flashcards = [];
-      return;
-    }
-
-    flashcards = data[category][langKey];
-    index = 0;
-    swapped = false;
-    loadCard();
-
-  } catch (err) {
-    console.error("Error loading flashcards:", err);
-  }
-}
-
-// Display the word/phrase
-const cardText = document.querySelector(".question-text");
-const answerText = document.querySelector(".answer-text");
-
-function loadCard() {
-  const cardData = flashcards[index];
-  cardText.textContent = swapped ? cardData.a : cardData.q;
-  answerBox.style.display = "none";
-  document.getElementById("index").textContent = index + 1;
-  document.getElementById("total").textContent = flashcards.length;
-}
-
-// Show answer button
-function showAnswer() {
-  const cardData = flashcards[index];
-  answerText.textContent = swapped ? cardData.q : cardData.a;
-  answerBox.style.display = "block";
-}
-
-// Navigation
-prevBtn.onclick = () => {
-  index = (index - 1 + flashcards.length) % flashcards.length;
-  loadCard();
-};
-
-nextBtn.onclick = () => {
-  index = (index + 1) % flashcards.length;
-  loadCard();
-};
-
-showBtn.onclick = showAnswer;
-
-swapBtn.onclick = () => {
-  swapped = !swapped;
-  loadCard();
-};
-
-
-// add click handlers for the speaker buttons
+// Speaker buttons
 document.addEventListener('click', function(e) {
-    if (e.target.classList.contains('pronounce-btn')) {
-        const parentBox = e.target.closest('.question-box, .answer-box');
-        
-        if (parentBox.id === 'question') {
-            // speaking the question
-            const text = cardText.textContent;
-            const lang = swapped ? to : from;
-            speak(text, lang);
-        } else if (parentBox.id === 'answer') {
-            // speaking the answer
-            const text = answerText.textContent;
-            const lang = swapped ? from : to;
-            speak(text, lang);
-        }
-    }
+    if (!e.target.classList.contains('pronounce-btn')) return;
+    const parentBox = e.target.closest('.question-box, .answer-box');
+    const text = parentBox.id === 'question' ? cardText.textContent : answerText.textContent;
+    const lang = swapped
+        ? (parentBox.id === 'question' ? to : from)
+        : (parentBox.id === 'question' ? from : to);
+    speak(text, lang);
 });
 
-// Load selected category
-loadCategory(category);
+// Initialize page after i18n loads
+document.addEventListener('DOMContentLoaded', async () => {
+    await i18n.loadLanguage(i18n.currentLang);
+    loadCategory(category);
+});

@@ -39,6 +39,31 @@
     "repostedBy": "أُعيد نشره بواسطة"
   },
 
+  "flashcardsMenu": {
+    "title": "قائمة البطاقات",
+    "language": "اللغة:",
+    "from": "من:",
+    "to": "إلى:",
+    "basicWords": "ابدأ: الكلمات الأساسية",
+    "basicPhrases": "ابدأ: العبارات الأساسية",
+    "basicSentences": "ابدأ: الجمل الأساسية"
+  },
+  "flashcards": {
+    "title": "البطاقات",
+    "back": "← رجوع",
+    "prev": "◀ السابق",
+    "next": "التالي ▶",
+    "show": "عرض الإجابة",
+    "swap": "تبديل الترتيب ⇅",
+    "card": "بطاقة",
+    "ttsNotSupported": "الميزة غير مدعومة في هذا المتصفح",
+    "categories": {
+      "words": "الكلمات الأساسية",
+      "phrases": "العبارات الأساسية",
+      "sentences": "الجمل الأساسية"
+    }
+  },
+
   "messages": {
     "pageTitle": "الرسائل",
     "title": "الرسائل",

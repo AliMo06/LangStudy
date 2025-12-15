@@ -39,6 +39,31 @@
     "repostedBy": "Republicado por"
   },
 
+  "flashcardsMenu": {
+    "title": "Menú de tarjetas",
+    "language": "Idioma:",
+    "from": "De:",
+    "to": "A:",
+    "basicWords": "Comenzar: Palabras básicas",
+    "basicPhrases": "Comenzar: Frases básicas",
+    "basicSentences": "Comenzar: Oraciones básicas"
+  },
+  "flashcards": {
+    "title": "Tarjetas",
+    "back": "← Atrás",
+    "prev": "◀ Anterior",
+    "next": "Siguiente ▶",
+    "show": "Respuesta",
+    "swap": "Cambiar orden ⇅",
+    "card": "Tarjeta",
+    "ttsNotSupported": "La síntesis de voz no es compatible con este navegador",
+    "categories": {
+      "words": "Palabras básicas",
+      "phrases": "Frases básicas",
+      "sentences": "Oraciones básicas"
+    }
+  },
+
   "messages": {
     "pageTitle": "Mensajes",
     "title": "Mensajes",

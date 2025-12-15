@@ -39,6 +39,31 @@
     "repostedBy": "Reposted by"
   },
   
+  "flashcardsMenu": {
+    "title": "Flashcards Menu",
+    "language": "Language:",
+    "from": "From:",
+    "to": "To:",
+    "basicWords": "Begin: Basic Words",
+    "basicPhrases": "Begin: Basic Phrases",
+    "basicSentences": "Begin: Basic Sentences"
+  },
+  "flashcards": {
+    "title": "Flashcards",
+    "back": "← Back",
+    "prev": "◀ Prev",
+    "next": "Next ▶",
+    "show": "Show Answer",
+    "swap": "Switch Order ⇅",
+    "card": "Card",
+    "ttsNotSupported": "Text-to-speech not supported in this browser",
+    "categories": {
+      "words": "Basic Words",
+      "phrases": "Basic Phrases",
+      "sentences": "Basic Sentences"
+    }
+  },
+
   "messages": {
     "pageTitle": "Messages",
     "title": "Messages",
