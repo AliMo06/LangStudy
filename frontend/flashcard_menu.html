@@ -1,87 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Flashcards Menu</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/taskbar.css">
-    <link rel="stylesheet" href="assets/css/flashcard_menu.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-i18n="flashcardsMenu.title">Flashcards Menu</title>
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/taskbar.css">
+<link rel="stylesheet" href="assets/css/flashcard_menu.css">
 </head>
 <body>
-    <div class="container">
-        <a href="index.html">
-            <img src="assets/img/logo_cropped.png" alt="Logo" class="logo">
-        </a>
-        <h1>Flashcards</h1>
+<div class="container">
+    <a href="index.html">
+        <img src="assets/img/logo_cropped.png" alt="Logo" class="logo">
+    </a>
+    <h1 data-i18n="flashcardsMenu.title">Flashcards</h1>
 
+    <!-- Language Selector -->
+    <div class="language-selector" style="margin-top: 10px;">
+        <label for="language-dropdown" data-i18n="flashcardsMenu.language">Language:</label>
+        <select id="language-dropdown">
+            <option value="en">English</option>
+            <option value="es">Español</option>
+            <option value="fr">Français</option>
+            <option value="ar">العربية</option>
+        </select>
+    </div>
 
-        <!-- Language Selector -->
-        <div class="language-selector" style="margin-top: 10px;">
-            <label for="language-dropdown">Language:</label>
-            <select id="language-dropdown">
-                <option value="en">English</option>
-                <option value="es">Español</option>
-                <option value="fr">Français</option>
-                <option value="ar">العربية</option>
-            </select>
-        </div>
-        
-        <div class="row">
+    <div class="row">
         <div>
-            <label>From:</label>
+            <label data-i18n="flashcardsMenu.from">From:</label>
             <select id="fromLang">
                 <option value="en">English</option>
                 <option value="es">Español</option>
                 <option value="fr">Français</option>
                 <option value="ar">العربية</option>
             </select>
-      </div>
+        </div>
 
-      <div>
-            <label>To:</label>
+        <div>
+            <label data-i18n="flashcardsMenu.to">To:</label>
             <select id="toLang">
                 <option value="en">English</option>
                 <option value="es">Español</option>
                 <option value="fr">Français</option>
                 <option value="ar">العربية</option>
             </select>
-      </div>
+        </div>
     </div>
 
-<button class="menu-button" id="basicWordsBtn">Begin: Basic Words</button>
-<button class="menu-button" id="basicPhrasesBtn">Begin: Basic Phrases</button>
-<button class="menu-button" id="basicSentencesBtn">Begin: Basic Sentences</button>
+    <button class="menu-button" id="basicWordsBtn" data-i18n="flashcardsMenu.basicWords">Begin: Basic Words</button>
+    <button class="menu-button" id="basicPhrasesBtn" data-i18n="flashcardsMenu.basicPhrases">Begin: Basic Phrases</button>
+    <button class="menu-button" id="basicSentencesBtn" data-i18n="flashcardsMenu.basicSentences">Begin: Basic Sentences</button>
+</div>
 
+<nav class="bottom-nav">
+    <a href="message_select.html" class="nav-item">
+        <div class="nav-icon"><img src="assets/img/messages_icon.png" alt="Logo" class="logo-image"></div>
+        <div class="nav-label" data-i18n="nav.messages">Messages</div>
+    </a>
+    <a href="flashcard_menu.html" class="nav-item">
+        <div class="nav-icon"><img src="assets/img/flashcards_logo.png" alt="Logo" class="logo-image"></div>
+        <div class="nav-label" data-i18n="nav.flashcards">Flashcards</div>
+    </a>
+    <a href="social_posting.html" class="nav-item">
+        <div class="nav-icon">🗣️</div>
+        <div class="nav-label" data-i18n="nav.social">Social Posting</div>
+    </a>
+    <a href="exchange.html" class="nav-item">
+        <div class="nav-icon"><img src="assets/img/language_exchange_logo.png" alt="Logo" class="logo-image"></div>
+        <div class="nav-label" data-i18n="nav.exchange">Exchange</div>
+    </a>
+    <a href="livetranslate.html" class="nav-item">
+        <div class="nav-icon"><img src="assets/img/live_translation_logo.png" alt="Logo" class="logo-image"></div>
+        <div class="nav-label" data-i18n="nav.translation">Live Translation</div>
+    </a>
+</nav>
+
+<script src="assets/js/main.js"></script>
+<script src="assets/js/i18n.js"></script>
 <script src="assets/js/flashcard_menu.js"></script>
-    
-  </div>
-
-      <nav class="bottom-nav">
-        <a href="message_select.html" class="nav-item">
-            <div class="nav-icon"><img src="assets/img/messages_icon.png" alt="Logo" class="logo-image"></div>
-            <div class="nav-label">Messages</div>
-        </a>
-        
-        <a href="flashcard_menu.html" class="nav-item">
-            <div class="nav-icon"><img src="assets/img/flashcards_logo.png" alt="Logo" class="logo-image"></div>
-            <div class="nav-label">Flashcards</div>
-        </a>
-        
-        <a href="social_posting.html" class="nav-item">
-            <div class="nav-icon">🗣️</div>
-            <div class="nav-label">Social Posting</div>
-        </a>
-        
-        <a href="exchange.html" class="nav-item">
-            <div class="nav-icon"><img src="assets/img/language_exchange_logo.png" alt="Logo" class="logo-image"></div>
-            <div class="nav-label">Exchange</div>
-        </a>
-        
-        <a href="livetranslate.html" class="nav-item">
-            <div class="nav-icon"><img src="assets/img/live_translation_logo.png" alt="Logo" class="logo-image"></div>
-            <div class="nav-label">Live Translation</div>
-        </a>
-    </nav>
 </body>
 </html>

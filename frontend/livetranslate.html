@@ -1,11 +1,11 @@
 <!doctype html>
 <html lang="en">
-<link rel="stylesheet" href="assets/css/taskbar.css">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Live Translator — Menu</title>
-   <style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title data-i18n="liveTranslator.title">Live Translator — Menu</title>
+<link rel="stylesheet" href="assets/css/taskbar.css">
+<style>
     :root{
       --bg: #12122a;
       --accent-start: #2f45f0;
@@ -180,34 +180,31 @@
 <body>
   <div class="container">
 
-    <!-- Language Selector (top-right) -->
-      <div class="language-selector">
-        <label for="language-dropdown">Language:</label>
-        <select id="language-dropdown">
-          <option value="en">English</option>
-          <option value="es">Español</option>
-          <option value="fr">Français</option>
-          <option value="ar">العربية</option>
-        </select>
-      </div>
+     <!-- Language Selector -->
+  <div class="language-selector">
+    <label for="language-dropdown" data-i18n="liveTranslator.language">Language:</label>
+    <select id="language-dropdown">
+      <option value="en">English</option>
+      <option value="es">Español</option>
+      <option value="fr">Français</option>
+      <option value="ar">العربية</option>
+    </select>
+  </div>
 
-      <header>
-    <div class="title">Live Translator</div>
-
+  <header>
+    <div class="title" data-i18n="liveTranslator.title">Live Translator</div>
     <a href="index.html" class="logo-link">
       <div class="logo">
         <img src="./assets/img/logo.png" alt="Pablu mascot">
       </div>
     </a>
-    </header>
+  </header>
 
-
-    <main class="menu">
-      <!-- Presentation Mode Card -->
-      <a href="presentation.html" class="card">
-        <div class="heading">Presentation Mode</div>
-
-        <div class="picture">
+  <main class="menu">
+    <!-- Presentation Mode Card -->
+    <a href="presentation.html" class="card">
+      <div class="heading" data-i18n="liveTranslator.presentation.heading">Presentation Mode</div>
+      <div class="picture">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
             <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
             <line x1="8" y1="21" x2="16" y2="21"></line>
@@ -215,17 +212,16 @@
             <path d="M7 8h4m-4 3h8"></path>
           </svg>
         </div>
+      <div class="description" data-i18n="liveTranslator.presentation.description">
+        Perfect for classrooms, meetings, or presentations. Speak naturally and see your words translated in real-time on the big screen for everyone to read.
+      </div>
+      <button class="btn" data-i18n="liveTranslator.presentation.button">Open Presentation Mode</button>
+    </a>
 
-        <div class="description">Perfect for classrooms, meetings, or presentations. Speak naturally and see your words translated in real-time on the big screen for everyone to read.</div>
-        
-        <button class="btn">Open Presentation Mode</button>
-      </a>
-
-      <!-- Conversation Mode Card -->
-      <a href="conversation.html" class="card">
-        <div class="heading">Conversation Mode</div>
-
-        <div class="picture">
+    <!-- Conversation Mode Card -->
+    <a href="conversation.html" class="card">
+      <div class="heading" data-i18n="liveTranslator.conversation.heading">Conversation Mode</div>
+      <div class="picture">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
             <circle cx="8" cy="10" r="1" fill="currentColor"></circle>
@@ -233,39 +229,38 @@
             <circle cx="16" cy="10" r="1" fill="currentColor"></circle>
           </svg>
         </div>
+      <div class="description" data-i18n="liveTranslator.conversation.description">
+        Have a two-way conversation with someone who speaks a different language. Each person speaks in their own language and sees the translation instantly.
+      </div>
+      <button class="btn" data-i18n="liveTranslator.conversation.button">Start Conversation Mode</button>
+    </a>
+  </main>
+</div>
 
-        <div class="description">Have a two-way conversation with someone who speaks a different language. Each person speaks in their own language and sees the translation instantly.</div>
+<nav class="bottom-nav">
+  <a href="message_select.html" class="nav-item">
+    <div class="nav-icon"><img src="assets/img/messages_icon.png" alt="Logo" class="logo-image"></div>
+    <div class="nav-label" data-i18n="nav.messages">Messages</div>
+  </a>
+  <a href="flashcard_menu.html" class="nav-item">
+    <div class="nav-icon"><img src="assets/img/flashcards_logo.png" alt="Logo" class="logo-image"></div>
+    <div class="nav-label" data-i18n="nav.flashcards">Flashcards</div>
+  </a>
+  <a href="social_posting.html" class="nav-item">
+    <div class="nav-icon">🗣️</div>
+    <div class="nav-label" data-i18n="nav.social">Social Posting</div>
+  </a>
+  <a href="exchange.html" class="nav-item">
+    <div class="nav-icon"><img src="assets/img/language_exchange_logo.png" alt="Logo" class="logo-image"></div>
+    <div class="nav-label" data-i18n="nav.exchange">Exchange</div>
+  </a>
+  <a href="livetranslate.html" class="nav-item">
+    <div class="nav-icon"><img src="assets/img/live_translation_logo.png" alt="Logo" class="logo-image"></div>
+    <div class="nav-label" data-i18n="nav.translation">Live Translation</div>
+  </a>
+</nav>
 
-        <button class="btn">Start Conversation Mode</button>
-      </a>
-
-    </main>
-  </div>
-      <nav class="bottom-nav">
-        <a href="message_select.html" class="nav-item">
-            <div class="nav-icon"><img src="assets/img/messages_icon.png" alt="Logo" class="logo-image"></div>
-            <div class="nav-label">Messages</div>
-        </a>
-        
-        <a href="flashcard_menu.html" class="nav-item">
-            <div class="nav-icon"><img src="assets/img/flashcards_logo.png" alt="Logo" class="logo-image"></div>
-            <div class="nav-label">Flashcards</div>
-        </a>
-        
-        <a href="social_posting.html" class="nav-item">
-            <div class="nav-icon">🗣️</div>
-            <div class="nav-label">Social Posting</div>
-        </a>
-        
-        <a href="exchange.html" class="nav-item">
-            <div class="nav-icon"><img src="assets/img/language_exchange_logo.png" alt="Logo" class="logo-image"></div>
-            <div class="nav-label">Exchange</div>
-        </a>
-        
-        <a href="livetranslate.html" class="nav-item">
-            <div class="nav-icon"><img src="assets/img/live_translation_logo.png" alt="Logo" class="logo-image"></div>
-            <div class="nav-label">Live Translation</div>
-        </a>
-    </nav>
+<script src="assets/js/i18n.js"></script>
+<script src="assets/js/main.js"></script>
 </body>
 </html>

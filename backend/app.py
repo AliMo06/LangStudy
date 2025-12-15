@@ -12,20 +12,17 @@ import base64
 from functools import wraps
 import time
 
-# Setup paths for frontend directory
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 FRONTEND_DIR = os.path.join(BASE_DIR, '..', 'frontend')
 
 app = Flask(__name__, static_folder=FRONTEND_DIR)
 app.secret_key = 'your-secret-key-change-this-later'
 
-# Configure session settings
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 app.config['SESSION_COOKIE_SECURE'] = False
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['SESSION_COOKIE_DOMAIN'] = None
 
-# CORS configuration
 CORS(app, 
      supports_credentials=True,
      origins=["http://localhost:5000", "http://127.0.0.1:5000"],

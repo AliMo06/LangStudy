@@ -39,6 +39,31 @@
     "repostedBy": "Republicado por"
   },
 
+  "flashcardsMenu": {
+    "title": "Menú de tarjetas",
+    "language": "Idioma:",
+    "from": "De:",
+    "to": "A:",
+    "basicWords": "Comenzar: Palabras básicas",
+    "basicPhrases": "Comenzar: Frases básicas",
+    "basicSentences": "Comenzar: Oraciones básicas"
+  },
+  "flashcards": {
+    "title": "Tarjetas",
+    "back": "← Atrás",
+    "prev": "◀ Anterior",
+    "next": "Siguiente ▶",
+    "show": "Respuesta",
+    "swap": "Cambiar orden ⇅",
+    "card": "Tarjeta",
+    "ttsNotSupported": "La síntesis de voz no es compatible con este navegador",
+    "categories": {
+      "words": "Palabras básicas",
+      "phrases": "Frases básicas",
+      "sentences": "Oraciones básicas"
+    }
+  },
+
   "messages": {
     "pageTitle": "Mensajes",
     "title": "Mensajes",
@@ -100,5 +125,20 @@
     "noPartnerSelected": "Ningún compañero seleccionado",
     "failedToSend": "No se pudo enviar el mensaje: ",
     "errorSendingMessage": "Error al enviar el mensaje"
+  },
+
+  "liveTranslator": {
+    "title": "Traductor en Vivo",
+    "language": "Idioma:",
+    "presentation": {
+      "heading": "Modo Presentación",
+      "description": "Perfecto para aulas, reuniones o presentaciones. Habla de manera natural y ve tus palabras traducidas en tiempo real en la pantalla grande para que todos las lean.",
+      "button": "Abrir Modo Presentación"
+    },
+    "conversation": {
+      "heading": "Modo Conversación",
+      "description": "Ten una conversación bidireccional con alguien que habla un idioma diferente. Cada persona habla en su propio idioma y ve la traducción al instante.",
+      "button": "Iniciar Modo Conversación"
+    }
   }
 }

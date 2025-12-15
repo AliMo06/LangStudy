@@ -1,48 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Flashcards</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-i18n="flashcards.title">Flashcards</title>
 <link rel="stylesheet" href="assets/css/style.css">
-<link rel="stylesheet" href="assets/css/flashcards.css" />
+<link rel="stylesheet" href="assets/css/flashcards.css">
+</head>
 <body>
 
 <div class="card-container">
-    <a class="back" href="flashcard_menu.html">← Back</a>
-    <h2>Flashcards</h2>
+    <a class="back" href="flashcard_menu.html" data-i18n="flashcards.back">← Back</a>
+    <h2 data-i18n="flashcards.title">Flashcards</h2>
     <h3 id="categoryLabel" class="category-label"></h3>
 
     <div id="question" class="question-box">
-    <span class="question-text"></span>
-    <button class="pronounce-btn">🔊</button>
+        <span class="question-text"></span>
+        <button class="pronounce-btn">🔊</button>
     </div>
 
     <div id="answer" class="answer-box">
-    <span class="answer-text"></span>
-    <button class="pronounce-btn">🔊</button>
+        <span class="answer-text"></span>
+        <button class="pronounce-btn">🔊</button>
     </div>
 
-
     <div>
-        <button class="nav-btn" id="prevBtn">◀ Prev</button>
-        <button class="show-btn" id="showBtn">Show Answer</button>
-        <button class="nav-btn" id="nextBtn">Next ▶</button>
-        
+        <button class="nav-btn" id="prevBtn" data-i18n="flashcards.prev">◀ Prev</button>
+        <button class="show-btn" id="showBtn" data-i18n="flashcards.show">Show Answer</button>
+        <button class="nav-btn" id="nextBtn" data-i18n="flashcards.next">Next ▶</button>
     </div>
 
     <div class="swap-container">
-        <button class="swap-btn" id="swapBtn">Switch Order ⇅</button>
+        <button class="swap-btn" id="swapBtn" data-i18n="flashcards.swap">Switch Order ⇅</button>
     </div>
 
     <p class="card-counter">
-        Card <span id="index">1</span> / <span id="total">1</span>
+        <span data-i18n="flashcards.card">Card</span>
+        <span id="index">1</span> / <span id="total">1</span>
     </p>
-
 </div>
 
+<script src="assets/js/main.js"></script>
+<script src="assets/js/i18n.js"></script>
 <script src="assets/js/flashcards.js"></script>
-
-
 </body>
 </html>

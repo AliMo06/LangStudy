@@ -39,6 +39,31 @@
     "repostedBy": "Reposted by"
   },
   
+  "flashcardsMenu": {
+    "title": "Flashcards Menu",
+    "language": "Language:",
+    "from": "From:",
+    "to": "To:",
+    "basicWords": "Begin: Basic Words",
+    "basicPhrases": "Begin: Basic Phrases",
+    "basicSentences": "Begin: Basic Sentences"
+  },
+  "flashcards": {
+    "title": "Flashcards",
+    "back": "← Back",
+    "prev": "◀ Prev",
+    "next": "Next ▶",
+    "show": "Show Answer",
+    "swap": "Switch Order ⇅",
+    "card": "Card",
+    "ttsNotSupported": "Text-to-speech not supported in this browser",
+    "categories": {
+      "words": "Basic Words",
+      "phrases": "Basic Phrases",
+      "sentences": "Basic Sentences"
+    }
+  },
+
   "messages": {
     "pageTitle": "Messages",
     "title": "Messages",
@@ -100,5 +125,20 @@
     "noPartnerSelected": "No partner selected",
     "failedToSend": "Failed to send message: ",
     "errorSendingMessage": "Error sending message"
+  },
+
+  "liveTranslator": {
+    "title": "Live Translator",
+    "language": "Language:",
+    "presentation": {
+      "heading": "Presentation Mode",
+      "description": "Perfect for classrooms, meetings, or presentations. Speak naturally and see your words translated in real-time on the big screen for everyone to read.",
+      "button": "Open Presentation Mode"
+    },
+    "conversation": {
+      "heading": "Conversation Mode",
+      "description": "Have a two-way conversation with someone who speaks a different language. Each person speaks in their own language and sees the translation instantly.",
+      "button": "Start Conversation Mode"
+    }
   }
 }
