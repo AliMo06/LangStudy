@@ -28,9 +28,9 @@
   "nav": {
     "messages": "Messages",
     "flashcards": "Cartes mémoire",
-    "social": "Publications Sociales",
+    "social": "Publications",
     "exchange": "Échange",
-    "translation": "Traduction en Direct"
+    "translation": "Traduction"
   },
   "post": {
     "likes": "Mentions J’aime",

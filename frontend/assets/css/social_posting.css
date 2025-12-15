@@ -24,6 +24,7 @@
     display: flex;
     align-items: center;
     gap: 18px;
+    margin-left: 50px;  
 }
 
 .language-selector {
