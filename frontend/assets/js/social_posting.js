@@ -115,11 +115,10 @@ async function renderPost(post) {
             });
             const result = await res.json();
             if (result.success) {
-                // Fetch updated like count from backend
                 const likeRes = await fetch(`/post-likes/${postId}`, { credentials: 'include' });
                 const likeData = await likeRes.json();
                 if (likeData.success) {
-                    likeCountSpan.textContent = `${likeData.count} Likes`;
+                    likeCountSpan.textContent = `${likeData.count} ${i18n.t('post.likes')}`; 
                     if (likeData.liked) likeBtn.classList.add('active');
                     else likeBtn.classList.remove('active');
                 }
@@ -145,7 +144,7 @@ async function renderPost(post) {
             const data = await res.json();
             if (data.success) {
                 alert('Post reposted!');
-                await loadFeed(); // Refresh feed to show repost
+                await loadFeed(); 
             } else {
                 alert('Failed to repost: ' + (data.message || 'unknown error'));
             }
@@ -163,3 +162,12 @@ function escapeHtml(text) {
 }
 
 loadFeed();
+
+const languageDropdown = document.getElementById('language-dropdown');
+if (languageDropdown) {
+    languageDropdown.addEventListener('change', async () => {
+        setTimeout(async () => {
+            await loadFeed();
+        }, 50);
+    });
+}
