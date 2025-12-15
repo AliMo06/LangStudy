@@ -49,12 +49,12 @@ function setupLanguageSelection() {
 
 async function publishRequest() {
     if (selectedSpeaks.length === 0) {
-        alert('Please select at least one language you speak');
+        alert(i18n.t('exchange.selectSpeaks'));
         return;
     }
     
     if (selectedLearning.length === 0) {
-        alert('Please select at least one language you want to learn');
+        alert(i18n.t('exchange.selectLearning'));
         return;
     }
     
@@ -72,7 +72,7 @@ async function publishRequest() {
         const data = await response.json();
         
         if (data.success) {
-            alert('Request published successfully!');
+            alert(i18n.t('exchange.requestPublished'));
             // Clear selections
             document.querySelectorAll('.language-btn.selected').forEach(btn => {
                 btn.classList.remove('selected');
@@ -83,11 +83,11 @@ async function publishRequest() {
             // Reload requests
             await loadExchangeRequests();
         } else {
-            alert('Failed to publish request: ' + data.message);
+            alert(i18n.t('exchange.failedToPublish') + data.message);
         }
     } catch (error) {
         console.error('Error publishing request:', error);
-        alert('Error publishing request');
+        alert(i18n.t('exchange.errorPublishing'));
     }
 }
 
@@ -115,7 +115,7 @@ function displayExchangeRequests(requests) {
     container.innerHTML = '';
     
     if (requests.length === 0) {
-        container.innerHTML = '<p style="text-align: center; color: #666; padding: 20px;">No exchange requests available</p>';
+        container.innerHTML = `<p style="text-align: center; color: #666; padding: 20px;">${i18n.t('exchange.noRequests')}</p>`;
         return;
     }
     
@@ -131,7 +131,7 @@ function displayExchangeRequests(requests) {
         speaksDiv.className = 'tags';
         const speaksLabel = document.createElement('span');
         speaksLabel.className = 'section-label';
-        speaksLabel.textContent = 'Speaks:';
+        speaksLabel.textContent = i18n.t('exchange.speaks');
         speaksDiv.appendChild(speaksLabel);
         
         request.speaks.forEach(lang => {
@@ -145,7 +145,7 @@ function displayExchangeRequests(requests) {
         learningDiv.className = 'tags';
         const learningLabel = document.createElement('span');
         learningLabel.className = 'section-label';
-        learningLabel.textContent = 'Learning:';
+        learningLabel.textContent = i18n.t('exchange.learning');
         learningDiv.appendChild(learningLabel);
         
         request.learning.forEach(lang => {
@@ -157,7 +157,7 @@ function displayExchangeRequests(requests) {
         
         const connectBtn = document.createElement('button');
         connectBtn.className = 'accept-btn';
-        connectBtn.textContent = 'Connect';
+        connectBtn.textContent = i18n.t('exchange.connect');
         connectBtn.onclick = () => connectToUser(request.user_id, request.username);
         
         card.appendChild(name);
@@ -170,7 +170,7 @@ function displayExchangeRequests(requests) {
 }
 
 async function connectToUser(userId, username) {
-    if (confirm(`Connect with ${username} for language exchange?`)) {
+    if (confirm(i18n.t('exchange.confirmConnect').replace('{username}', username))) {
         try {
             const response = await fetch('/connect-exchange', {
                 method: 'POST',
@@ -185,11 +185,11 @@ async function connectToUser(userId, username) {
                 // Redirect to exchange chat room
                 window.location.href = `/exchange_chat.html?partner_id=${userId}`;
             } else {
-                alert('Failed to connect: ' + data.message);
+                alert(i18n.t('exchange.failedToConnect') + data.message);
             }
         } catch (error) {
             console.error('Error connecting:', error);
-            alert('Error connecting to user');
+            alert(i18n.t('exchange.errorConnecting'));
         }
     }
 }

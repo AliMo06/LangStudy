@@ -51,7 +51,7 @@ function displayMessage(text, isMine, senderUsername) {
     
     const label = document.createElement("div");
     label.className = isMine ? "sender" : "receiver";
-    label.textContent = isMine ? "You" : senderUsername || "Friend";
+    label.textContent = isMine ? i18n.t('messages.you') : senderUsername || i18n.t('messages.friend');
     
     const content = document.createElement("div");
     content.textContent = text;
@@ -66,7 +66,7 @@ async function sendMessage() {
     if (text === "") return;
     
     if (!friendId) {
-        alert('No friend selected');
+        alert(i18n.t('messages.noFriendSelected'));
         return;
     }
     
@@ -92,11 +92,11 @@ async function sendMessage() {
             // Reload messages to show the new one
             await loadMessages();
         } else {
-            alert('Failed to send message: ' + data.message);
+            alert(i18n.t('messages.failedToSend') + data.message);
         }
     } catch (error) {
         console.error('Error sending message:', error);
-        alert('Error sending message');
+        alert(i18n.t('messages.errorSendingMessage'));
     }
 }
 

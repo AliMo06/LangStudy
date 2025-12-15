@@ -17,7 +17,7 @@
 
         <!-- Language Selector -->
         <div class="language-selector" style="margin-top: 10px;">
-            <label for="language-dropdown">Language:</label>
+            <label for="language-dropdown" data-i18n="language-label">Language:</label>
             <select id="language-dropdown">
                 <option value="en">English</option>
                 <option value="es">Español</option>
@@ -32,7 +32,7 @@
                 type="text" 
                 id="searchInput" 
                 class="search-input" 
-                placeholder="Search users by username (or leave blank to see all)..."
+                data-i18n-placeholder="messages.searchPlaceholder" placeholder="Search users by username (or leave blank to see all)..."
             />
         </div>
         
@@ -42,7 +42,7 @@
         <h2>Friends</h2>
         <!-- List of friends -->
         <ul id="friendsList">
-            <li style="list-style: none; padding: 10px;">Loading friends...</li>
+            <li style="list-style: none; padding: 10px;" data-i18n="messages.friendsList">Loading friends...</li>
         </ul>
         
     </div>
@@ -50,27 +50,27 @@
     <nav class="bottom-nav">
         <a href="message_select.html" class="nav-item">
             <div class="nav-icon"><img src="assets/img/messages_icon.png" alt="Logo" class="logo-image"></div>
-            <div class="nav-label">Messages</div>
+            <div class="nav-label" data-i18n="nav.messages">Messages</div>
         </a>
         
         <a href="flashcard_menu.html" class="nav-item">
             <div class="nav-icon"><img src="assets/img/flashcards_logo.png" alt="Logo" class="logo-image"></div>
-            <div class="nav-label">Flashcards</div>
+            <div class="nav-label" data-i18n="nav.flashcards">Flashcards</div>
         </a>
         
         <a href="social_posting.html" class="nav-item">
             <div class="nav-icon">🗣️</div>
-            <div class="nav-label">Social Posting</div>
+            <div class="nav-label" data-i18n="nav.social">Social Posting</div>
         </a>
         
         <a href="exchange.html" class="nav-item">
             <div class="nav-icon"><img src="assets/img/language_exchange_logo.png" alt="Logo" class="logo-image"></div>
-            <div class="nav-label">Exchange</div>
+            <div class="nav-label" data-i18n="nav.exchange">Exchange</div>
         </a>
         
         <a href="livetranslate.html" class="nav-item">
             <div class="nav-icon"><img src="assets/img/live_translation_logo.png" alt="Logo" class="logo-image"></div>
-            <div class="nav-label">Live Translation</div>
+            <div class="nav-label" data-i18n="nav.translation">Live Translation</div>
         </a>
     </nav>
     

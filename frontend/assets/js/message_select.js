@@ -158,28 +158,28 @@ function displaySearchResults(users) {
         if (user.friendship_status === 'friends') {
             const badge = document.createElement('span');
             badge.className = 'status-badge status-friends';
-            badge.textContent = 'Friends';
+            badge.textContent = i18n.t('messages.friends');
             resultItem.appendChild(badge);
         } else if (user.friendship_status === 'request_sent') {
             const badge = document.createElement('span');
             badge.className = 'status-badge status-pending';
-            badge.textContent = 'Request Sent';
+            badge.textContent = i18n.t('messages.requestSent');
             resultItem.appendChild(badge);
         } else if (user.friendship_status === 'request_received') {
             const badge = document.createElement('span');
             badge.className = 'status-badge status-pending';
-            badge.textContent = 'Send Request Back';
+            badge.textContent = i18n.t('messages.sendRequestBack');
             resultItem.appendChild(badge);
             
             const addBtn = document.createElement('button');
             addBtn.className = 'add-friend-btn';
-            addBtn.textContent = 'Add Friend';
+            addBtn.textContent = i18n.t('messages.addFriend');
             addBtn.onclick = () => addFriend(user.username, addBtn);
             resultItem.appendChild(addBtn);
         } else {
             const addBtn = document.createElement('button');
             addBtn.className = 'add-friend-btn';
-            addBtn.textContent = 'Add Friend';
+            addBtn.textContent = i18n.t('messages.addFriend');
             addBtn.onclick = () => addFriend(user.username, addBtn);
             resultItem.appendChild(addBtn);
         }
@@ -191,7 +191,7 @@ function displaySearchResults(users) {
 async function addFriend(username, button) {
     // Disable button to prevent multiple clicks
     button.disabled = true;
-    button.textContent = 'Sending...';
+    button.textContent = i18n.t('messages.sending');
     
     try {
         const response = await fetch('/add-friend', {
@@ -221,14 +221,14 @@ async function addFriend(username, button) {
                 searchUsers(searchInput.value.trim());
             }
         } else {
-            alert('Failed to add friend: ' + data.message);
+            alert(i18n.t('messages.failedToAdd') + data.message);
             button.disabled = false;
-            button.textContent = 'Add Friend';
+            button.textContent = i18n.t('messages.addFriend');
         }
     } catch (error) {
         console.error('Error adding friend:', error);
-        alert('Error adding friend');
+        alert(i18n.t('messages.errorAddingFriend'));
         button.disabled = false;
-        button.textContent = 'Add Friend';
+        button.textContent = i18n.t('messages.addFriend');
     }
 }

@@ -1,32 +1,80 @@
 {
-    "app-title": "LangStudy",
-  "language-label": "Langue:",
-  "welcome-message": "Bienvenue dans l'Application de LangStudy",
-  "description": "Se Connecter ou Créer un compte.",
-  "signup-button": "Créer un compte",
-  "login-button": "Se Connecter",
+  "app-title": "LangStudy",
+  "language-label": "Langue :",
+  "welcome-message": "Bienvenue sur LangStudy",
+  "description": "Connectez-vous ou inscrivez-vous ci-dessous",
+  "signup-button": "S’inscrire",
+  "login-button": "Se connecter",
 
   "page": {
-    "title": "LangStudy - Flux Social"
+    "title": "LangStudy - Fil Social"
   },
   "header": {
     "appName": "LangStudy"
   },
   "postCreator": {
-    "heading": "Partagez votre parcours d'apprentissage des langues:",
+    "heading": "Partagez votre parcours d’apprentissage des langues :",
     "titleLabel": "Titre",
     "titlePlaceholder": "Donnez un titre à votre publication...",
-    "contentLabel": "Qu'est-ce qui préoccupe votre esprit?",
-    "contentPlaceholder": "Tapez ici...",
-    "shareButton": "Poste"
+    "contentLabel": "À quoi pensez-vous ?",
+    "contentPlaceholder": "Écrivez ici...",
+    "shareButton": "Publier"
   },
   "nav": {
     "messages": "Messages",
     "flashcards": "Cartes mémoire",
-    "social": "Publication sociale",
+    "social": "Publications Sociales",
     "exchange": "Échange",
-    "translation": "Traduction"
+    "translation": "Traduction en Direct"
+  },
+  "post": {
+    "likes": "Mentions J’aime",
+    "repost": "Reposter",
+    "translate": "Traduire",
+    "repostedBy": "Reposté par"
+  },
+
+  "messages": {
+    "noFriends": "Aucun ami pour le moment. Recherchez des utilisateurs ci-dessus pour ajouter des amis !",
+    "noUsersFound": "Aucun utilisateur trouvé correspondant à votre recherche",
+    "noOtherUsers": "Il n’y a pas encore d’autres utilisateurs dans le système",
+    "friends": "Amis",
+    "requestSent": "Demande envoyée",
+    "sendRequestBack": "Renvoyer une demande",
+    "addFriend": "Ajouter un ami",
+    "sending": "Envoi en cours...",
+    "failedToAdd": "Impossible d’ajouter l’ami : ",
+    "errorAddingFriend": "Erreur lors de l’ajout de l’ami",
+    "you": "Vous",
+    "friend": "Ami",
+    "noFriendSelected": "Aucun ami sélectionné",
+    "failedToSend": "Impossible d’envoyer le message : ",
+    "errorSendingMessage": "Erreur lors de l’envoi du message"
+  },
+
+  "exchange": {
+    "selectSpeaks": "Veuillez sélectionner au moins une langue que vous parlez",
+    "selectLearning": "Veuillez sélectionner au moins une langue que vous souhaitez apprendre",
+    "requestPublished": "Demande publiée avec succès !",
+    "failedToPublish": "Échec de la publication de la demande : ",
+    "errorPublishing": "Erreur lors de la publication de la demande",
+    "noRequests": "Aucune demande d’échange disponible",
+    "speaks": "Parle :",
+    "learning": "Apprend :",
+    "connect": "Se connecter",
+    "confirmConnect": "Se connecter avec {username} pour un échange linguistique ?",
+    "failedToConnect": "Impossible de se connecter : ",
+    "errorConnecting": "Erreur lors de la connexion à l’utilisateur"
+  },
+
+  "exchangeChat": {
+    "you": "Vous",
+    "translate": "Traduire",
+    "translation": "Traduction : ",
+    "translationFailed": "La traduction a échoué",
+    "translationUnavailable": "Service de traduction indisponible",
+    "noPartnerSelected": "Aucun partenaire sélectionné",
+    "failedToSend": "Impossible d’envoyer le message : ",
+    "errorSendingMessage": "Erreur lors de l’envoi du message"
   }
-
 }
-

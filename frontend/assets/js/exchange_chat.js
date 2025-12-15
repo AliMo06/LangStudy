@@ -51,7 +51,7 @@ function displayMessage(msg) {
     
     const label = document.createElement("div");
     label.className = msg.is_mine ? "sender" : "receiver";
-    label.textContent = msg.is_mine ? "You" : msg.sender_username;
+    label.textContent = msg.is_mine ? i18n.t('exchangeChat.you') : msg.sender_username;
     
     const content = document.createElement("div");
     content.textContent = msg.message_text;
@@ -63,7 +63,7 @@ function displayMessage(msg) {
     if (!msg.is_mine) {
         const translateBtn = document.createElement("button");
         translateBtn.className = "translate-btn";
-        translateBtn.textContent = "Translate";
+        translateBtn.textContent = i18n.t('exchangeChat.translate');
         translateBtn.onclick = () => translateMessage(msg.id, msg.message_text, wrapper);
         msgDiv.appendChild(translateBtn);
     }
@@ -74,7 +74,7 @@ function displayMessage(msg) {
     if (translations[msg.id]) {
         const translationDiv = document.createElement("div");
         translationDiv.className = "translation";
-        translationDiv.textContent = `Translation: ${translations[msg.id]}`;
+        translationDiv.textContent = i18n.t('exchangeChat.translation') + translations[msg.id];
         wrapper.appendChild(translationDiv);
     }
     
@@ -99,14 +99,14 @@ async function translateMessage(messageId, text, wrapper) {
             // Add translation to the message
             const translationDiv = document.createElement("div");
             translationDiv.className = "translation";
-            translationDiv.textContent = `Translation: ${translatedText}`;
+            translationDiv.textContent = i18n.t('exchangeChat.translation') + translatedText;
             wrapper.appendChild(translationDiv);
         } else {
-            alert('Translation failed');
+            alert(i18n.t('exchangeChat.translationFailed'));
         }
     } catch (error) {
         console.error('Translation error:', error);
-        alert('Translation service unavailable');
+        alert(i18n.t('exchangeChat.translationUnavailable'));
     }
 }
 
@@ -115,7 +115,7 @@ async function sendMessage() {
     if (text === "") return;
     
     if (!partnerId) {
-        alert('No partner selected');
+        alert(i18n.t('exchangeChat.noPartnerSelected'));
         return;
     }
     
@@ -136,11 +136,11 @@ async function sendMessage() {
             input.value = "";
             await loadMessages();
         } else {
-            alert('Failed to send message: ' + data.message);
+            alert(i18n.t('exchangeChat.failedToSend') + data.message);
         }
     } catch (error) {
         console.error('Error sending message:', error);
-        alert('Error sending message');
+        alert(i18n.t('exchangeChat.errorSendingMessage'));
     }
 }
 

@@ -1,8 +1,80 @@
 {
-  "app-title": "لانج ستدي",
+  "app-title": "LangStudy",
   "language-label": "اللغة:",
-  "welcome-message": "مرحباً بك في لانج ستدي",
-  "description": "تسجيل الدخول أو إنشاء حساب أدناه",
+  "welcome-message": "مرحبًا بك في LangStudy",
+  "description": "سجّل الدخول أو أنشئ حسابًا أدناه",
   "signup-button": "إنشاء حساب",
-  "login-button": "تسجيل الدخول"
+  "login-button": "تسجيل الدخول",
+
+  "page": {
+    "title": "LangStudy - المنشورات الاجتماعية"
+  },
+  "header": {
+    "appName": "LangStudy"
+  },
+  "postCreator": {
+    "heading": "شارك رحلتك في تعلم اللغات:",
+    "titleLabel": "العنوان",
+    "titlePlaceholder": "أضف عنوانًا لمنشورك...",
+    "contentLabel": "بماذا تفكر؟",
+    "contentPlaceholder": "اكتب هنا...",
+    "shareButton": "نشر"
+  },
+  "nav": {
+    "messages": "الرسائل",
+    "flashcards": "البطاقات التعليمية",
+    "social": "النشر الاجتماعي",
+    "exchange": "التبادل",
+    "translation": "الترجمة المباشرة"
+  },
+  "post": {
+    "likes": "الإعجابات",
+    "repost": "إعادة النشر",
+    "translate": "ترجمة",
+    "repostedBy": "أُعيد نشره بواسطة"
+  },
+
+  "messages": {
+    "noFriends": "لا يوجد أصدقاء بعد. ابحث عن مستخدمين أعلاه لإضافة أصدقاء!",
+    "noUsersFound": "لم يتم العثور على مستخدمين مطابقين لبحثك",
+    "noOtherUsers": "لا يوجد مستخدمون آخرون في النظام حتى الآن",
+    "friends": "الأصدقاء",
+    "requestSent": "تم إرسال الطلب",
+    "sendRequestBack": "إرسال طلب مقابل",
+    "addFriend": "إضافة صديق",
+    "sending": "جارٍ الإرسال...",
+    "failedToAdd": "فشل في إضافة الصديق: ",
+    "errorAddingFriend": "خطأ أثناء إضافة الصديق",
+    "you": "أنت",
+    "friend": "صديق",
+    "noFriendSelected": "لم يتم اختيار صديق",
+    "failedToSend": "فشل في إرسال الرسالة: ",
+    "errorSendingMessage": "خطأ أثناء إرسال الرسالة"
+  },
+
+  "exchange": {
+    "selectSpeaks": "يرجى اختيار لغة واحدة على الأقل تتحدثها",
+    "selectLearning": "يرجى اختيار لغة واحدة على الأقل ترغب في تعلمها",
+    "requestPublished": "تم نشر الطلب بنجاح!",
+    "failedToPublish": "فشل في نشر الطلب: ",
+    "errorPublishing": "خطأ أثناء نشر الطلب",
+    "noRequests": "لا توجد طلبات تبادل متاحة",
+    "speaks": "يتحدث:",
+    "learning": "يتعلم:",
+    "connect": "اتصال",
+    "confirmConnect": "هل تريد الاتصال بـ {username} لتبادل اللغات؟",
+    "failedToConnect": "فشل في الاتصال: ",
+    "errorConnecting": "خطأ أثناء الاتصال بالمستخدم"
+  },
+
+  "exchangeChat": {
+    "you": "أنت",
+    "translate": "ترجمة",
+    "translation": "الترجمة: ",
+    "translationFailed": "فشلت الترجمة",
+    "translationUnavailable": "خدمة الترجمة غير متاحة",
+    "noPartnerSelected": "لم يتم اختيار شريك",
+    "failedToSend": "فشل في إرسال الرسالة: ",
+    "errorSendingMessage": "خطأ أثناء إرسال الرسالة"
+  }
 }

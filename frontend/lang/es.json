@@ -2,18 +2,16 @@
   "app-title": "LangStudy",
   "language-label": "Idioma:",
   "welcome-message": "Bienvenido a LangStudy",
-  "description": "Inicia sesión o registra tu cuenta.",
+  "description": "Inicia sesión o regístrate abajo",
   "signup-button": "Registrarse",
   "login-button": "Iniciar sesión",
 
   "page": {
     "title": "LangStudy - Muro Social"
   },
-
   "header": {
     "appName": "LangStudy"
   },
-
   "postCreator": {
     "heading": "Comparte tu experiencia de aprendizaje de idiomas:",
     "titleLabel": "Título",
@@ -22,20 +20,61 @@
     "contentPlaceholder": "Escribe aquí...",
     "shareButton": "Publicar"
   },
-
   "nav": {
     "messages": "Mensajes",
     "flashcards": "Tarjetas",
-    "social": "Publicaciones",
+    "social": "Publicaciones Sociales",
     "exchange": "Intercambio",
     "translation": "Traducción en Vivo"
   },
-
   "post": {
     "likes": "Me gusta",
-    "repost": "Repostear",
+    "repost": "Republicar",
     "translate": "Traducir",
-    "repostedBy": "Reposteado por"
-}
+    "repostedBy": "Republicado por"
+  },
 
+  "messages": {
+    "noFriends": "Aún no tienes amigos. ¡Busca usuarios arriba para agregar amigos!",
+    "noUsersFound": "No se encontraron usuarios que coincidan con tu búsqueda",
+    "noOtherUsers": "Aún no hay otros usuarios en el sistema",
+    "friends": "Amigos",
+    "requestSent": "Solicitud enviada",
+    "sendRequestBack": "Enviar solicitud de vuelta",
+    "addFriend": "Agregar amigo",
+    "sending": "Enviando...",
+    "failedToAdd": "No se pudo agregar al amigo: ",
+    "errorAddingFriend": "Error al agregar amigo",
+    "you": "Tú",
+    "friend": "Amigo",
+    "noFriendSelected": "Ningún amigo seleccionado",
+    "failedToSend": "No se pudo enviar el mensaje: ",
+    "errorSendingMessage": "Error al enviar el mensaje"
+  },
+
+  "exchange": {
+    "selectSpeaks": "Por favor selecciona al menos un idioma que hables",
+    "selectLearning": "Por favor selecciona al menos un idioma que quieras aprender",
+    "requestPublished": "¡Solicitud publicada con éxito!",
+    "failedToPublish": "No se pudo publicar la solicitud: ",
+    "errorPublishing": "Error al publicar la solicitud",
+    "noRequests": "No hay solicitudes de intercambio disponibles",
+    "speaks": "Habla:",
+    "learning": "Aprendiendo:",
+    "connect": "Conectar",
+    "confirmConnect": "¿Conectarte con {username} para intercambio de idiomas?",
+    "failedToConnect": "No se pudo conectar: ",
+    "errorConnecting": "Error al conectar con el usuario"
+  },
+
+  "exchangeChat": {
+    "you": "Tú",
+    "translate": "Traducir",
+    "translation": "Traducción: ",
+    "translationFailed": "La traducción falló",
+    "translationUnavailable": "Servicio de traducción no disponible",
+    "noPartnerSelected": "Ningún compañero seleccionado",
+    "failedToSend": "No se pudo enviar el mensaje: ",
+    "errorSendingMessage": "Error al enviar el mensaje"
+  }
 }

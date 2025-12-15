@@ -27,13 +27,54 @@
     "exchange": "Exchange",
     "translation": "Live Translation"
   },
-
- "post": {
+  "post": {
     "likes": "Likes",
     "repost": "Repost",
     "translate": "Translate",
     "repostedBy": "Reposted by"
+  },
+  
+  "messages": {
+    "noFriends": "No friends yet. Search for users above to add friends!",
+    "noUsersFound": "No users found matching your search",
+    "noOtherUsers": "No other users in the system yet",
+    "friends": "Friends",
+    "requestSent": "Request Sent",
+    "sendRequestBack": "Send Request Back",
+    "addFriend": "Add Friend",
+    "sending": "Sending...",
+    "failedToAdd": "Failed to add friend: ",
+    "errorAddingFriend": "Error adding friend",
+    "you": "You",
+    "friend": "Friend",
+    "noFriendSelected": "No friend selected",
+    "failedToSend": "Failed to send message: ",
+    "errorSendingMessage": "Error sending message"
+  },
+  
+  "exchange": {
+    "selectSpeaks": "Please select at least one language you speak",
+    "selectLearning": "Please select at least one language you want to learn",
+    "requestPublished": "Request published successfully!",
+    "failedToPublish": "Failed to publish request: ",
+    "errorPublishing": "Error publishing request",
+    "noRequests": "No exchange requests available",
+    "speaks": "Speaks:",
+    "learning": "Learning:",
+    "connect": "Connect",
+    "confirmConnect": "Connect with {username} for language exchange?",
+    "failedToConnect": "Failed to connect: ",
+    "errorConnecting": "Error connecting to user"
+  },
+  
+  "exchangeChat": {
+    "you": "You",
+    "translate": "Translate",
+    "translation": "Translation: ",
+    "translationFailed": "Translation failed",
+    "translationUnavailable": "Translation service unavailable",
+    "noPartnerSelected": "No partner selected",
+    "failedToSend": "Failed to send message: ",
+    "errorSendingMessage": "Error sending message"
+  }
 }
-
-}
-
