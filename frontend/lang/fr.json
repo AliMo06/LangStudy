@@ -5,6 +5,10 @@
   "description": "Connectez-vous ou inscrivez-vous ci-dessous",
   "signup-button": "S’inscrire",
   "login-button": "Se connecter",
+  "English": "Anglais",
+  "Spanish": "Espagnol",
+  "French": "Français",
+  "Arabic": "arabe",
 
   "page": {
     "title": "LangStudy - Fil Social"

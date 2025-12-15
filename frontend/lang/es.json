@@ -5,6 +5,10 @@
   "description": "Inicia sesión o regístrate abajo",
   "signup-button": "Registrarse",
   "login-button": "Iniciar sesión",
+  "English": "Inglés",
+  "Spanish": "Español",
+  "French": "Francés",
+  "Arabic": "árabe",
 
   "page": {
     "title": "LangStudy - Muro Social"

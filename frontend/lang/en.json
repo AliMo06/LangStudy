@@ -5,6 +5,10 @@
   "description": "Login or Sign Up Below",
   "signup-button": "Sign Up",
   "login-button": "Log In",
+  "English": "English",
+  "Spanish": "Spanish",
+  "French": "French",
+  "Arabic": "Arabic",
 
   "page": {
     "title": "LangStudy - Social Feed"

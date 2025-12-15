@@ -5,6 +5,10 @@
   "description": "سجّل الدخول أو أنشئ حسابًا أدناه",
   "signup-button": "إنشاء حساب",
   "login-button": "تسجيل الدخول",
+  "English": "إنجليزي",
+  "Spanish": "الأسبانية",
+  "French": "فرنسي",
+  "Arabic": "عربي",
 
   "page": {
     "title": "LangStudy - المنشورات الاجتماعية"
