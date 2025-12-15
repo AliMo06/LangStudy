@@ -125,5 +125,20 @@
     "noPartnerSelected": "No partner selected",
     "failedToSend": "Failed to send message: ",
     "errorSendingMessage": "Error sending message"
+  },
+
+  "liveTranslator": {
+    "title": "Live Translator",
+    "language": "Language:",
+    "presentation": {
+      "heading": "Presentation Mode",
+      "description": "Perfect for classrooms, meetings, or presentations. Speak naturally and see your words translated in real-time on the big screen for everyone to read.",
+      "button": "Open Presentation Mode"
+    },
+    "conversation": {
+      "heading": "Conversation Mode",
+      "description": "Have a two-way conversation with someone who speaks a different language. Each person speaks in their own language and sees the translation instantly.",
+      "button": "Start Conversation Mode"
+    }
   }
 }

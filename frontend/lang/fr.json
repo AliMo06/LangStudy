@@ -125,5 +125,20 @@
     "noPartnerSelected": "Aucun partenaire sélectionné",
     "failedToSend": "Impossible d’envoyer le message : ",
     "errorSendingMessage": "Erreur lors de l’envoi du message"
+  },
+
+  "liveTranslator": {
+    "title": "Traducteur en Direct",
+    "language": "Langue:",
+    "presentation": {
+      "heading": "Mode Présentation",
+      "description": "Parfait pour les salles de classe, réunions ou présentations. Parlez naturellement et voyez vos mots traduits en temps réel sur grand écran pour que tout le monde puisse les lire.",
+      "button": "Ouvrir le Mode Présentation"
+    },
+    "conversation": {
+      "heading": "Mode Conversation",
+      "description": "Ayez une conversation bidirectionnelle avec quelqu'un qui parle une langue différente. Chaque personne parle dans sa propre langue et voit la traduction instantanément.",
+      "button": "Commencer le Mode Conversation"
+    }
   }
 }
