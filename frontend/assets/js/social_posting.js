@@ -3,6 +3,9 @@ const postTitle = document.getElementById('postTitle');
 const postContent = document.getElementById('postContent');
 const feed = document.getElementById('feed');
 
+// Store translations to avoid re-translating
+const translations = {};
+
 // Create post box
 createPostBtn.addEventListener('click', async () => {
     const title = postTitle.value.trim();
@@ -78,7 +81,7 @@ async function renderPost(post) {
                 <span>🔁</span>
                 <span>${i18n.t('post.repost')}</span>
             </button>
-            <button class="action-button translate-button">
+            <button class="action-button translate-button" data-post-id="${post.id}">
                 <span>🌐</span>
                 <span>${i18n.t('post.translate')}</span>
             </button>
@@ -90,6 +93,7 @@ async function renderPost(post) {
     const likeBtn = div.querySelector('.like-button');
     const likeCountSpan = likeBtn.querySelector('.like-count');
     const repostBtn = div.querySelector('.repost-button');
+    const translateBtn = div.querySelector('.translate-button');
 
     // Like Count
     try {
@@ -153,6 +157,107 @@ async function renderPost(post) {
             alert('Network error while reposting');
         }
     });
+
+    // Translation
+    translateBtn.addEventListener('click', async () => {
+        await translatePost(post.id, post.title, post.content, div, translateBtn);
+    });
+
+    // Show cached translation if exists
+    if (translations[post.id]) {
+        displayTranslation(div, translations[post.id]);
+        translateBtn.querySelector('span:last-child').textContent = i18n.t('post.translated') || 'Translated';
+    }
+}
+
+async function translatePost(postId, title, content, postDiv, button) {
+    const targetLang = i18n.currentLang;
+    
+    // Check if already translated
+    if (translations[postId]) {
+        return;
+    }
+    
+    // Disable button and show loading state
+    const originalText = button.querySelector('span:last-child').textContent;
+    button.disabled = true;
+    button.querySelector('span:last-child').textContent = i18n.t('post.translating') || 'Translating...';
+    
+    try {
+        // Translate both title and content
+        const titleResponse = await fetch('/api/translate', {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include',
+            body: JSON.stringify({
+                text: title,
+                target_language: targetLang
+            })
+        });
+        
+        const contentResponse = await fetch('/api/translate', {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include',
+            body: JSON.stringify({
+                text: content,
+                target_language: targetLang
+            })
+        });
+        
+        const titleData = await titleResponse.json();
+        const contentData = await contentResponse.json();
+        
+        if (titleData.translated_text && contentData.translated_text) {
+            const translatedTitle = titleData.translated_text;
+            const translatedContent = contentData.translated_text;
+            
+            // Store translation
+            translations[postId] = {
+                title: translatedTitle,
+                content: translatedContent
+            };
+            
+            // Display translation
+            displayTranslation(postDiv, translations[postId]);
+            
+            // Update button to show translation is complete
+            button.querySelector('span:last-child').textContent = i18n.t('post.translated') || 'Translated';
+        } else {
+            console.error('Translation error:', titleData.error || contentData.error);
+            alert(i18n.t('post.translationFailed') || 'Translation failed. Please try again.');
+            button.disabled = false;
+            button.querySelector('span:last-child').textContent = originalText;
+        }
+    } catch (error) {
+        console.error('Translation error:', error);
+        alert(i18n.t('post.translationUnavailable') || 'Translation service unavailable. Please try again later.');
+        button.disabled = false;
+        button.querySelector('span:last-child').textContent = originalText;
+    }
+}
+
+function displayTranslation(postDiv, translation) {
+    // Check if translation already displayed
+    let translationDiv = postDiv.querySelector('.post-translation');
+    
+    if (!translationDiv) {
+        translationDiv = document.createElement('div');
+        translationDiv.className = 'post-translation';
+        translationDiv.innerHTML = `
+            <div class="translation-label">${i18n.t('post.translationLabel') || 'Translation:'}</div>
+            <div class="translated-title">${escapeHtml(translation.title)}</div>
+            <div class="translated-content">${escapeHtml(translation.content)}</div>
+        `;
+        
+        // Insert before post-actions
+        const actionsDiv = postDiv.querySelector('.post-actions');
+        postDiv.insertBefore(translationDiv, actionsDiv);
+    }
 }
 
 function escapeHtml(text) {
