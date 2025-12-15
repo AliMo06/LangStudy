@@ -3,6 +3,14 @@ from flask_cors import CORS
 from database import get_db_connection, hash_password, init_db
 import sqlite3
 import os
+import asyncio
+import whisper
+from googletrans import Translator
+from gtts import gTTS
+import tempfile
+import base64
+from functools import wraps
+import time
 
 # Setup paths for frontend directory
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -26,21 +34,209 @@ CORS(app,
 
 init_db()
 
-# Serve HTML files
+class SpeechTranslator:
+    #init for the translator object
+    def __init__(self, target_language='en', model_size='base'):
+        print("Loading Whisper...")
+        self.whisper_model = whisper.load_model(model_size)
+        self.translator = Translator()
+        self.target_language = target_language
+
+    #whisper for stt
+    def transcribe_audio(self, audio_file):
+        print("Transcribing audio...")
+        result = self.whisper_model.transcribe(audio_file)
+        return result["text"]
+
+    async def translate_text(self, text, max_retries=3):
+        """Translate text with retry logic"""
+        for attempt in range(max_retries):
+            try:
+                print(f"Translating to {self.target_language}... (attempt {attempt + 1}/{max_retries})")
+                
+                # Create a fresh translator instance on each retry
+                if attempt > 0:
+                    self.translator = Translator()
+                    await asyncio.sleep(1)  # Wait 1 second before retry
+                
+                translation = await self.translator.translate(
+                    text,
+                    dest=self.target_language
+                )
+                
+                if translation and translation.text:
+                    return translation.text
+                else:
+                    raise Exception("Empty translation received")
+                    
+            except Exception as e:
+                print(f"Translation attempt {attempt + 1} failed: {str(e)}")
+                
+                if attempt == max_retries - 1:
+                    raise Exception(f"Translation failed after {max_retries} attempts: {str(e)}")
+                
+                await asyncio.sleep(2 ** attempt)
+        
+        raise Exception("Translation failed")
+
+    def text_to_speech(self, text, output_file):
+        print("Generating speech...")
+        tts = gTTS(text=text, lang=self.target_language)
+        tts.save(output_file)
+
+
+speech_translator = SpeechTranslator(target_language='en', model_size='base')
+
+def async_route(f):
+    @wraps(f)
+    def wrapped(*args, **kwargs):
+        return asyncio.run(f(*args, **kwargs))
+    return wrapped
+
+
+@app.route('/api/transcribe', methods=['POST'])
+def transcribe():
+    """Transcribe audio to text using Whisper"""
+    try:
+        if 'audio' not in request.files:
+            return jsonify({'error': 'No audio file provided'}), 400
+        
+        audio_file = request.files['audio']
+        
+        with tempfile.NamedTemporaryFile(suffix='.wav', delete=False) as tmp:
+            audio_path = tmp.name
+            audio_file.save(audio_path)
+        
+        text = speech_translator.transcribe_audio(audio_path)
+        
+        os.remove(audio_path)
+        
+        return jsonify({'text': text})
+    
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/translate', methods=['POST'])
+@async_route
+async def translate():
+    """Translate text to target language"""
+    try:
+        data = request.get_json()
+        text = data.get('text')
+        target_lang = data.get('target_language', 'en')
+        
+        if not text:
+            return jsonify({'error': 'No text provided'}), 400
+        
+        if not target_lang:
+            return jsonify({'error': 'No target language specified'}), 400
+        
+        print(f"Translating '{text[:50]}...' to {target_lang}")
+        
+        speech_translator.target_language = target_lang
+        translated_text = await speech_translator.translate_text(text)
+        
+        return jsonify({'translated_text': translated_text})
+    
+    except Exception as e:
+        error_msg = str(e)
+        print(f"Translation error: {error_msg}")
+        
+        if "JSONDecodeError" in error_msg or "Expecting value" in error_msg:
+            return jsonify({'error': 'Translation service temporarily unavailable. Please try again.'}), 503
+        else:
+            return jsonify({'error': f'Translation failed: {error_msg}'}), 500
+
+@app.route('/api/text-to-speech', methods=['POST'])
+def text_to_speech():
+    """Convert text to speech audio file"""
+    try:
+        data = request.get_json()
+        text = data.get('text')
+        lang = data.get('language', 'en')
+        
+        if not text:
+            return jsonify({'error': 'No text provided'}), 400
+        
+        with tempfile.NamedTemporaryFile(suffix='.mp3', delete=False) as tmp:
+            output_path = tmp.name
+        
+        speech_translator.target_language = lang
+        speech_translator.text_to_speech(text, output_path)
+        
+        with open(output_path, 'rb') as f:
+            audio_data = base64.b64encode(f.read()).decode('utf-8')
+        
+        os.remove(output_path)
+        
+        return jsonify({'audio': audio_data})
+    
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/full-translation', methods=['POST'])
+@async_route
+async def full_translation():
+    """Complete pipeline: audio -> transcribe -> translate -> TTS"""
+    try:
+        if 'audio' not in request.files:
+            return jsonify({'error': 'No audio file provided'}), 400
+        
+        audio_file = request.files['audio']
+        target_lang = request.form.get('target_language', 'en')
+        
+        with tempfile.NamedTemporaryFile(suffix='.wav', delete=False) as tmp_audio:
+            audio_path = tmp_audio.name
+            audio_file.save(audio_path)
+
+        with tempfile.NamedTemporaryFile(suffix='.mp3', delete=False) as tmp_output:
+            output_path = tmp_output.name
+
+        try:
+            speech_translator.target_language = target_lang
+            
+            original_text = speech_translator.transcribe_audio(audio_path)
+            print(f"\nOriginal text: {original_text}")
+
+            translated_text = await speech_translator.translate_text(original_text)
+            print(f"Translated text: {translated_text}\n")
+
+            speech_translator.text_to_speech(translated_text, output_path)
+            
+            with open(output_path, 'rb') as f:
+                audio_data = base64.b64encode(f.read()).decode('utf-8')
+            
+            return jsonify({
+                'original_text': original_text,
+                'translated_text': translated_text,
+                'audio': audio_data
+            })
+        
+        finally:
+            if os.path.exists(audio_path):
+                os.remove(audio_path)
+            if os.path.exists(output_path):
+                os.remove(output_path)
+    
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/health', methods=['GET'])
+def health():
+    return jsonify({'status': 'healthy'})
+
 @app.route('/')
 def index():
     return send_from_directory(FRONTEND_DIR, 'index.html')
 
 @app.route('/<path:filename>')
 def serve_frontend(filename):
-    # Serve all files from frontend directory
     try:
         return send_from_directory(FRONTEND_DIR, filename)
     except Exception as e:
         print(f"Error serving {filename}: {e}")
         return "File not found", 404
 
-# ========== USER AUTHENTICATION ==========
 
 @app.route('/signup', methods=['POST'])
 def signup():
