@@ -206,3 +206,7 @@ document.getElementById('inputText').addEventListener('input', function() {
         this.translateTimer = setTimeout(handleTranslate, 1000);
     }
 });
+
+window.goBack = function() {
+    window.history.back();
+}
