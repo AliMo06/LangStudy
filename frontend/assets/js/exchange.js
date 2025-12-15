@@ -193,3 +193,12 @@ async function connectToUser(userId, username) {
         }
     }
 }
+
+const languageDropdown = document.getElementById('language-dropdown');
+if (languageDropdown) {
+    languageDropdown.addEventListener('change', async () => {
+        setTimeout(async () => {
+            await loadFeed();
+        }, 50);
+    });
+}

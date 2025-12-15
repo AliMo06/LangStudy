@@ -232,3 +232,12 @@ async function addFriend(username, button) {
         button.textContent = i18n.t('messages.addFriend');
     }
 }
+
+const languageDropdown = document.getElementById('language-dropdown');
+if (languageDropdown) {
+    languageDropdown.addEventListener('change', async () => {
+        setTimeout(async () => {
+            await loadFeed();
+        }, 50);
+    });
+}

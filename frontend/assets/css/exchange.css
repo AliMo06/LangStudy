@@ -50,7 +50,7 @@ body {
     justify-content: center;
 }
 
-.language-selector {
+.language-dropdown {
     padding: 8px 12px;
     border: 2px solid #e0e0e0;
     border-radius: 8px;
@@ -61,8 +61,8 @@ body {
     transition: border-color 0.3s;
 }
 
-.language-selector:focus,
-.language-selector:hover {
+.language-dropdown:focus,
+.language-dropdown:hover {
     border-color: #667eea;
 }
 
