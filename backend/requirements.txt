@@ -6,6 +6,6 @@ itsdangerous==2.2.0
 Jinja2==3.1.6
 MarkupSafe==3.0.3
 Werkzeug==3.1.4
-openai-whisper==20231117
-googletrans==4.0.0-rc1
-gtts==2.5.1
+openai-whisper==20250625
+googletrans==4.0.2
+gtts==2.5.4
