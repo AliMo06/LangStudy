@@ -64,7 +64,7 @@ function displayMessage(msg) {
         const translateBtn = document.createElement("button");
         translateBtn.className = "translate-btn";
         translateBtn.textContent = i18n.t('exchangeChat.translate');
-        translateBtn.onclick = () => translateMessage(msg.id, msg.message_text, wrapper);
+        translateBtn.onclick = () => translateMessage(msg.id, msg.message_text, wrapper, translateBtn);
         msgDiv.appendChild(translateBtn);
     }
     
@@ -81,28 +81,36 @@ function displayMessage(msg) {
     messageArea.appendChild(wrapper);
 }
 
-async function translateMessage(messageId, text, wrapper) {
-    const targetLang = document.getElementById('language-dropdown').value;
+async function translateMessage(messageId, text, wrapper, button) {
+    const targetLang = i18n.currentLang;
     // Check if already translated
     if (translations[messageId]) {
         return;
     }
     
+    // Disable button and show loading state
+    const originalText = button.textContent;
+    button.disabled = true;
+    button.textContent = i18n.t('exchangeChat.translating') || 'Translating...';
+    
     try {
-        const response = await fetch(`${API_URL}/translate`, {
+        // Use your backend translation API
+        const response = await fetch('/api/translate', {
             method: 'POST',
-            headers: {
+            headers: { 
                 'Content-Type': 'application/json'
             },
+            credentials: 'include',
             body: JSON.stringify({
                 text: text,
-                target_language: targetLang
+                target_language: targetLang // You can make this dynamic based on user preference
             })
         });
+        
         const data = await response.json();
         
-        if (data.responseData && data.responseData.translatedText) {
-            const translatedText = data.responseData.translatedText;
+        if (data.translated_text) {
+            const translatedText = data.translated_text;
             translations[messageId] = translatedText;
             
             // Add translation to the message
@@ -110,12 +118,20 @@ async function translateMessage(messageId, text, wrapper) {
             translationDiv.className = "translation";
             translationDiv.textContent = i18n.t('exchangeChat.translation') + translatedText;
             wrapper.appendChild(translationDiv);
-        } else {
-            alert(i18n.t('exchangeChat.translationFailed'));
+            
+            // Update button to show translation is complete
+            button.textContent = i18n.t('exchangeChat.translated') || 'Translated';
+        } else if (data.error) {
+            console.error('Translation error:', data.error);
+            alert(i18n.t('exchangeChat.translationFailed') || 'Translation failed. Please try again.');
+            button.disabled = false;
+            button.textContent = originalText;
         }
     } catch (error) {
         console.error('Translation error:', error);
-        alert(i18n.t('exchangeChat.translationUnavailable'));
+        alert(i18n.t('exchangeChat.translationUnavailable') || 'Translation service unavailable. Please try again later.');
+        button.disabled = false;
+        button.textContent = originalText;
     }
 }
 
