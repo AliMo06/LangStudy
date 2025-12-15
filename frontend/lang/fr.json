@@ -1,10 +1,10 @@
 {
-  "app-title": "LangStudy",
-  "language-label": "Language:",
-  "welcome-message": "Welcome to LangStudy",
-  "description": "Login or Sign Up Below",
-  "signup-button": "Sign Up",
-  "login-button": "Log In",
+    "app-title": "LangStudy",
+  "language-label": "Langue:",
+  "welcome-message": "Bienvenue dans l'Application de LangStudy",
+  "description": "Se Connecter ou Créer un compte.",
+  "signup-button": "Créer un compte",
+  "login-button": "Se Connecter",
 
   "page": {
     "title": "LangStudy - Flux Social"
