@@ -10,7 +10,8 @@
     "title": "LangStudy - المنشورات الاجتماعية"
   },
   "header": {
-    "appName": "LangStudy"
+    "appName": "LangStudy",
+    "language-selector": "اللغة:"
   },
   "postCreator": {
     "heading": "شارك رحلتك في تعلم اللغات:",
@@ -35,6 +36,11 @@
   },
 
   "messages": {
+    "pageTitle": "الرسائل",
+    "title": "الرسائل",
+    "searchPlaceholder": "ابحث عن المستخدمين باسم المستخدم (أو اتركه فارغًا لعرض الكل)...",
+    "friendsHeading": "الأصدقاء",
+    "loadingFriends": "جارٍ تحميل الأصدقاء...",
     "noFriends": "لا يوجد أصدقاء بعد. ابحث عن مستخدمين أعلاه لإضافة أصدقاء!",
     "noUsersFound": "لم يتم العثور على مستخدمين مطابقين لبحثك",
     "noOtherUsers": "لا يوجد مستخدمون آخرون في النظام حتى الآن",
@@ -49,10 +55,20 @@
     "friend": "صديق",
     "noFriendSelected": "لم يتم اختيار صديق",
     "failedToSend": "فشل في إرسال الرسالة: ",
-    "errorSendingMessage": "خطأ أثناء إرسال الرسالة"
+    "errorSendingMessage": "خطأ أثناء إرسال الرسالة",
+    "conversationTitle": "المحادثة",
+    "back": "← رجوع",
+    "conversationWith": "محادثة مع صديق",
+    "typeMessage": "اكتب رسالة..."
   },
 
   "exchange": {
+    "pageTitle": "تبادل اللغات",
+    "languagesYouSpeak": "اللغات التي تتحدثها",
+    "languagesYouWantToLearn": "اللغات التي ترغب في تعلمها",
+    "publishRequest": "نشر الطلب",
+    "availableRequests": "طلبات التبادل المتاحة",
+    "loadingRequests": "جارٍ تحميل الطلبات...",
     "selectSpeaks": "يرجى اختيار لغة واحدة على الأقل تتحدثها",
     "selectLearning": "يرجى اختيار لغة واحدة على الأقل ترغب في تعلمها",
     "requestPublished": "تم نشر الطلب بنجاح!",
@@ -68,6 +84,10 @@
   },
 
   "exchangeChat": {
+    "pageTitle": "دردشة تبادل اللغات",
+    "title": "تبادل اللغات",
+    "back": "← رجوع",
+    "typeMessage": "اكتب رسالة...",
     "you": "أنت",
     "translate": "ترجمة",
     "translation": "الترجمة: ",

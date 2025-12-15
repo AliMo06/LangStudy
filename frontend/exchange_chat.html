@@ -3,27 +3,28 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Language Exchange Chat</title>
+    <title data-i18n="exchangeChat.pageTitle">Language Exchange Chat</title>
     <link rel="stylesheet" href="assets/css/messages.css" />
 </head>
 
 <body>
 
     <div class="header exchange-header">
-        <a class="back" href="exchange.html" style="color: white;">← Back</a>
-        <h2 id="partnerName">Language Exchange</h2>
+        <a class="back" href="exchange.html" style="color: white;" data-i18n="exchangeChat.back">← Back</a>
+        <h2 id="partnerName" data-i18n="exchangeChat.title">Language Exchange</h2>
         <div></div>
     </div>
 
     <div class="messages" id="messageArea"></div>
 
     <div class="input-area">
-        <input id="messageInput" type="text" placeholder="Type a message..." />
+        <input id="messageInput" type="text" data-i18n-placeholder="exchangeChat.typeMessage" placeholder="Type a message..." />
         <button class="send-btn" id="sendBtn">➤</button>
     </div>
         
     <script src="assets/js/main.js"></script>
     <script src="assets/js/i18n.js"></script>
     <script src="assets/js/exchange_chat.js"></script>
+
 </body>
 </html>

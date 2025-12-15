@@ -10,7 +10,8 @@
     "title": "LangStudy - Muro Social"
   },
   "header": {
-    "appName": "LangStudy"
+    "appName": "LangStudy",
+    "language-selector": "Idioma:"
   },
   "postCreator": {
     "heading": "Comparte tu experiencia de aprendizaje de idiomas:",
@@ -35,6 +36,11 @@
   },
 
   "messages": {
+    "pageTitle": "Mensajes",
+    "title": "Mensajes",
+    "searchPlaceholder": "Buscar usuarios por nombre de usuario (o dejar en blanco para ver todos)...",
+    "friendsHeading": "Amigos",
+    "loadingFriends": "Cargando amigos...",
     "noFriends": "Aún no tienes amigos. ¡Busca usuarios arriba para agregar amigos!",
     "noUsersFound": "No se encontraron usuarios que coincidan con tu búsqueda",
     "noOtherUsers": "Aún no hay otros usuarios en el sistema",
@@ -49,10 +55,20 @@
     "friend": "Amigo",
     "noFriendSelected": "Ningún amigo seleccionado",
     "failedToSend": "No se pudo enviar el mensaje: ",
-    "errorSendingMessage": "Error al enviar el mensaje"
+    "errorSendingMessage": "Error al enviar el mensaje",
+    "conversationTitle": "Conversación",
+    "back": "← Volver",
+    "conversationWith": "Conversación con un amigo",
+    "typeMessage": "Escribe un mensaje..."
   },
 
   "exchange": {
+    "pageTitle": "Intercambio de Idiomas",
+    "languagesYouSpeak": "Idiomas que hablas",
+    "languagesYouWantToLearn": "Idiomas que quieres aprender",
+    "publishRequest": "Publicar solicitud",
+    "availableRequests": "Solicitudes de Intercambio Disponibles",
+    "loadingRequests": "Cargando solicitudes...",
     "selectSpeaks": "Por favor selecciona al menos un idioma que hables",
     "selectLearning": "Por favor selecciona al menos un idioma que quieras aprender",
     "requestPublished": "¡Solicitud publicada con éxito!",
@@ -68,6 +84,10 @@
   },
 
   "exchangeChat": {
+    "pageTitle": "Chat de Intercambio de Idiomas",
+    "title": "Intercambio de Idiomas",
+    "back": "← Volver",
+    "typeMessage": "Escribe un mensaje...",
     "you": "Tú",
     "translate": "Traducir",
     "translation": "Traducción: ",

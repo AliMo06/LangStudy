@@ -10,7 +10,8 @@
     "title": "LangStudy - Social Feed"
   },
   "header": {
-    "appName": "LangStudy"
+    "appName": "LangStudy",
+    "language-selector": "Language:"
   },
   "postCreator": {
     "heading": "Share your language learning journey:",
@@ -35,6 +36,11 @@
   },
   
   "messages": {
+    "pageTitle": "Messages",
+    "title": "Messages",
+    "searchPlaceholder": "Search users by username (or leave blank to see all)...",
+    "friendsHeading": "Friends",
+    "loadingFriends": "Loading friends...",
     "noFriends": "No friends yet. Search for users above to add friends!",
     "noUsersFound": "No users found matching your search",
     "noOtherUsers": "No other users in the system yet",
@@ -49,10 +55,20 @@
     "friend": "Friend",
     "noFriendSelected": "No friend selected",
     "failedToSend": "Failed to send message: ",
-    "errorSendingMessage": "Error sending message"
+    "errorSendingMessage": "Error sending message",
+    "conversationTitle": "Conversation",
+    "back": "← Back",
+    "conversationWith": "Conversation with Friend",
+    "typeMessage": "Type a message..."
   },
   
   "exchange": {
+    "pageTitle": "Language Exchange",
+    "languagesYouSpeak": "Languages you speak",
+    "languagesYouWantToLearn": "Languages you want to learn",
+    "publishRequest": "Publish request",
+    "availableRequests": "Available Exchange Requests",
+    "loadingRequests": "Loading requests...",
     "selectSpeaks": "Please select at least one language you speak",
     "selectLearning": "Please select at least one language you want to learn",
     "requestPublished": "Request published successfully!",
@@ -68,6 +84,10 @@
   },
   
   "exchangeChat": {
+    "pageTitle": "Language Exchange Chat",
+    "title": "Language Exchange",
+    "back": "← Back",
+    "typeMessage": "Type a message...",
     "you": "You",
     "translate": "Translate",
     "translation": "Translation: ",

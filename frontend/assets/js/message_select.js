@@ -237,7 +237,7 @@ const languageDropdown = document.getElementById('language-dropdown');
 if (languageDropdown) {
     languageDropdown.addEventListener('change', async () => {
         setTimeout(async () => {
-            await loadFeed();
+            await (window.location.href = window.location.href);
         }, 50);
     });
 }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Messages</title>
+    <title data-i18n="messages.pageTitle">Messages</title>
     <link rel="stylesheet" href="assets/css/taskbar.css" />
     <link rel="stylesheet" href="assets/css/message_select.css" />
 </head>
@@ -13,7 +13,7 @@
         <a href="index.html">
             <img src="assets/img/logo_cropped.png" alt="Logo" class="logo">
         </a>
-        <h1>Messages</h1>
+        <h1 data-i18n="messages.title">Messages</h1>
 
         <!-- Language Selector -->
         <div class="language-selector" style="margin-top: 10px;">
@@ -32,17 +32,18 @@
                 type="text" 
                 id="searchInput" 
                 class="search-input" 
-                data-i18n-placeholder="messages.searchPlaceholder" placeholder="Search users by username (or leave blank to see all)..."
+                data-i18n-placeholder="messages.searchPlaceholder"
+                placeholder="Search users by username (or leave blank to see all)..."
             />
         </div>
         
         <!-- Search Results -->
         <div class="search-results" id="searchResults"></div>
         
-        <h2>Friends</h2>
+        <h2 data-i18n="messages.friendsHeading">Friends</h2>
         <!-- List of friends -->
         <ul id="friendsList">
-            <li style="list-style: none; padding: 10px;" data-i18n="messages.friendsList">Loading friends...</li>
+            <li style="list-style: none; padding: 10px;" data-i18n="messages.loadingFriends">Loading friends...</li>
         </ul>
         
     </div>

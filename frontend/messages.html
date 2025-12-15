@@ -3,43 +3,29 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Conversation</title>
+    <title data-i18n="messages.conversationTitle">Conversation</title>
     <link rel="stylesheet" href="assets/css/messages.css" />
-
 </head>
 
 <body>
 
     <div class="header">
-        <a class="back" href="message_select.html">← Back</a> <!-- Back button, returns to select screen-->
-        <h2>Conversation with Friend</h2>
+        <a class="back" href="message_select.html" data-i18n="messages.back">← Back</a>
+        <h2 data-i18n="messages.conversationWith">Conversation with Friend</h2>
     </div>
 
     <div class="messages" id="messageArea">
-        <div class="message friend">
-            <div class="receiver">Friend</div>
-            <div>Hey, how are you doing today?</div>
-        </div>
-
-        <div class="message you">
-            <div class="sender">You</div>
-            <div>I'm doing good, working on something.</div>
-        </div>
-
-        <div class="message friend">
-            <div class="receiver">Friend</div>
-            <div>Nice! Let me know if you need help.</div>
-        </div>
+        <!-- Messages will be loaded here dynamically -->
     </div>
 
     <div class="input-area">
-        <input id="messageInput" type="text" placeholder="Type a message..." />
+        <input id="messageInput" type="text" data-i18n-placeholder="messages.typeMessage" placeholder="Type a message..." />
         <button class="send-btn" id="sendBtn">➤</button>
     </div>
-    
-    <script src="assets/js/main.js"></script>
-    <script src="assets/js/i18n.js"></script>
-    <script src="assets/js/messages.js"></script>
+        
+<script src="assets/js/main.js"></script>
+<script src="assets/js/i18n.js"></script>
+<script src="assets/js/messages.js"></script>
 
 </body>
 </html>

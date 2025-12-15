@@ -10,7 +10,8 @@
     "title": "LangStudy - Fil Social"
   },
   "header": {
-    "appName": "LangStudy"
+    "appName": "LangStudy",
+    "language-selector": "Langue :"
   },
   "postCreator": {
     "heading": "Partagez votre parcours d’apprentissage des langues :",
@@ -35,6 +36,11 @@
   },
 
   "messages": {
+    "pageTitle": "Messages",
+    "title": "Messages",
+    "searchPlaceholder": "Rechercher des utilisateurs par nom d’utilisateur (ou laisser vide pour tout voir)...",
+    "friendsHeading": "Amis",
+    "loadingFriends": "Chargement des amis...",
     "noFriends": "Aucun ami pour le moment. Recherchez des utilisateurs ci-dessus pour ajouter des amis !",
     "noUsersFound": "Aucun utilisateur trouvé correspondant à votre recherche",
     "noOtherUsers": "Il n’y a pas encore d’autres utilisateurs dans le système",
@@ -49,10 +55,20 @@
     "friend": "Ami",
     "noFriendSelected": "Aucun ami sélectionné",
     "failedToSend": "Impossible d’envoyer le message : ",
-    "errorSendingMessage": "Erreur lors de l’envoi du message"
+    "errorSendingMessage": "Erreur lors de l’envoi du message",
+    "conversationTitle": "Conversation",
+    "back": "← Retour",
+    "conversationWith": "Conversation avec un ami",
+    "typeMessage": "Écrivez un message..."
   },
 
   "exchange": {
+    "pageTitle": "Échange Linguistique",
+    "languagesYouSpeak": "Langues que vous parlez",
+    "languagesYouWantToLearn": "Langues que vous souhaitez apprendre",
+    "publishRequest": "Publier la demande",
+    "availableRequests": "Demandes d’Échange Disponibles",
+    "loadingRequests": "Chargement des demandes...",
     "selectSpeaks": "Veuillez sélectionner au moins une langue que vous parlez",
     "selectLearning": "Veuillez sélectionner au moins une langue que vous souhaitez apprendre",
     "requestPublished": "Demande publiée avec succès !",
@@ -68,6 +84,10 @@
   },
 
   "exchangeChat": {
+    "pageTitle": "Chat d’Échange Linguistique",
+    "title": "Échange Linguistique",
+    "back": "← Retour",
+    "typeMessage": "Écrivez un message...",
     "you": "Vous",
     "translate": "Traduire",
     "translation": "Traduction : ",

@@ -3,23 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Language Exchange</title>
+<title data-i18n="exchange.pageTitle">Language Exchange</title>
 <link rel="stylesheet" href="assets/css/style.css">
 <link rel="stylesheet" href="assets/css/taskbar.css">
 <link rel="stylesheet" href="assets/css/exchange.css">
 </head>
+
 <body>
     
     <div class="social-container">
         <div class="social-header">
             <div class="header-left">
-            <a href="index.html" class="logo-link">
-                <div class="logo-image">
-                    <img src="assets/img/logo_cropped.png" alt="Logo" class="logo-image">
-                </div>
-            </a>
-            <h1 data-i18n="header.appName">LangStudy</h1>
-        </div>
+                <div class="logo-image"><img src="assets/img/logo_cropped.png" alt="Logo" class="logo-image"></div>
+                <h1 data-i18n="header.appName">LangStudy</h1>
+            </div>
         <div class="header-right">
             <label for="language-dropdown" data-i18n="language-label">Language:</label>
             <select id="language-dropdown">
@@ -35,7 +32,7 @@
     <div class="publish-section">
         <div class="language-selection">
             <div class="selection-column">
-                <h3>Languages you speak</h3>
+                <h3 data-i18n="exchange.languagesYouSpeak">Languages you speak</h3>
                 <div class="language-grid" id="speaksGrid">
                     <button class="language-btn" data-lang="English">English</button>
                     <button class="language-btn" data-lang="Spanish">Spanish</button>
@@ -45,7 +42,7 @@
             </div>
             
             <div class="selection-column">
-                <h3>Languages you want to learn</h3>
+                <h3 data-i18n="exchange.languagesYouWantToLearn">Languages you want to learn</h3>
                 <div class="language-grid" id="learningGrid">
                     <button class="language-btn" data-lang="English">English</button>
                     <button class="language-btn" data-lang="Spanish">Spanish</button>
@@ -55,41 +52,41 @@
             </div>
         </div>
         
-        <button class="publish-btn" id="publishBtn">Publish request</button>
+        <button class="publish-btn" id="publishBtn" data-i18n="exchange.publishRequest">Publish request</button>
     </div>
 
     <div class="divider"></div>
-    <h2 class="requests-header">Available Exchange Requests</h2>
+    <h2 class="requests-header" data-i18n="exchange.availableRequests">Available Exchange Requests</h2>
 
     <div class="exchange-container" id="exchangeContainer">
         <!-- Exchange requests will be loaded here dynamically -->
-        <p style="text-align: center; color: #666; padding: 20px;">Loading requests...</p>
+        <p style="text-align: center; color: #666; padding: 20px;" data-i18n="exchange.loadingRequests">Loading requests...</p>
     </div>
     
     <nav class="bottom-nav">
         <a href="message_select.html" class="nav-item">
             <div class="nav-icon"><img src="assets/img/messages_icon.png" alt="Logo" class="logo-image"></div>
-            <div class="nav-label">Messages</div>
+            <div class="nav-label" data-i18n="nav.messages">Messages</div>
         </a>
         
         <a href="flashcard_menu.html" class="nav-item">
             <div class="nav-icon"><img src="assets/img/flashcards_logo.png" alt="Logo" class="logo-image"></div>
-            <div class="nav-label">Flashcards</div>
+            <div class="nav-label" data-i18n="nav.flashcards">Flashcards</div>
         </a>
         
         <a href="social_posting.html" class="nav-item">
             <div class="nav-icon">🗣️</div>
-            <div class="nav-label">Social Posting</div>
+            <div class="nav-label" data-i18n="nav.social">Social Posting</div>
         </a>
         
         <a href="exchange.html" class="nav-item">
             <div class="nav-icon"><img src="assets/img/language_exchange_logo.png" alt="Logo" class="logo-image"></div>
-            <div class="nav-label">Exchange</div>
+            <div class="nav-label" data-i18n="nav.exchange">Exchange</div>
         </a>
         
         <a href="livetranslate.html" class="nav-item">
             <div class="nav-icon"><img src="assets/img/live_translation_logo.png" alt="Logo" class="logo-image"></div>
-            <div class="nav-label">Live Translation</div>
+            <div class="nav-label" data-i18n="nav.translation">Live Translation</div>
         </a>
     </nav>
     
