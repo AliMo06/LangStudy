@@ -1,4 +1,5 @@
 document.getElementById('forgotPasswordForm').addEventListener('submit', async function(e) {
+    //prevent default form submission
     e.preventDefault();
     
     //gets all three fields
@@ -30,20 +31,25 @@ document.getElementById('forgotPasswordForm').addEventListener('submit', async f
             body: JSON.stringify(resetData)
         });
         
+        //parse json response from server
         const data = await response.json();
         
         if (data.success) {  //show success message
+            //password reset successful
             successMessage.classList.add('show');
-            this.reset();
+            this.reset(); //reset form fields
             
             setTimeout(function() {  //wait 2 seconds then redirect to login
                 successMessage.classList.remove('show');
+                //redirect to lgin page
                 window.location.href = 'login.html';
             }, 2000);
         } else {
+            //password reset failed
             alert('Error: ' + data.message);
         }
     } catch (error) {
+        //network error or server not responding
         alert('Error connecting to server!');
         console.error('Error:', error);
     }

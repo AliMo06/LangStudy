@@ -1,5 +1,5 @@
-from flask import Flask, request, jsonify, session, send_from_directory
-from flask_cors import CORS
+from flask import Flask, request, jsonify, session, send_from_directory  #web framework for the application
+from flask_cors import CORS  #allows the frontend to make requests to Flask backend
 from database import get_db_connection, hash_password, init_db
 import sqlite3
 import os
@@ -12,23 +12,28 @@ import base64
 from functools import wraps
 import time
 
+#base directory paths for frontend files
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 FRONTEND_DIR = os.path.join(BASE_DIR, '..', 'frontend')
 
+# Initialize Flask app
 app = Flask(__name__, static_folder=FRONTEND_DIR)
 app.secret_key = 'your-secret-key-change-this-later'
 
+# Session cookie settings
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 app.config['SESSION_COOKIE_SECURE'] = False
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['SESSION_COOKIE_DOMAIN'] = None
 
+# Enable CORS for specific origins
 CORS(app, 
      supports_credentials=True,
      origins=["http://localhost:5000", "http://127.0.0.1:5000"],
      allow_headers=["Content-Type"],
      expose_headers=["Content-Type"])
 
+# Initialize the database
 init_db()
 
 class SpeechTranslator:
@@ -61,6 +66,7 @@ class SpeechTranslator:
                     dest=self.target_language
                 )
                 
+                # Check if translation text is valid
                 if translation and translation.text:
                     return translation.text
                 else:
@@ -81,7 +87,7 @@ class SpeechTranslator:
         tts = gTTS(text=text, lang=self.target_language)
         tts.save(output_file)
 
-
+#create global speech translator instance
 speech_translator = SpeechTranslator(target_language='en', model_size='base')
 
 def async_route(f):
@@ -90,22 +96,26 @@ def async_route(f):
         return asyncio.run(f(*args, **kwargs))
     return wrapped
 
-
+#speech/translation endpoints
 @app.route('/api/transcribe', methods=['POST'])
 def transcribe():
     """Transcribe audio to text using Whisper"""
     try:
+        #check if audio file is in request
         if 'audio' not in request.files:
             return jsonify({'error': 'No audio file provided'}), 400
         
         audio_file = request.files['audio']
         
+        #save audio to a temporary file
         with tempfile.NamedTemporaryFile(suffix='.wav', delete=False) as tmp:
             audio_path = tmp.name
             audio_file.save(audio_path)
         
+        #transcribe audio
         text = speech_translator.transcribe_audio(audio_path)
         
+        #remove temporary file
         os.remove(audio_path)
         
         return jsonify({'text': text})
@@ -118,10 +128,12 @@ def transcribe():
 async def translate():
     """Translate text to target language"""
     try:
+        #parse request data
         data = request.get_json()
         text = data.get('text')
         target_lang = data.get('target_language', 'en')
         
+        #validate input
         if not text:
             return jsonify({'error': 'No text provided'}), 400
         
@@ -130,6 +142,7 @@ async def translate():
         
         print(f"Translating '{text[:50]}...' to {target_lang}")
         
+        #update translator and language translate
         speech_translator.target_language = target_lang
         translated_text = await speech_translator.translate_text(text)
         
@@ -139,6 +152,7 @@ async def translate():
         error_msg = str(e)
         print(f"Translation error: {error_msg}")
         
+        #Handle JSON decode errors
         if "JSONDecodeError" in error_msg or "Expecting value" in error_msg:
             return jsonify({'error': 'Translation service temporarily unavailable. Please try again.'}), 503
         else:
@@ -148,22 +162,28 @@ async def translate():
 def text_to_speech():
     """Convert text to speech audio file"""
     try:
+        #parse request data
         data = request.get_json()
         text = data.get('text')
         lang = data.get('language', 'en')
         
+        #validate input
         if not text:
             return jsonify({'error': 'No text provided'}), 400
         
+        #create temporary file for audio
         with tempfile.NamedTemporaryFile(suffix='.mp3', delete=False) as tmp:
             output_path = tmp.name
         
+        #generate speech
         speech_translator.target_language = lang
         speech_translator.text_to_speech(text, output_path)
         
+        #read and encode audio file to base64
         with open(output_path, 'rb') as f:
             audio_data = base64.b64encode(f.read()).decode('utf-8')
         
+        #remove temporary file
         os.remove(output_path)
         
         return jsonify({'audio': audio_data})
@@ -176,12 +196,14 @@ def text_to_speech():
 async def full_translation():
     """Complete pipeline: audio -> transcribe -> translate -> TTS"""
     try:
+        #validate audio file present
         if 'audio' not in request.files:
             return jsonify({'error': 'No audio file provided'}), 400
         
         audio_file = request.files['audio']
         target_lang = request.form.get('target_language', 'en')
         
+        #create temporary files for input audio and output speech
         with tempfile.NamedTemporaryFile(suffix='.wav', delete=False) as tmp_audio:
             audio_path = tmp_audio.name
             audio_file.save(audio_path)
@@ -190,16 +212,21 @@ async def full_translation():
             output_path = tmp_output.name
 
         try:
+            #set target language
             speech_translator.target_language = target_lang
             
+            #transcribe audio
             original_text = speech_translator.transcribe_audio(audio_path)
             print(f"\nOriginal text: {original_text}")
 
+            #translate text
             translated_text = await speech_translator.translate_text(original_text)
             print(f"Translated text: {translated_text}\n")
 
+            #convert translation to speech
             speech_translator.text_to_speech(translated_text, output_path)
             
+            #encode audio as base64
             with open(output_path, 'rb') as f:
                 audio_data = base64.b64encode(f.read()).decode('utf-8')
             
@@ -210,6 +237,7 @@ async def full_translation():
             })
         
         finally:
+            #cleanup temporary files
             if os.path.exists(audio_path):
                 os.remove(audio_path)
             if os.path.exists(output_path):
@@ -218,6 +246,7 @@ async def full_translation():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+#utility endpoints
 @app.route('/health', methods=['GET'])
 def health():
     return jsonify({'status': 'healthy'})
@@ -235,20 +264,25 @@ def serve_frontend(filename):
         return "File not found", 404
 
 
+#authentication endpoints
 @app.route('/signup', methods=['POST'])
 def signup():
+    #parse request data
     data = request.get_json()
     fullname = data.get('fullname')
     email = data.get('email')
     username = data.get('username')
     password = data.get('password')
     
+    #validate input
     if not all([fullname, email, username, password]):
         return jsonify({'success': False, 'message': 'All fields are required'}), 400
     
+    #hash password
     password_hash = hash_password(password)
     
     try:
+        #insert new user into database
         conn = get_db_connection()
         cursor = conn.cursor()
         cursor.execute(
@@ -263,15 +297,18 @@ def signup():
 
 @app.route('/login', methods=['POST'])
 def login():
+    #authenticate user and create session
     data = request.get_json()
     username = data.get('username')
     password = data.get('password')
     
+    #validate input
     if not username or not password:
         return jsonify({'success': False, 'message': 'Username and password are required'}), 400
     
     password_hash = hash_password(password)
     
+    #check credentials in database
     conn = get_db_connection()
     cursor = conn.cursor()
     user = cursor.execute(
@@ -281,6 +318,7 @@ def login():
     conn.close()
     
     if user:
+        #store user info in session
         session['user_id'] = user['id']
         session['username'] = user['username']
         return jsonify({'success': True, 'message': 'Login successful', 'username': user['username']})
@@ -306,17 +344,21 @@ def check_session():
 
 @app.route('/forgot-password', methods=['POST'])
 def forgot_password():
+    #parse request data
     data = request.get_json()
     email = data.get('email')
     username = data.get('username')
     new_password = data.get('new_password')
     
+    #validate input
     if not all([email, username, new_password]):
         return jsonify({'success': False, 'message': 'All fields are required'}), 400
     
+    #check password length
     if len(new_password) < 8:
         return jsonify({'success': False, 'message': 'Password must be at least 8 characters'}), 400
     
+    #find user and update password
     conn = get_db_connection()
     cursor = conn.cursor()
     user = cursor.execute(
@@ -346,6 +388,7 @@ def search_users():
     if 'user_id' not in session:
         return jsonify({'success': False, 'message': 'Not logged in'}), 401
     
+    #get search query
     query = request.args.get('query', '').strip().lower()
     
     user_id = session['user_id']
@@ -387,6 +430,7 @@ def search_users():
             (user['id'], user_id)
         ).fetchone()
         
+        # Determine friendship status
         status = 'none'
         if friendship_out and friendship_out['status'] == 'accepted':
             status = 'friends'
@@ -414,6 +458,7 @@ def search_users():
 @app.route('/friends', methods=['GET'])
 def get_friends():
     """Get list of all friends for the logged-in user"""
+    #check if user is logged in
     if 'user_id' not in session:
         return jsonify({'success': False, 'message': 'Not logged in'}), 401
     
@@ -440,6 +485,7 @@ def get_friends():
     
     conn.close()
     
+    #format friends list
     friends_list = [{'id': f['id'], 'username': f['username'], 'fullname': f['fullname']} for f in friends]
     return jsonify({'success': True, 'friends': friends_list})
 
@@ -449,6 +495,7 @@ def add_friend():
     if 'user_id' not in session:
         return jsonify({'success': False, 'message': 'Not logged in'}), 401
     
+    #parse request data
     data = request.get_json()
     friend_username = data.get('friend_username')
     
@@ -468,6 +515,7 @@ def add_friend():
     
     friend_id = friend['id']
     
+    # Prevent adding oneself as friend
     if friend_id == user_id:
         conn.close()
         return jsonify({'success': False, 'message': 'Cannot add yourself as friend'}), 400
@@ -522,13 +570,16 @@ def add_friend():
 @app.route('/send-message', methods=['POST'])
 def send_message():
     """Send a message to a friend"""
+    #check if user is logged in
     if 'user_id' not in session:
         return jsonify({'success': False, 'message': 'Not logged in'}), 401
     
+    #parse request data
     data = request.get_json()
     receiver_id = data.get('receiver_id')
     message_text = data.get('message_text')
     
+    #validate input
     if not receiver_id or not message_text:
         return jsonify({'success': False, 'message': 'Receiver ID and message text required'}), 400
     
@@ -548,12 +599,14 @@ def send_message():
         conn.close()
         return jsonify({'success': False, 'message': 'You are not friends with this user'}), 403
     
+    # Insert message
     cursor.execute(
         'INSERT INTO messages (sender_id, receiver_id, message_text) VALUES (?, ?, ?)',
         (sender_id, receiver_id, message_text)
     )
     conn.commit()
     
+    #get message ID and timestamp
     message_id = cursor.lastrowid
     timestamp = cursor.execute('SELECT timestamp FROM messages WHERE id = ?', (message_id,)).fetchone()['timestamp']
     
@@ -569,6 +622,7 @@ def send_message():
 @app.route('/get-messages/<int:friend_id>', methods=['GET'])
 def get_messages(friend_id):
     """Get all messages between logged-in user and a specific friend"""
+    #check if user is logged in
     if 'user_id' not in session:
         return jsonify({'success': False, 'message': 'Not logged in'}), 401
     
@@ -612,6 +666,7 @@ def get_messages(friend_id):
 @app.route('/unread-count', methods=['GET'])
 def unread_count():
     """Get count of unread messages for logged-in user"""
+    #check if user is logged in
     if 'user_id' not in session:
         return jsonify({'success': False, 'message': 'Not logged in'}), 401
     
@@ -619,6 +674,7 @@ def unread_count():
     conn = get_db_connection()
     cursor = conn.cursor()
     
+    # Count unread messages
     count = cursor.execute(
         'SELECT COUNT(*) as count FROM messages WHERE receiver_id = ? AND read_status = 0',
         (user_id,)
@@ -635,6 +691,7 @@ def get_posts():
     conn = get_db_connection()
     cursor = conn.cursor()
 
+    # Fetch posts along with original post details if reposted
     cursor.execute("""
         SELECT 
             p.id,
@@ -652,6 +709,7 @@ def get_posts():
         ORDER BY p.created_at DESC
     """)
 
+    #format posts
     posts = [dict(row) for row in cursor.fetchall()]
     conn.close()
     return jsonify(posts)
@@ -659,16 +717,20 @@ def get_posts():
 
 @app.route("/posts", methods=["POST"])
 def create_post():
+    #check authentication
     if 'username' not in session:
         return jsonify({'success': False, 'message': 'Not logged in'}), 401
 
+    #parse request data
     data = request.get_json()
     title = data.get("title")
     content = data.get("content")
 
+    #validate input
     if not title or not content:
         return jsonify({'success': False, 'message': 'Missing fields'}), 400
 
+    #insert new post
     conn = get_db_connection()
     cursor = conn.cursor()
 
@@ -685,15 +747,18 @@ def create_post():
 
 @app.route("/repost", methods=["POST"])
 def repost():
+    #check authentication
     if 'username' not in session:
         return jsonify({'success': False, 'message': 'Not logged in'}), 401
 
+    #parse request data
     data = request.get_json()
     post_id = data.get("post_id")
 
     conn = get_db_connection()
     cursor = conn.cursor()
 
+    #get original post
     original = cursor.execute(
         "SELECT * FROM posts WHERE id = ?",
         (post_id,)
@@ -703,6 +768,7 @@ def repost():
         conn.close()
         return jsonify({'success': False, 'message': 'Post not found'}), 404
 
+    #create repost with reference to original
     cursor.execute("""
         INSERT INTO posts (
             author, title, content,
@@ -727,6 +793,7 @@ def repost():
 
 @app.route('/like', methods=['POST'])
 def like_post():
+    #check authentication
     if 'user_id' not in session:
         return jsonify({'success': False, 'message': 'Not logged in'}), 401
 
@@ -771,6 +838,7 @@ def like_post():
 
 @app.route('/post-likes/<int:post_id>', methods=['GET'])
 def get_post_likes(post_id):
+    #check authentication
     """Get like count and whether current user liked it"""
     if 'user_id' not in session:
         user_id = None
@@ -780,6 +848,7 @@ def get_post_likes(post_id):
     conn = get_db_connection()
     cursor = conn.cursor()
 
+    # Get original post ID (follow repost chain)
     post = cursor.execute('SELECT reposted_from FROM posts WHERE id = ?', (post_id,)).fetchone()
     if not post:
         conn.close()
@@ -787,11 +856,13 @@ def get_post_likes(post_id):
 
     original_post_id = post['reposted_from'] or post_id
 
+    # Get like count
     count = cursor.execute(
         'SELECT COUNT(*) as cnt FROM post_likes WHERE post_id = ?',
         (original_post_id,)
     ).fetchone()['cnt']
 
+    # Check if current user liked
     liked = False
     if user_id:
         liked = cursor.execute(
@@ -808,13 +879,16 @@ def get_post_likes(post_id):
 @app.route('/publish-exchange-request', methods=['POST'])
 def publish_exchange_request():
     """Publish a language exchange request"""
+    #check authentication
     if 'user_id' not in session:
         return jsonify({'success': False, 'message': 'Not logged in'}), 401
     
+    #parse request data
     data = request.get_json()
     speaks = data.get('speaks', [])
     learning = data.get('learning', [])
     
+    #validate input
     if not speaks or not learning:
         return jsonify({'success': False, 'message': 'Must specify languages'}), 400
     
@@ -839,6 +913,7 @@ def publish_exchange_request():
 @app.route('/get-exchange-requests', methods=['GET'])
 def get_exchange_requests():
     """Get all exchange requests except from current user"""
+    #check authentication
     if 'user_id' not in session:
         return jsonify({'success': False, 'message': 'Not logged in'}), 401
     
@@ -846,6 +921,7 @@ def get_exchange_requests():
     conn = get_db_connection()
     cursor = conn.cursor()
     
+    # Fetch all exchange requests except from the current user
     requests = cursor.execute('''
         SELECT e.user_id, e.speaks_languages, e.learning_languages, 
                u.username, u.fullname
@@ -857,6 +933,7 @@ def get_exchange_requests():
     
     conn.close()
     
+    #format requests list
     requests_list = [{
         'user_id': r['user_id'],
         'username': r['username'],
@@ -870,9 +947,11 @@ def get_exchange_requests():
 @app.route('/connect-exchange', methods=['POST'])
 def connect_exchange():
     """Connect with a user for language exchange"""
+    #check authentication
     if 'user_id' not in session:
         return jsonify({'success': False, 'message': 'Not logged in'}), 401
     
+    #parse request data
     data = request.get_json()
     partner_id = data.get('partner_id')
     
@@ -905,6 +984,7 @@ def connect_exchange():
 @app.route('/get-exchange-messages/<int:partner_id>', methods=['GET'])
 def get_exchange_messages(partner_id):
     """Get exchange messages with a partner"""
+    #check authentication
     if 'user_id' not in session:
         return jsonify({'success': False, 'message': 'Not logged in'}), 401
     
@@ -912,6 +992,7 @@ def get_exchange_messages(partner_id):
     conn = get_db_connection()
     cursor = conn.cursor()
     
+    # Get all messages between these two users
     messages = cursor.execute('''
         SELECT m.id, m.sender_id, m.receiver_id, m.message_text, m.timestamp,
                u.username as sender_username
@@ -924,6 +1005,7 @@ def get_exchange_messages(partner_id):
     
     conn.close()
     
+    #format messages list
     messages_list = [{
         'id': m['id'],
         'sender_id': m['sender_id'],
@@ -938,13 +1020,16 @@ def get_exchange_messages(partner_id):
 @app.route('/send-exchange-message', methods=['POST'])
 def send_exchange_message():
     """Send a message in exchange chat"""
+    #check authentication
     if 'user_id' not in session:
         return jsonify({'success': False, 'message': 'Not logged in'}), 401
     
+    #parse request data
     data = request.get_json()
     partner_id = data.get('partner_id')
     message_text = data.get('message_text')
     
+    #validate input
     if not partner_id or not message_text:
         return jsonify({'success': False, 'message': 'Missing required fields'}), 400
     
@@ -952,6 +1037,7 @@ def send_exchange_message():
     conn = get_db_connection()
     cursor = conn.cursor()
     
+    # Insert message
     cursor.execute('''
         INSERT INTO messages (sender_id, receiver_id, message_text)
         VALUES (?, ?, ?)
@@ -964,5 +1050,6 @@ def send_exchange_message():
     
     return jsonify({'success': True, 'message_id': message_id, 'timestamp': timestamp})
 
+#Run the Flask application
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

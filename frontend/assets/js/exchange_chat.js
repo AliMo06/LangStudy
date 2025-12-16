@@ -9,30 +9,37 @@ const partnerId = urlParams.get('partner_id');
 // Store translations to avoid re-translating
 const translations = {};
 
+//load messages when page loads
 window.addEventListener('DOMContentLoaded', loadMessages);
+//poll for new messages every 3 seconds to keep chat updated
 setInterval(loadMessages, 3000);
 
 async function loadMessages() {
+    //validate that we have a partner id
     if (!partnerId) {
         console.error('No partner_id in URL');
         return;
     }
     
     try {
+        //request messages frmo back end
         const response = await fetch(`/get-exchange-messages/${partnerId}`, {
             method: 'GET',
-            credentials: 'include'
+            credentials: 'include'  //include session cookies for authentication
         });
         
         const data = await response.json();
         
         if (data.success) {
+            //clear existing messages
             messageArea.innerHTML = '';
             
+            //display each message in chronological order
             data.messages.forEach(msg => {
                 displayMessage(msg);
             });
             
+            //scroll to bottom to show latest messages
             messageArea.scrollTop = messageArea.scrollHeight;
         } else {
             console.error('Failed to load messages:', data.message);
@@ -43,19 +50,24 @@ async function loadMessages() {
 }
 
 function displayMessage(msg) {
+    //create wrapper for message
     const wrapper = document.createElement("div");
     wrapper.className = "message-wrapper";
     
+    //create main message div woth styling based on sender
     const msgDiv = document.createElement("div");
     msgDiv.className = msg.is_mine ? "message you" : "message friend";
     
+    //create label showing who sent the message
     const label = document.createElement("div");
     label.className = msg.is_mine ? "sender" : "receiver";
     label.textContent = msg.is_mine ? i18n.t('exchangeChat.you') : msg.sender_username;
     
+    //create div for message content
     const content = document.createElement("div");
     content.textContent = msg.message_text;
     
+    //build message structure
     msgDiv.appendChild(label);
     msgDiv.appendChild(content);
     
@@ -111,6 +123,7 @@ async function translateMessage(messageId, text, wrapper, button) {
         
         if (data.translated_text) {
             const translatedText = data.translated_text;
+            //cache translation to avoid re-translating
             translations[messageId] = translatedText;
             
             // Add translation to the message
@@ -128,6 +141,7 @@ async function translateMessage(messageId, text, wrapper, button) {
             button.textContent = originalText;
         }
     } catch (error) {
+        //handle network or other errors
         console.error('Translation error:', error);
         alert(i18n.t('exchangeChat.translationUnavailable') || 'Translation service unavailable. Please try again later.');
         button.disabled = false;
@@ -135,9 +149,11 @@ async function translateMessage(messageId, text, wrapper, button) {
     }
 }
 
+//send message to language exahange partner
 async function sendMessage() {
+    //get and validate message text
     const text = input.value.trim();
-    if (text === "") return;
+    if (text === "") return;  //no empty messages
     
     if (!partnerId) {
         alert(i18n.t('exchangeChat.noPartnerSelected'));
@@ -145,22 +161,25 @@ async function sendMessage() {
     }
     
     try {
+        //send message to backend
         const response = await fetch('/send-exchange-message', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
             body: JSON.stringify({
-                partner_id: partnerId,
-                message_text: text
+                partner_id: partnerId,  //recipient user id
+                message_text: text  //message content
             })
         });
         
         const data = await response.json();
         
         if (data.success) {
+            //clear input field after successful send
             input.value = "";
             await loadMessages();
         } else {
+            //show error if message failed to send
             alert(i18n.t('exchangeChat.failedToSend') + data.message);
         }
     } catch (error) {
@@ -169,8 +188,10 @@ async function sendMessage() {
     }
 }
 
+//attach click handler to send button
 sendBtn.addEventListener("click", sendMessage);
 
+//allow sending message by pressing enter key
 input.addEventListener("keypress", function (e) {
     if (e.key === "Enter") {
         sendMessage();

@@ -1,3 +1,4 @@
+//get DOM element references for post creation interface
 const createPostBtn = document.getElementById('createPostBtn');
 const postTitle = document.getElementById('postTitle');
 const postContent = document.getElementById('postContent');
@@ -11,29 +12,34 @@ createPostBtn.addEventListener('click', async () => {
     const title = postTitle.value.trim();
     const content = postContent.value.trim();
 
+    //require both title and content
     if (!title || !content) {
         alert('Please fill in both title and content fields.');
         return;
     }
 
     try {
+        //send post data to backend
         const res = await fetch('/posts', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            credentials: 'include',
+            credentials: 'include',  //include session cookies
             body: JSON.stringify({ title, content })
         });
 
         const data = await res.json();
 
+        //check if post creation was successful
         if (!data.success) {
             alert('Failed to create post: ' + (data.message || 'unknown error'));
             return;
         }
 
+        //clear input fields after successful post
         postTitle.value = '';
         postContent.value = '';
 
+        //reload feed to show new post
         await loadFeed();
 
     } catch (err) {
@@ -46,8 +52,10 @@ createPostBtn.addEventListener('click', async () => {
 async function loadFeed() {
     feed.innerHTML = '';
     try {
+        //fetch posts from backend
         const res = await fetch('/posts', { credentials: 'include' });
         const posts = await res.json();
+        //render each post
         for (let post of posts) {
             await renderPost(post);
         }
@@ -59,8 +67,10 @@ async function loadFeed() {
 
 // Creating a post
 async function renderPost(post) {
+    //create post container
     const div = document.createElement('div');
     div.className = 'post';
+    //build post structure
     div.innerHTML = `
         <div class="post-header">
             <div class="post-info">
@@ -88,8 +98,10 @@ async function renderPost(post) {
         </div>
     `;
 
+    //add post to feed
     feed.appendChild(div);
 
+    //get references to action buttons
     const likeBtn = div.querySelector('.like-button');
     const likeCountSpan = likeBtn.querySelector('.like-count');
     const repostBtn = div.querySelector('.repost-button');
@@ -100,7 +112,9 @@ async function renderPost(post) {
         const res = await fetch(`/post-likes/${post.id}`, { credentials: 'include' });
         const data = await res.json();
         if (data.success) {
+            //update like count and button state
             likeCountSpan.textContent = `${data.count} ${i18n.t('post.likes')}`;
+            //highlight like button if user has liked
             if (data.liked) likeBtn.classList.add('active');
         }
     } catch (err) { 
@@ -111,6 +125,7 @@ async function renderPost(post) {
     likeBtn.addEventListener('click', async () => {
         const postId = likeBtn.getAttribute('data-post-id');
         try {
+            //send like/unlike request to backend
             const res = await fetch('/like', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -119,9 +134,11 @@ async function renderPost(post) {
             });
             const result = await res.json();
             if (result.success) {
+                //fetch updated like count
                 const likeRes = await fetch(`/post-likes/${postId}`, { credentials: 'include' });
                 const likeData = await likeRes.json();
                 if (likeData.success) {
+                    //update like count and button state
                     likeCountSpan.textContent = `${likeData.count} ${i18n.t('post.likes')}`; 
                     if (likeData.liked) likeBtn.classList.add('active');
                     else likeBtn.classList.remove('active');
@@ -139,6 +156,7 @@ async function renderPost(post) {
     repostBtn.addEventListener('click', async () => {
         const postId = repostBtn.getAttribute('data-post-id');
         try {
+            //send repost request to backend
             const res = await fetch('/repost', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -148,6 +166,7 @@ async function renderPost(post) {
             const data = await res.json();
             if (data.success) {
                 alert('Post reposted!');
+                //reload feed to show repost
                 await loadFeed(); 
             } else {
                 alert('Failed to repost: ' + (data.message || 'unknown error'));
@@ -171,7 +190,7 @@ async function renderPost(post) {
 }
 
 async function translatePost(postId, title, content, postDiv, button) {
-    const targetLang = i18n.currentLang;
+    const targetLang = i18n.currentLang;  //get current language
     
     // Check if already translated
     if (translations[postId]) {
@@ -197,6 +216,7 @@ async function translatePost(postId, title, content, postDiv, button) {
             })
         });
         
+        //translate content
         const contentResponse = await fetch('/api/translate', {
             method: 'POST',
             headers: { 
@@ -212,6 +232,7 @@ async function translatePost(postId, title, content, postDiv, button) {
         const titleData = await titleResponse.json();
         const contentData = await contentResponse.json();
         
+        //check if both translations were successful
         if (titleData.translated_text && contentData.translated_text) {
             const translatedTitle = titleData.translated_text;
             const translatedContent = contentData.translated_text;
@@ -228,15 +249,17 @@ async function translatePost(postId, title, content, postDiv, button) {
             // Update button to show translation is complete
             button.querySelector('span:last-child').textContent = i18n.t('post.translated') || 'Translated';
         } else {
+            //translation API returned error
             console.error('Translation error:', titleData.error || contentData.error);
             alert(i18n.t('post.translationFailed') || 'Translation failed. Please try again.');
-            button.disabled = false;
+            button.disabled = false;  //reenable button
             button.querySelector('span:last-child').textContent = originalText;
         }
     } catch (error) {
+        //network or other error during translation
         console.error('Translation error:', error);
         alert(i18n.t('post.translationUnavailable') || 'Translation service unavailable. Please try again later.');
-        button.disabled = false;
+        button.disabled = false;  //reenable button
         button.querySelector('span:last-child').textContent = originalText;
     }
 }
@@ -246,6 +269,7 @@ function displayTranslation(postDiv, translation) {
     let translationDiv = postDiv.querySelector('.post-translation');
     
     if (!translationDiv) {
+        //create translation container
         translationDiv = document.createElement('div');
         translationDiv.className = 'post-translation';
         translationDiv.innerHTML = `
@@ -262,16 +286,16 @@ function displayTranslation(postDiv, translation) {
 
 function escapeHtml(text) {
     const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
+    div.textContent = text;  //browser handles escaping
+    return div.innerHTML;  //return escaped HTML
 }
 
+// Initial load of feed
 loadFeed();
-
 const languageDropdown = document.getElementById('language-dropdown');
 if (languageDropdown) {
     languageDropdown.addEventListener('change', async () => {
-        setTimeout(async () => {
+        setTimeout(async () => {  //delay to allow language change to take effect
             await loadFeed();
         }, 50);
     });
